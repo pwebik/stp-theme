@@ -1,18 +1,16 @@
-{%- comment %} Speech Therapy Publishing — brand header (matches Genesis mockup) {% endcomment -%}
+{%- comment %} Speech Therapy Publishing — brand header {% endcomment -%}
 <header class="stp-header">
   <div class="stp-nav-inner">
     <a href="{{ routes.root_url }}" class="stp-logo">
       {%- if section.settings.logo_image != blank -%}
-        {{ section.settings.logo_image | image_url: width: 300 | image_tag: alt: shop.name, class: 'stp-logo-img' }}
+        {{ section.settings.logo_image | image_url: width: 400 | image_tag: alt: shop.name, class: 'stp-logo-img', style: 'height:' | append: section.settings.logo_height | append: 'px' }}
       {%- else -%}
-        <span class="stp-logo-dot" aria-hidden="true"></span>{{ section.settings.logo_text }} <em>{{ section.settings.logo_text_accent }}</em>
+        <span class="stp-logo-dot" aria-hidden="true"></span><span class="stp-logo-text">{{ section.settings.logo_text }} <em>{{ section.settings.logo_text_accent }}</em></span>
       {%- endif -%}
     </a>
 
-    <input type="checkbox" id="stp-nav-toggle" class="stp-nav-toggle" hidden>
-    <label for="stp-nav-toggle" class="stp-burger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </label>
+    <input type="checkbox" id="stp-nav-toggle" class="stp-nav-toggle">
+    <label for="stp-nav-toggle" class="stp-burger" aria-label="Toggle menu"><span></span><span></span><span></span></label>
 
     <nav class="stp-links" aria-label="Primary">
       {%- if section.settings.menu != blank -%}
@@ -21,34 +19,54 @@
         {%- endfor -%}
       {%- endif -%}
       {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="stp-nav-cta">{{ section.settings.cta_label }}</a>
-      {%- endif -%}
-      {%- if section.settings.show_cart -%}
-        <a href="{{ routes.cart_url }}" class="stp-cart">Cart{% if cart.item_count > 0 %} <span class="stp-cart-count">{{ cart.item_count }}</span>{% endif %}</a>
+        <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="stp-nav-cta stp-cta-mobile">{{ section.settings.cta_label }}</a>
       {%- endif -%}
     </nav>
+
+    <div class="stp-actions">
+      {%- if section.settings.show_search -%}
+        <a href="{{ routes.search_url }}" class="stp-icon" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_cart -%}
+        <a href="{{ routes.cart_url }}" class="stp-icon stp-cart" aria-label="Cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          {%- if cart.item_count > 0 -%}<span class="stp-cart-count">{{ cart.item_count }}</span>{%- endif -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="stp-nav-cta stp-cta-desktop">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+    </div>
   </div>
 </header>
 
 {% stylesheet %}
 .stp-header { background: var(--cream, #FDF3E2); border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); position: sticky; top: 0; z-index: 50; }
-.stp-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1200px; margin: 0 auto; gap: 20px; }
-.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 19px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; }
-.stp-logo-img { height: 34px; width: auto; display: block; }
-.stp-logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral, #F4901E); flex: none; }
+.stp-nav-inner { display: flex; align-items: center; gap: 24px; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; margin-right: auto; }
+.stp-logo-img { width: auto; display: block; }
+.stp-logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--coral, #F4901E); flex: none; }
 .stp-logo em { font-style: normal; color: var(--coral-deep, #DE7B0E); }
-.stp-links { display: flex; gap: 32px; align-items: center; }
-.stp-links a { font-weight: 700; font-size: 14.5px; color: var(--ink-soft, #635D74); text-decoration: none; }
-.stp-links a:hover { color: var(--ink, #262138); }
-.stp-nav-cta { background: var(--ink, #262138); color: var(--white, #fff) !important; padding: 11px 22px; border-radius: 100px; font-weight: 700; font-size: 14px; }
+.stp-links { display: flex; gap: 30px; align-items: center; }
+.stp-links > a { font-weight: 700; font-size: 14.5px; color: var(--ink-soft, #635D74); text-decoration: none; }
+.stp-links > a:hover { color: var(--ink, #262138); }
+.stp-actions { display: flex; align-items: center; gap: 18px; }
+.stp-icon { color: var(--ink, #262138); display: inline-flex; align-items: center; position: relative; }
+.stp-icon:hover { color: var(--coral-deep, #DE7B0E); }
+.stp-cart-count { position: absolute; top: -8px; right: -10px; background: var(--coral, #F4901E); color: #fff; border-radius: 100px; min-width: 18px; height: 18px; padding: 0 5px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.stp-nav-cta { background: var(--ink, #262138); color: var(--white, #fff) !important; padding: 11px 22px; border-radius: 100px; font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
 .stp-nav-cta:hover { background: var(--teal-deep, #145E51); }
-.stp-cart { display: inline-flex; align-items: center; gap: 6px; }
-.stp-cart-count { background: var(--coral, #F4901E); color: #fff; border-radius: 100px; padding: 1px 8px; font-size: 12px; }
-.stp-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+.stp-cta-mobile { display: none; }
+.stp-nav-toggle { display: none; }
+.stp-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; margin-left: 4px; }
 .stp-burger span { width: 24px; height: 2px; background: var(--ink, #262138); border-radius: 2px; }
 @media (max-width: 980px) {
-  .stp-burger { display: flex; }
-  .stp-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream, #FDF3E2); flex-direction: column; align-items: flex-start; gap: 18px; padding: 20px 24px; border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); box-shadow: var(--shadow-soft, 0 20px 45px -20px rgba(43,36,64,0.25)); }
+  .stp-burger { display: flex; order: 5; }
+  .stp-cta-desktop { display: none; }
+  .stp-cta-mobile { display: inline-block; }
+  .stp-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream, #FDF3E2); flex-direction: column; align-items: flex-start; gap: 18px; padding: 20px 24px; border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); box-shadow: var(--shadow-soft, 0 20px 45px -20px rgba(43,36,64,0.25)); z-index: 60; }
   .stp-nav-toggle:checked ~ .stp-links { display: flex; }
 }
 {% endstylesheet %}
@@ -58,12 +76,14 @@
   "name": "STP Header",
   "settings": [
     { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional — overrides text logo)" },
+    { "type": "range", "id": "logo_height", "label": "Logo image height", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 44 },
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "speech therapy" },
     { "type": "text", "id": "logo_text_accent", "label": "Logo text (accent)", "default": "publishing" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop Bundles" },
     { "type": "url", "id": "cta_link", "label": "CTA button link" },
-    { "type": "checkbox", "id": "show_cart", "label": "Show cart link", "default": true }
+    { "type": "checkbox", "id": "show_search", "label": "Show search icon", "default": true },
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true }
   ],
   "enabled_on": { "groups": ["header"] }
 }
