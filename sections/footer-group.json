@@ -1,1 +1,51 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"image_bgxppH":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/White_Logo.png","image_width":335,"alignment":"center"}}},"block_order":["image_bgxppH"],"custom_css":[".footer {background-color: #4fc2c9;}",".field__input {background-color: white; margin: 0;}",".field__label {color: #8f8f8f;}",".footer-block__heading {font-size: 32px; font-weight: bolder;}"],"settings":{"menu":"main-menu-2025","color_scheme":"scheme-3","newsletter_enable":true,"newsletter_heading":"Join our email list!","enable_follow_on_shop":false,"show_social":false,"enable_country_selector":false,"enable_language_selector":true,"payment_enable":false,"show_policy":false,"margin_top":0,"padding_top":44,"padding_bottom":48}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "stp-footer": {
+      "type": "stp-footer",
+      "settings": {
+        "logo_text": "speech therapy",
+        "logo_text_accent": "publishing",
+        "copyright": "Speech Therapy Publishing. All rights reserved."
+      },
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "heading": "Shop"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "heading": "Company"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "heading": "New"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ]
+    }
+  },
+  "order": [
+    "stp-footer"
+  ]
+}

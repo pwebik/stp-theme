@@ -1,33 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "header": {
-      "type": "header",
-      "custom_css": [
-        ".cart-count-bubble {background-color: #4fc2c9;}"
-      ],
-      "settings": {
-        "logo_position": "middle-left",
-        "mobile_logo_position": "center",
-        "menu": "main-menu-2025",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "reduce-logo-size",
-        "show_line_separator": false,
-        "color_scheme": "scheme-2",
-        "menu_color_scheme": "scheme-2",
-        "enable_search_modal": false,
-        "enable_account_link": false,
-        "enable_shop_page": true,
-        "shop_link": "shopify://collections/all",
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "enable_customer_avatar": true,
-        "margin_bottom": 0,
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    },
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
@@ -51,10 +34,20 @@
         "enable_country_selector": false,
         "enable_language_selector": false
       }
+    },
+    "stp-header": {
+      "type": "stp-header",
+      "settings": {
+        "logo_text": "speech therapy",
+        "logo_text_accent": "publishing",
+        "menu": "main-menu",
+        "cta_label": "Shop Bundles",
+        "show_cart": true
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "stp-header"
   ]
 }
