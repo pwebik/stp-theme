@@ -11,7 +11,6 @@
   "sections": {
     "home_hero": {
       "type": "home-hero",
-      "settings": {},
       "blocks": {
         "home_hero_b1": {
           "type": "meta",
@@ -50,17 +49,33 @@
         "home_hero_b3",
         "home_hero_b4",
         "home_hero_b5"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "📖 An at-home tool from a pediatric SLP",
+        "heading": "From first sounds to",
+        "heading_highlight": "everyday conversations.",
+        "subtext": "<p>Four SLP-created board books, one complete system. The <strong>Early Speech Complete Bundle</strong> now includes our newest book, My Routines — so you're covered from your child's very first babble to full mealtime chatter.</p>",
+        "stat_stars": "★★★★★",
+        "stat_number": "100,000+",
+        "stat_label": "families trust this system",
+        "cta_primary_label": "Shop the Complete Bundle →",
+        "cta_primary_link": "",
+        "cta_secondary_label": "See all 4 books",
+        "cta_secondary_link": "",
+        "card_badge": "+1 NEW BOOK!",
+        "card_title": "Early Speech Complete Bundle",
+        "card_subtitle": "All 4 Books · Sounds → Words → Actions → Routines",
+        "flag_text": "★ NEW"
+      }
     },
     "home_trust": {
       "type": "home-trust",
-      "settings": {},
       "blocks": {
         "home_trust_b1": {
           "type": "item",
           "settings": {
             "icon": "👩‍⚕️",
-            "icon_bg": "#FCE7CF",
+            "icon_bg": "#fce7cf",
             "title": "Created by an SLP",
             "subtitle": "Pediatric speech-language pathologist"
           }
@@ -69,7 +84,7 @@
           "type": "item",
           "settings": {
             "icon": "💕",
-            "icon_bg": "#FBE0EB",
+            "icon_bg": "#fbe0eb",
             "title": "Loved by Families",
             "subtitle": "1,000+ five-star reviews"
           }
@@ -78,7 +93,7 @@
           "type": "item",
           "settings": {
             "icon": "🛡️",
-            "icon_bg": "#DCF3F4",
+            "icon_bg": "#dcf3f4",
             "title": "Trusted by Professionals",
             "subtitle": "Recommended by SLPs nationwide"
           }
@@ -87,7 +102,7 @@
           "type": "item",
           "settings": {
             "icon": "🚂",
-            "icon_bg": "#E7E3F7",
+            "icon_bg": "#e7e3f7",
             "title": "A Complete System",
             "subtitle": "Grows with your child, stage by stage"
           }
@@ -98,22 +113,33 @@
         "home_trust_b2",
         "home_trust_b3",
         "home_trust_b4"
-      ]
+      ],
+      "settings": {}
     },
     "home_video": {
       "type": "home-video",
-      "settings": {}
+      "settings": {
+        "eyebrow": "See it in action",
+        "heading": "One system, every stage of talking.",
+        "subheading": "From first sounds to everyday routines — a quick look at how the books work together.",
+        "video": "shopify://files/videos/Main video for loop.mov",
+        "caption": "🔊 Tap to unmute",
+        "autoplay": true,
+        "muted": true,
+        "loop": true,
+        "show_controls": true
+      }
     },
     "home_bundles": {
       "type": "home-bundles",
-      "settings": {},
       "blocks": {
         "home_bundles_b1": {
           "type": "bundle",
           "settings": {
             "featured": false,
+            "ribbon": "★ Best Value · Includes the NEW book",
             "kicker": "Starter",
-            "kicker_color": "#DE7B0E",
+            "kicker_color": "#de7b0e",
             "title": "Early Speech Starter Bundle",
             "label_1": "Imitation",
             "label_2": "My Words",
@@ -124,7 +150,8 @@
             "price_now": "$39.99",
             "price_was": "$47.97",
             "price_save": "Save $7.98",
-            "button_label": "Shop Starter Bundle"
+            "button_label": "Shop Starter Bundle",
+            "button_link": ""
           }
         },
         "home_bundles_b2": {
@@ -133,6 +160,7 @@
             "featured": true,
             "ribbon": "★ Best Value · Includes the NEW book",
             "kicker": "Complete System",
+            "kicker_color": "#de7b0e",
             "title": "Early Speech Complete Bundle",
             "label_1": "Imitation",
             "label_2": "My Words",
@@ -143,15 +171,17 @@
             "price_now": "$49.99",
             "price_was": "$63.96",
             "price_save": "Save $13.97 · Free shipping",
-            "button_label": "Shop the Complete Bundle"
+            "button_label": "Shop the Complete Bundle",
+            "button_link": ""
           }
         },
         "home_bundles_b3": {
           "type": "bundle",
           "settings": {
             "featured": false,
+            "ribbon": "★ Best Value · Includes the NEW book",
             "kicker": "Mealtime & routines",
-            "kicker_color": "#6E5FC4",
+            "kicker_color": "#6e5fc4",
             "title": "Daily Routines Early Speech Bundle",
             "label_1": "Routines",
             "label_2": "Imitation",
@@ -162,7 +192,8 @@
             "price_now": "$39.99",
             "price_was": "$47.97",
             "price_save": "Save $7.98",
-            "button_label": "Shop Daily Routines Bundle"
+            "button_label": "Shop Daily Routines Bundle",
+            "button_link": ""
           }
         }
       },
@@ -170,50 +201,60 @@
         "home_bundles_b1",
         "home_bundles_b2",
         "home_bundles_b3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Choose your system",
+        "heading": "Three bundles. One goal: more words, sooner.",
+        "subheading": "Start where your child is, or get the full arc from first sounds to everyday routines with our best-value set."
+      }
     },
     "home_system": {
       "type": "home-system",
-      "settings": {},
       "blocks": {
         "home_system_b1": {
           "type": "car",
           "settings": {
-            "color_1": "#F4901E",
-            "color_2": "#DE7B0E",
+            "color_1": "#f4901e",
+            "color_2": "#de7b0e",
             "stage_tag": "Stage 1 · Sounds",
+            "stage_highlight": false,
             "title": "Imitation Book",
             "description": "Playful sounds & gestures — the first step toward talking.",
-            "age": "Ages 6mo–2yrs"
+            "age": "Ages 6mo–2yrs",
+            "show_new_badge": false
           }
         },
         "home_system_b2": {
           "type": "car",
           "settings": {
-            "color_1": "#EF4F8B",
-            "color_2": "#D63576",
+            "color_1": "#ef4f8b",
+            "color_2": "#d63576",
             "stage_tag": "Stage 2 · Words",
+            "stage_highlight": false,
             "title": "My Words Book",
             "description": "Real first words your toddler can actually say.",
-            "age": "Ages 1–3yrs"
+            "age": "Ages 1–3yrs",
+            "show_new_badge": false
           }
         },
         "home_system_b3": {
           "type": "car",
           "settings": {
-            "color_1": "#1F8C79",
-            "color_2": "#145E51",
+            "color_1": "#1f8c79",
+            "color_2": "#145e51",
             "stage_tag": "Stage 3 · Actions",
+            "stage_highlight": false,
             "title": "Action Book",
             "description": "Verbs that bridge single words into early sentences.",
-            "age": "Ages 18mo–4yrs"
+            "age": "Ages 18mo–4yrs",
+            "show_new_badge": false
           }
         },
         "home_system_b4": {
           "type": "car",
           "settings": {
-            "color_1": "#8B7FD6",
-            "color_2": "#6E5FC4",
+            "color_1": "#8b7fd6",
+            "color_2": "#6e5fc4",
             "stage_tag": "Stage 4 · Routines",
             "stage_highlight": true,
             "title": "My Routines Book",
@@ -228,67 +269,81 @@
         "home_system_b2",
         "home_system_b3",
         "home_system_b4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "The 4-book system",
+        "heading": "Sounds → Words → Actions → Routines",
+        "subheading": "Each book is a car on the same train — ride the whole track, or hop on wherever your child is today."
+      }
     },
     "home_books": {
       "type": "home-books",
-      "settings": {},
       "blocks": {
         "home_books_b1": {
           "type": "book",
           "settings": {
-            "frame_color_1": "#FCD9A6",
-            "frame_color_2": "#F4901E",
+            "frame_color_1": "#fcd9a6",
+            "frame_color_2": "#f4901e",
+            "presale_flag": "",
             "kicker": "Stage 1",
-            "accent_color": "#DE7B0E",
+            "accent_color": "#de7b0e",
             "title": "Imitation Book",
             "tagline": "Sounds & Play · Ages 6mo–2yrs",
             "description": "Silly sounds and play actions that spark your toddler's very first attempts to talk.",
             "price": "$18.99",
-            "shop_label": "Shop this book →"
+            "shop_label": "Shop this book →",
+            "shop_link": "",
+            "highlight_border": false
           }
         },
         "home_books_b2": {
           "type": "book",
           "settings": {
-            "frame_color_1": "#FBC7DC",
-            "frame_color_2": "#EF4F8B",
+            "frame_color_1": "#fbc7dc",
+            "frame_color_2": "#ef4f8b",
+            "presale_flag": "",
             "kicker": "Stage 2",
-            "accent_color": "#D63576",
+            "accent_color": "#d63576",
             "title": "My Words Book",
             "tagline": "First Words · Ages 1–3yrs",
             "description": "First words your toddler can actually say — ball, mama, puppy, banana.",
             "price": "$18.99",
-            "shop_label": "Shop this book →"
+            "shop_label": "Shop this book →",
+            "shop_link": "",
+            "highlight_border": false
           }
         },
         "home_books_b3": {
           "type": "book",
           "settings": {
-            "frame_color_1": "#A9E6EA",
-            "frame_color_2": "#1F8C79",
+            "frame_color_1": "#a9e6ea",
+            "frame_color_2": "#1f8c79",
+            "presale_flag": "",
             "kicker": "Stage 3",
-            "accent_color": "#145E51",
+            "accent_color": "#145e51",
             "title": "Action Book",
             "tagline": "Verbs & Sentences · Ages 18mo–4yrs",
             "description": "Verbs and -ing words that bridge single words into early sentences.",
             "price": "$18.99",
-            "shop_label": "Shop this book →"
+            "shop_label": "Shop this book →",
+            "shop_link": "",
+            "highlight_border": false
           }
         },
         "home_books_b4": {
           "type": "book",
           "settings": {
-            "frame_color_1": "#8B7FD6",
-            "frame_color_2": "#6E5FC4",
+            "frame_color_1": "#8b7fd6",
+            "frame_color_2": "#6e5fc4",
             "presale_flag": "Presale",
             "kicker": "Stage 4 · NEW",
-            "accent_color": "#6E5FC4",
+            "accent_color": "#6e5fc4",
             "title": "My Routines Book",
             "tagline": "Everyday Routines · Ages 18mo–4yrs",
             "description": "Real phrases for mealtime, dressing, and play — the language of daily life at home.",
             "price": "$18.99",
             "shop_label": "Reserve yours →",
+            "shop_link": "",
             "highlight_border": true
           }
         }
@@ -298,19 +353,36 @@
         "home_books_b2",
         "home_books_b3",
         "home_books_b4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Shop by book",
+        "heading": "Or start with just one.",
+        "subheading": "Every book stands on its own. Start wherever your child is, and add the rest as they grow."
+      }
     },
     "home_presale": {
       "type": "home-presale",
-      "settings": {}
+      "settings": {
+        "eyebrow": "🎉 Presale now open",
+        "heading": "Meet the 4th book: My Routines.",
+        "copy": "The newest addition to the system — built around the routines your family already has: mealtime, getting dressed, bath time, and play. Reserve your copy now and be first to get it, before it hits the rest of the site.",
+        "email_placeholder": "Your email address",
+        "button_label": "Notify Me + Reserve",
+        "email_tag": "my-routines-presale",
+        "success_message": "You're on the list — check your inbox!",
+        "note": "Ships [Month Day] · Presale customers get early access + a launch-week bonus.",
+        "video": "shopify://files/videos/My Routines Video.MOV",
+        "placeholder_label": "Book trailer / cover reveal video slot",
+        "placeholder_hint": "Drop in the My Routines Book teaser or unboxing clip here"
+      }
     },
     "home_families": {
       "type": "home-families",
-      "settings": {},
       "blocks": {
         "home_families_b1": {
           "type": "tile",
           "settings": {
+            "video": "shopify://files/videos/1st video (1).mp4",
             "caption": "Featured video",
             "label": "\"Wait for it — she says 'nana' at 0:42\""
           }
@@ -318,6 +390,7 @@
         "home_families_b2": {
           "type": "tile",
           "settings": {
+            "video": "shopify://files/videos/2nd (1).mp4",
             "caption": "Parent clip",
             "label": "Bedtime with the Imitation Book"
           }
@@ -325,6 +398,7 @@
         "home_families_b3": {
           "type": "tile",
           "settings": {
+            "video": "shopify://files/videos/3rd Video (1).mp4",
             "caption": "SLP tip",
             "label": "Stephanie demos \"pause & wait\""
           }
@@ -334,18 +408,23 @@
         "home_families_b1",
         "home_families_b2",
         "home_families_b3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "See it in action",
+        "heading": "Real families, real reading time.",
+        "subheading": "Short clips of parents and toddlers using the books together — the pause, the giggle, the first try at a word."
+      }
     },
     "home_reviews": {
       "type": "home-reviews",
-      "settings": {},
       "blocks": {
         "home_reviews_b1": {
           "type": "review",
           "settings": {
+            "stars": "★★★★★",
             "quote": "\"This book helped my baby start to talk and say words at 12 months old. It's now part of our daily routine.\"",
             "avatar_letter": "K",
-            "avatar_color": "#F4901E",
+            "avatar_color": "#f4901e",
             "name": "Krizzy",
             "role": "Verified buyer"
           }
@@ -353,9 +432,10 @@
         "home_reviews_b2": {
           "type": "review",
           "settings": {
+            "stars": "★★★★★",
             "quote": "\"As a parent, finding tools that actually help your child's development can feel overwhelming. This is one of those rare finds that delivers.\"",
             "avatar_letter": "A",
-            "avatar_color": "#1F8C79",
+            "avatar_color": "#1f8c79",
             "name": "Amazon Customer",
             "role": "Verified purchase"
           }
@@ -363,9 +443,10 @@
         "home_reviews_b3": {
           "type": "review",
           "settings": {
+            "stars": "★★★★★",
             "quote": "\"Speech path here. I love this book. It was one of my son's favorites and what I used to help him produce more words from 1–2 years.\"",
             "avatar_letter": "B",
-            "avatar_color": "#EF4F8B",
+            "avatar_color": "#ef4f8b",
             "name": "Brooke",
             "role": "SLP & mom"
           }
@@ -375,15 +456,24 @@
         "home_reviews_b1",
         "home_reviews_b2",
         "home_reviews_b3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "From real families",
+        "heading": "1,000+ five-star reviews",
+        "subheading": "Recommended by speech therapists. Loved by parents and grandparents."
+      }
     },
     "home_founder": {
       "type": "home-founder",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Meet Stephanie",
+        "quote": "\"I wrote these books so parents can guide their child's speech confidently at home — no special training needed.\"",
+        "attribution": "— Stephanie Anderson, M.S., CCC-SLP · Founder, Speech Therapy Publishing",
+        "bio": "<p>I began my career as a speech-language pathologist working in Early Intervention. While nearly every parent I worked with read to their child, I struggled to find books that truly met kids where they were developmentally. That's how Imitation Book was born — and today, all four books are used by families and professionals across the country.</p>"
+      }
     },
     "home_faq": {
       "type": "home-faq",
-      "settings": {},
       "blocks": {
         "home_faq_b1": {
           "type": "qa",
@@ -397,21 +487,24 @@
           "type": "qa",
           "settings": {
             "question": "When does My Routines Book ship?",
-            "answer": "<p>My Routines Book is currently in presale. Reserve your copy today and it will ship on [date] — presale customers get early access ahead of general availability.</p>"
+            "answer": "<p>My Routines Book is currently in presale. Reserve your copy today and it will ship on [date] — presale customers get early access ahead of general availability.</p>",
+            "open": false
           }
         },
         "home_faq_b3": {
           "type": "qa",
           "settings": {
             "question": "What age are these books for?",
-            "answer": "<p>Ages 6 months through 4 years, across the four stages. Most families return to all four books at different points in that range.</p>"
+            "answer": "<p>Ages 6 months through 4 years, across the four stages. Most families return to all four books at different points in that range.</p>",
+            "open": false
           }
         },
         "home_faq_b4": {
           "type": "qa",
           "settings": {
             "question": "What about shipping and returns?",
-            "answer": "<p>Bundles ship free within the US, arriving in 3–5 business days. Not happy with your books? Send them back within 30 days for a full refund.</p>"
+            "answer": "<p>Bundles ship free within the US, arriving in 3–5 business days. Not happy with your books? Send them back within 30 days for a full refund.</p>",
+            "open": false
           }
         }
       },
@@ -420,11 +513,20 @@
         "home_faq_b2",
         "home_faq_b3",
         "home_faq_b4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "Things parents often ask"
+      }
     },
     "home_final_cta": {
       "type": "home-final-cta",
-      "settings": {}
+      "settings": {
+        "heading": "Open the books, read together, and watch the words come.",
+        "subtext": "Get all four — Sounds, Words, Actions, and Routines — in one complete system.",
+        "cta_label": "Shop the Complete Bundle",
+        "cta_link": ""
+      }
     }
   },
   "order": [
