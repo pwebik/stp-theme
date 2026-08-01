@@ -1,0 +1,40 @@
+{%- comment -%}
+  Asset-dependent CSS for the landing pages.
+  
+  Loads:
+  - Lilita One font (bubble-letter display)
+  - Bee mascot background image
+  - Stephanie portrait background image
+  
+  Include this BEFORE the main landing-pages.css stylesheet.
+  
+  Usage in your page template:
+    {% render 'landing-page-css-head' %}
+    {{ 'landing-pages.css' | asset_url | stylesheet_tag }}
+{%- endcomment -%}
+
+<style>
+  @font-face {
+    font-family: 'Lilita One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url({{ 'lilita-one.ttf' | asset_url }}) format('truetype');
+  }
+  
+  .lp-page .hero-decor .bee {
+    background-image: url({{ 'bee-mascot.png' | asset_url }});
+  }
+  
+  .lp-page .stephanie-image-wrap {
+    background-image: url({{ 'stephanie-portrait.jpg' | asset_url }});
+  }
+</style>
+
+{%- comment -%}
+  Also load Fredoka + Nunito from Google Fonts (the body + secondary display fonts).
+  If your theme already loads these, you can remove this block.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">

@@ -1,0 +1,89 @@
+{%- comment %} The 4-book system, shown as a train {% endcomment -%}
+<section class="home-block home-system">
+  <div class="wrap">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow teal">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="track-wrap">
+      <div class="track-line" aria-hidden="true"></div>
+      <div class="train-row">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign img = block.settings.cover
+            assign fallback = ''
+            assign key = block.settings.title | downcase
+            if key contains 'imitation'
+              assign fallback = 'home-cover-imitation.webp'
+            elsif key contains 'word'
+              assign fallback = 'home-cover-my-words.webp'
+            elsif key contains 'action'
+              assign fallback = 'home-cover-action.webp'
+            elsif key contains 'routine'
+              assign fallback = 'home-cover-my-routines.webp'
+            endif
+          -%}
+          <div class="train-car" {{ block.shopify_attributes }}>
+            <div class="car-body" style="background:linear-gradient(160deg,{{ block.settings.color_1 }},{{ block.settings.color_2 }});{% if block.settings.show_new_badge %}border-color:var(--yellow);{% endif %}">
+              {%- if img != blank -%}
+                {{ img | image_url: width: 300 | image_tag: class: 'car-photo', alt: block.settings.title }}
+              {%- elsif fallback != blank -%}
+                <img class="car-photo" src="{{ fallback | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {%- endif -%}
+              {%- if block.settings.show_new_badge -%}<span class="badge-new" style="top:-14px;right:-14px;left:auto;transform:rotate(8deg);">NEW</span>{%- endif -%}
+            </div>
+            <div class="car-wheels" aria-hidden="true"><div class="wheel"></div><div class="wheel"></div></div>
+            <div class="car-label">
+              {%- if block.settings.stage_tag != blank -%}<span class="stage-tag"{% if block.settings.stage_highlight %} style="background:var(--yellow);"{% endif %}>{{ block.settings.stage_tag }}</span>{%- endif -%}
+              <h4>{{ block.settings.title }}</h4>
+              {%- if block.settings.description != blank -%}<p>{{ block.settings.description }}</p>{%- endif -%}
+              {%- if block.settings.age != blank -%}<p class="car-age">{{ block.settings.age }}</p>{%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · 4-book system",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The 4-book system" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Sounds → Words → Actions → Routines" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Each book is a car on the same train — ride the whole track, or hop on wherever your child is today." }
+  ],
+  "blocks": [
+    {
+      "type": "car",
+      "name": "Book / car",
+      "settings": [
+        { "type": "image_picker", "id": "cover", "label": "Cover image" },
+        { "type": "color", "id": "color_1", "label": "Car gradient start", "default": "#F4901E" },
+        { "type": "color", "id": "color_2", "label": "Car gradient end", "default": "#DE7B0E" },
+        { "type": "text", "id": "stage_tag", "label": "Stage tag", "default": "Stage 1 · Sounds" },
+        { "type": "checkbox", "id": "stage_highlight", "label": "Highlight stage tag (yellow)", "default": false },
+        { "type": "text", "id": "title", "label": "Title", "default": "Imitation Book" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Playful sounds & gestures — the first step toward talking." },
+        { "type": "text", "id": "age", "label": "Age range", "default": "Ages 6mo–2yrs" },
+        { "type": "checkbox", "id": "show_new_badge", "label": "Show NEW badge", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Home · 4-book system",
+      "blocks": [
+        { "type": "car", "settings": { "color_1": "#F4901E", "color_2": "#DE7B0E", "stage_tag": "Stage 1 · Sounds", "title": "Imitation Book", "description": "Playful sounds & gestures — the first step toward talking.", "age": "Ages 6mo–2yrs" } },
+        { "type": "car", "settings": { "color_1": "#EF4F8B", "color_2": "#D63576", "stage_tag": "Stage 2 · Words", "title": "My Words Book", "description": "Real first words your toddler can actually say.", "age": "Ages 1–3yrs" } },
+        { "type": "car", "settings": { "color_1": "#1F8C79", "color_2": "#145E51", "stage_tag": "Stage 3 · Actions", "title": "Action Book", "description": "Verbs that bridge single words into early sentences.", "age": "Ages 18mo–4yrs" } },
+        { "type": "car", "settings": { "color_1": "#8B7FD6", "color_2": "#6E5FC4", "stage_tag": "Stage 4 · Routines", "stage_highlight": true, "title": "My Routines Book", "description": "Everyday phrases for mealtime, getting dressed & play.", "age": "Ages 18mo–4yrs", "show_new_badge": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

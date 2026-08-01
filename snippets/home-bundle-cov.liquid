@@ -1,0 +1,25 @@
+{%- comment -%}
+  Renders one bundle cover cell. Static inputs only (Shopify resolves types at compile).
+  Params: image (image_picker value or blank), label (string)
+{%- endcomment -%}
+{%- if image != blank or label != blank -%}
+  {%- assign fallback = '' -%}
+  {%- assign key = label | downcase -%}
+  {%- if key contains 'imitation' -%}
+    {%- assign fallback = 'home-cover-imitation.webp' -%}
+  {%- elsif key contains 'word' -%}
+    {%- assign fallback = 'home-cover-my-words.webp' -%}
+  {%- elsif key contains 'action' -%}
+    {%- assign fallback = 'home-cover-action.webp' -%}
+  {%- elsif key contains 'routine' -%}
+    {%- assign fallback = 'home-cover-my-routines.webp' -%}
+  {%- endif -%}
+  <div class="cov">
+    {%- if image != blank -%}
+      {{ image | image_url: width: 180 | image_tag: alt: label }}
+    {%- elsif fallback != blank -%}
+      <img src="{{ fallback | asset_url }}" alt="{{ label | escape }}" loading="lazy">
+    {%- endif -%}
+    {%- if label != blank -%}<span>{{ label }}</span>{%- endif -%}
+  </div>
+{%- endif -%}

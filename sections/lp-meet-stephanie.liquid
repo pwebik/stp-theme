@@ -1,0 +1,105 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Meet Stephanie
+  Bio + portrait. Soft sky-soft background.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="meet-stephanie">
+  <div class="container">
+    <div class="meet-copy">
+      {%- if section.settings.small_label != blank -%}
+        <span class="small-label">{{ section.settings.small_label }}</span>
+      {%- endif -%}
+      
+      {%- if section.settings.headline != blank -%}
+        <h2>{{ section.settings.headline }}</h2>
+      {%- endif -%}
+      
+      {%- if section.settings.body != blank -%}
+        <div class="meet-body">{{ section.settings.body }}</div>
+      {%- endif -%}
+      
+      {%- if section.settings.credentials != blank -%}
+        <div class="credentials">{{ section.settings.credentials }}</div>
+      {%- endif -%}
+    </div>
+    
+    {%- if section.settings.portrait != blank -%}
+      <div class="stephanie-image-wrap"
+        style="background-image: url('{{ section.settings.portrait | image_url: width: 1200 }}');">
+        <span class="visually-hidden">{{ section.settings.portrait_alt | default: 'Stephanie Anderson' }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Meet Stephanie",
+  "tag": "section",
+  "class": "lp-section lp-section--meet",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label",
+      "default": "MEET STEPHANIE"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Hi, I'm Stephanie"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Bio paragraphs",
+      "default": "<p>I'm a pediatric speech-language pathologist, mom, and the founder of Speech Therapy Publishing. After years of working one-on-one with toddlers and their families, I wanted to put the gentle techniques I use every day into something parents could pick up and use too.</p><p>That's how these books came to be — written for the parent who wants to make their child's reading time the most powerful part of the day, with no special training required.</p>"
+    },
+    {
+      "type": "text",
+      "id": "credentials",
+      "label": "Credentials line",
+      "default": "Stephanie Anderson, M.S., CCC-SLP · Pediatric Speech-Language Pathologist · Founder, Twin Cities Speech Therapy Publishing"
+    },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Portrait image",
+      "info": "Recommended: portrait orientation, ~1000×1200px."
+    },
+    {
+      "type": "text",
+      "id": "portrait_alt",
+      "label": "Portrait alt text",
+      "default": "Stephanie Anderson holding the 3 books"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Meet Stephanie"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,271 @@
+{% comment %}
+  ** Row with Columns Section **
+  - Author: Gemini AI
+  - Version: 2.1
+  - Updates:
+    - Added heading size control to each column block.
+    - Fixed heading to correctly inherit the theme's heading font.
+{% endcomment %}
+
+{%- liquid
+  assign text_color_style = ''
+  if section.settings.text_color != 'rgba(0,0,0,0)' and section.settings.text_color != blank
+    assign text_color_style = 'color: ' | append: section.settings.text_color | append: ';'
+  endif
+  assign section_styles = text_color_style
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.75);
+    {% if section.settings.background_color != 'rgba(0,0,0,0)' %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+  }
+
+  {%- if section.settings.background_image != blank -%}
+    .section-background--{{ section.id }} {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; z-index: 0;
+    }
+    .section-background--{{ section.id }} img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .section-background--{{ section.id }}::after {
+      content: ''; position: absolute; inset: 0;
+      background-color: #000;
+      opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    }
+  {%- endif -%}
+
+  .row-with-columns__wrapper--{{ section.id }} {
+    position: relative;
+    z-index: 1;
+  }
+
+  .row-with-columns__header {
+    margin-bottom: 4rem;
+    text-align: {{ section.settings.header_alignment }};
+  }
+  
+  .row-with-columns__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media screen and (min-width: 550px) {
+    .row-with-columns__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media screen and (min-width: 990px) {
+    .row-with-columns__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    }
+  }
+
+  .row-with-columns__grid-item {
+    text-align: {{ section.settings.column_content_alignment }};
+  }
+
+  .grid-item__image-wrapper {
+    margin-bottom: 1.5rem;
+    {% if section.settings.column_content_alignment == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+    {% elsif section.settings.column_content_alignment == 'right' %}
+      margin-left: auto;
+    {% endif %}
+  }
+
+  .grid-item__image-wrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--media-radius);
+    box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius) rgba(var(--color-shadow), var(--media-shadow-opacity));
+  }
+
+  .grid-item__heading {
+    margin: 0;
+  }
+
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding" style="{{ section_styles }}">
+  {%- if section.settings.background_image != blank -%}
+    <div class="section-background--{{ section.id }}">
+      {{- section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '800, 1200, 1600, 2000, 2400' -}}
+    </div>
+  {%- endif -%}
+
+  <div class="row-with-columns__wrapper--{{ section.id }} page-width">
+    
+    <div class="row-with-columns__header">
+      {%- if section.settings.main_heading != blank -%}
+        <h2 class="h1" style="color: {{ section.settings.main_heading_color | default: 'inherit' }};">
+          {{ section.settings.main_heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.main_subheading != blank -%}
+        <div class="rte" style="color: {{ section.settings.main_subheading_color | default: 'inherit' }};">
+          {{ section.settings.main_subheading }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="row-with-columns__grid">
+        {%- for block in section.blocks -%}
+          <div class="row-with-columns__grid-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="grid-item__image-wrapper" style="max-width: {{ block.settings.image_width }}px;">
+                {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '100, 200, 300, 400, 500' }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="grid-item__heading {{ block.settings.heading_size }}" style="color: {{ block.settings.heading_color | default: 'inherit' }};">
+                {{ block.settings.heading | escape }}
+              </h3>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Row with Columns",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Styling & Layout"
+    },
+    {
+      "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "t:sections.all.padding.padding_top", "default": 60
+    },
+    {
+      "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom", "default": 60
+    },
+    { "type": "color", "id": "background_color", "label": "Background Color" },
+    { "type": "image_picker", "id": "background_image", "label": "Background Image" },
+    {
+      "type": "range", "id": "overlay_opacity", "min": 0, "max": 95, "step": 5, "unit": "%",
+      "label": "Background Overlay Opacity", "default": 10
+    },
+    { "type": "color", "id": "text_color", "label": "Default Text Color" },
+    {
+      "type": "header",
+      "content": "Row 1: Header"
+    },
+    {
+      "type": "text", "id": "main_heading",
+      "label": "Heading", "default": "Our Features"
+    },
+    { "type": "color", "id": "main_heading_color", "label": "Heading Color" },
+    {
+      "type": "richtext", "id": "main_subheading", "label": "Subheading",
+      "default": "<p>Use this space to provide more details about the features listed below.</p>"
+    },
+    { "type": "color", "id": "main_subheading_color", "label": "Subheading Color" },
+    {
+      "type": "select", "id": "header_alignment", "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Row 2: Columns"
+    },
+    {
+      "type": "range", "id": "columns_desktop", "min": 2, "max": 4, "step": 1,
+      "label": "Columns on desktop", "default": 3
+    },
+    {
+      "type": "select", "id": "column_content_alignment", "label": "Column Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "range",
+          "id": "image_width",
+          "min": 50,
+          "max": 250,
+          "step": 10,
+          "unit": "px",
+          "label": "Image Width",
+          "default": 150
+        },
+        {
+          "type": "text", "id": "heading",
+          "label": "Heading", "default": "Feature Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h4",
+              "label": "Small"
+            },
+            {
+              "value": "h3",
+              "label": "Medium"
+            },
+            {
+              "value": "h2",
+              "label": "Large"
+            }
+          ],
+          "default": "h3"
+        },
+        { "type": "color", "id": "heading_color", "label": "Heading Color" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Row with Columns",
+      "blocks": [
+        { "type": "column" },
+        { "type": "column" },
+        { "type": "column" }
+      ]
+    }
+  ]
+}
+{% endschema %}

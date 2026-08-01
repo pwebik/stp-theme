@@ -1,0 +1,61 @@
+{%- comment %} Presale spotlight — email capture wired to Shopify's customer (marketing) list {% endcomment -%}
+<section class="home-block home-presale" id="presale">
+  <div class="presale-grid">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.copy != blank -%}<p class="copy">{{ section.settings.copy }}</p>{%- endif -%}
+
+      {%- form 'customer', class: 'presale-form' -%}
+        <input type="hidden" name="contact[tags]" value="{{ section.settings.email_tag }}">
+        <input type="hidden" name="contact[accepts_marketing]" value="true">
+        <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder }}" aria-label="Email address" required>
+        <button type="submit">{{ section.settings.button_label }}</button>
+        {%- if form.posted_successfully? -%}
+          <p class="presale-note" style="color:var(--yellow);">{{ section.settings.success_message }}</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.settings.note != blank -%}<p class="presale-note">{{ section.settings.note }}</p>{%- endif -%}
+    </div>
+
+    <div class="presale-visual">
+      {%- assign v = section.settings.video -%}
+      {%- if v != blank -%}
+        <video autoplay muted loop playsinline {% if section.settings.poster != blank %}poster="{{ section.settings.poster | image_url: width: 720 }}"{% endif %}>
+          {%- for source in v.sources -%}{%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="video/mp4">{%- endif -%}{%- endfor -%}
+        </video>
+      {%- elsif section.settings.poster != blank -%}
+        <img src="{{ section.settings.poster | image_url: width: 720 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+      {%- else -%}
+        <div class="ph-icon" aria-hidden="true">🎬</div>
+        <p class="ph-label">{{ section.settings.placeholder_label }}</p>
+        <p style="font-size:12.5px;color:rgba(255,255,255,0.6);">{{ section.settings.placeholder_hint }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · Presale spotlight",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "🎉 Presale now open" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Meet the 4th book: My Routines." },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "The newest addition to the system — built around the routines your family already has: mealtime, getting dressed, bath time, and play. Reserve your copy now and be first to get it, before it hits the rest of the site." },
+    { "type": "header", "content": "Email capture" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Notify Me + Reserve" },
+    { "type": "text", "id": "email_tag", "label": "Tag added to subscriber", "default": "my-routines-presale" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "You're on the list — check your inbox!" },
+    { "type": "text", "id": "note", "label": "Fine print", "default": "Ships [Month Day] · Presale customers get early access + a launch-week bonus." },
+    { "type": "header", "content": "Video slot" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Upload to Shopify and select. Leave empty to show the placeholder." },
+    { "type": "image_picker", "id": "poster", "label": "Poster / still image" },
+    { "type": "text", "id": "placeholder_label", "label": "Placeholder label", "default": "Book trailer / cover reveal video slot" },
+    { "type": "text", "id": "placeholder_hint", "label": "Placeholder hint", "default": "Drop in the My Routines Book teaser or unboxing clip here" }
+  ],
+  "presets": [ { "name": "Home · Presale spotlight" } ]
+}
+{% endschema %}

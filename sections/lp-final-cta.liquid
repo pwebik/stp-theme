@@ -1,0 +1,176 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Final CTA
+  Closing banner image + white card with headline, price, button.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="final-cta" id="buy">
+  {%- if section.settings.show_accents -%}
+    <span class="lp-accent acc-yellow" aria-hidden="true" style="top: 50%; left: 4%; --acc-size: 32px; opacity: 0.45; transform: rotate(10deg);">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"/></svg>
+    </span>
+    <span class="lp-accent acc-teal" aria-hidden="true" style="top: 55%; right: 5%; --acc-size: 22px; opacity: 0.5; transform: rotate(-12deg);">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14.39 9.27 L22 9.27 L15.81 13.78 L18.2 21.05 L12 16.54 L5.8 21.05 L8.19 13.78 L2 9.27 L9.61 9.27 Z"/></svg>
+    </span>
+  {%- endif -%}
+  
+  {%- if section.settings.banner_image != blank -%}
+    <div class="closing-banner-img">
+      {{ section.settings.banner_image | image_url: width: 1400 | image_tag:
+          loading: 'lazy',
+          alt: section.settings.banner_alt | default: 'Every child deserves the chance to find their voice',
+          widths: '700, 1100, 1400'
+      }}
+    </div>
+  {%- endif -%}
+  
+  <div class="cta-content">
+    <h2>
+      {{ section.settings.headline_main }}
+      {%- if section.settings.headline_accent != blank -%}
+        <span class="accent">{{ section.settings.headline_accent }}</span>
+      {%- endif -%}
+    </h2>
+    
+    {%- if section.settings.quote_attrib != blank -%}
+      <div class="quote-attrib">{{ section.settings.quote_attrib }}</div>
+    {%- endif -%}
+    
+    {%- if section.settings.price_strike != blank or section.settings.price_main != blank -%}
+      <div class="price-display">
+        {%- if section.settings.price_strike != blank -%}
+          <span class="strike">{{ section.settings.price_strike }}</span>
+        {%- endif -%}
+        <strong>{{ section.settings.price_main }}</strong> {{ section.settings.price_subtext }}
+      </div>
+    {%- endif -%}
+    
+    {%- if section.settings.small_print != blank -%}
+      <div class="small-print">{{ section.settings.small_print }}</div>
+    {%- endif -%}
+    
+    {%- if section.settings.cta_text != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="btn-primary">{{ section.settings.cta_text }}</a>
+    {%- endif -%}
+    
+    {%- if section.settings.post_cta != blank -%}
+      <div class="post-cta">{{ section.settings.post_cta }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Final CTA",
+  "tag": "section",
+  "class": "lp-section lp-section--final",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image",
+      "info": "Wide closing banner (~1400×466px). Often has 'find their voice' headline baked in."
+    },
+    {
+      "type": "text",
+      "id": "banner_alt",
+      "label": "Banner alt text",
+      "default": "Every child deserves the chance to find their voice"
+    },
+    {
+      "type": "header",
+      "content": "CTA card"
+    },
+    {
+      "type": "text",
+      "id": "headline_main",
+      "label": "Card headline (first part)",
+      "default": "Open the books, read together,"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent",
+      "label": "Card headline (orange accent)",
+      "default": "and watch the words come."
+    },
+    {
+      "type": "text",
+      "id": "quote_attrib",
+      "label": "Attribution (italic, below headline)",
+      "default": "— Stephanie Anderson, M.S., CCC-SLP"
+    },
+    {
+      "type": "text",
+      "id": "price_strike",
+      "label": "Strike-through price",
+      "default": "$47.97"
+    },
+    {
+      "type": "text",
+      "id": "price_main",
+      "label": "Main price",
+      "default": "$39.99"
+    },
+    {
+      "type": "text",
+      "id": "price_subtext",
+      "label": "Price subtext (after main price)",
+      "default": "for all 3 books"
+    },
+    {
+      "type": "text",
+      "id": "small_print",
+      "label": "Small print under price",
+      "default": "Free shipping · Less than $14 per book · Save $7.98"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Add the Bundle to Cart"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "post_cta",
+      "label": "Text below button",
+      "default": "30-day returns · Ships in 1-2 business days · Loved by 1,000+ families"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_accents",
+      "label": "Show decorative star + sparkle accents",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Final CTA"
+    }
+  ]
+}
+{% endschema %}

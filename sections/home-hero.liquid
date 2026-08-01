@@ -1,0 +1,105 @@
+{%- comment %} Speech Therapy Publishing — Homepage hero {% endcomment -%}
+<section class="home-block home-hero">
+  <div class="wrap hero-grid">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1>{{ section.settings.heading }} {%- if section.settings.heading_highlight != blank %} <span class="hl">{{ section.settings.heading_highlight }}</span>{% endif -%}</h1>
+      {%- if section.settings.subtext != blank -%}<div class="hero-sub">{{ section.settings.subtext }}</div>{%- endif -%}
+
+      {%- if section.settings.stat_number != blank -%}
+        <div class="hero-stars">
+          <span class="stars">{{ section.settings.stat_stars }}</span>
+          <span class="stat-num">{{ section.settings.stat_number }}</span> {{ section.settings.stat_label }}
+        </div>
+      {%- endif -%}
+
+      <div class="hero-ctas">
+        {%- if section.settings.cta_primary_label != blank -%}
+          <a href="{{ section.settings.cta_primary_link | default: '#' }}" class="btn-primary">{{ section.settings.cta_primary_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank -%}
+          <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="btn-secondary">{{ section.settings.cta_secondary_label }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- assign has_meta = false -%}
+      {%- for block in section.blocks -%}{%- if block.type == 'meta' -%}{%- assign has_meta = true -%}{%- endif -%}{%- endfor -%}
+      {%- if has_meta -%}
+        <div class="hero-meta">
+          {%- for block in section.blocks -%}{%- if block.type == 'meta' -%}<span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{%- endif -%}{%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        {%- if section.settings.card_badge != blank -%}<span class="badge-new">{{ section.settings.card_badge }}</span>{%- endif -%}
+        <div class="hero-card-head">
+          <h3>{{ section.settings.card_title }}</h3>
+          {%- if section.settings.card_subtitle != blank -%}<p class="sub">{{ section.settings.card_subtitle }}</p>{%- endif -%}
+        </div>
+        <div class="hero-photo-wrap">
+          {% render 'home-image', image: section.settings.cover_1, fallback: 'home-cover-imitation.webp', class: 'hero-cover hc1', alt: 'Imitation Book cover', width: 400 %}
+          {% render 'home-image', image: section.settings.cover_2, fallback: 'home-cover-my-words.webp', class: 'hero-cover hc2', alt: 'My Words Book cover', width: 400 %}
+          {% render 'home-image', image: section.settings.cover_3, fallback: 'home-cover-action.webp', class: 'hero-cover hc3', alt: 'Action Book cover', width: 400 %}
+          {% render 'home-image', image: section.settings.cover_4, fallback: 'home-cover-my-routines.webp', class: 'hero-cover hc4', alt: 'My Routines Book cover', width: 400 %}
+          {%- if section.settings.flag_text != blank -%}<span class="hc4-flag">{{ section.settings.flag_text }}</span>{%- endif -%}
+        </div>
+        {%- assign has_fact = false -%}
+        {%- for block in section.blocks -%}{%- if block.type == 'fact' -%}{%- assign has_fact = true -%}{%- endif -%}{%- endfor -%}
+        {%- if has_fact -%}
+          <div class="hero-quick-facts">
+            {%- for block in section.blocks -%}{%- if block.type == 'fact' -%}<div class="floating-pill" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>{%- endif -%}{%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "📖 An at-home tool from a pediatric SLP" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From first sounds to" },
+    { "type": "text", "id": "heading_highlight", "label": "Heading highlight (coloured)", "default": "everyday conversations." },
+    { "type": "richtext", "id": "subtext", "label": "Subtext", "default": "<p>Four SLP-created board books, one complete system. The <strong>Early Speech Complete Bundle</strong> now includes our newest book, My Routines — so you're covered from your child's very first babble to full mealtime chatter.</p>" },
+    { "type": "header", "content": "Rating stat" },
+    { "type": "text", "id": "stat_stars", "label": "Stars", "default": "★★★★★" },
+    { "type": "text", "id": "stat_number", "label": "Stat number", "default": "100,000+" },
+    { "type": "text", "id": "stat_label", "label": "Stat label", "default": "families trust this system" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary button label", "default": "Shop the Complete Bundle →" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary button label", "default": "See all 4 books" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Bundle card" },
+    { "type": "text", "id": "card_badge", "label": "Card badge", "default": "+1 NEW BOOK!" },
+    { "type": "text", "id": "card_title", "label": "Card title", "default": "Early Speech Complete Bundle" },
+    { "type": "text", "id": "card_subtitle", "label": "Card subtitle", "default": "All 4 Books · Sounds → Words → Actions → Routines" },
+    { "type": "image_picker", "id": "cover_1", "label": "Cover 1 (Imitation)" },
+    { "type": "image_picker", "id": "cover_2", "label": "Cover 2 (My Words)" },
+    { "type": "image_picker", "id": "cover_3", "label": "Cover 3 (Action)" },
+    { "type": "image_picker", "id": "cover_4", "label": "Cover 4 (My Routines)" },
+    { "type": "text", "id": "flag_text", "label": "Cover 4 flag", "default": "★ NEW" }
+  ],
+  "blocks": [
+    { "type": "meta", "name": "Guarantee item", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "✓ Free shipping" } ] },
+    { "type": "fact", "name": "Quick-fact pill", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "🚂 Sounds → Routines" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Home · Hero",
+      "blocks": [
+        { "type": "meta", "settings": { "text": "✓ Free shipping" } },
+        { "type": "meta", "settings": { "text": "✓ Under $11/book in the bundle" } },
+        { "type": "meta", "settings": { "text": "✓ SLP-created" } },
+        { "type": "fact", "settings": { "text": "🚂 Sounds → Routines" } },
+        { "type": "fact", "settings": { "text": "👶 Ages 6mo–4yrs" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,137 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Reframe Section
+  "What happens in a speech therapy session? Mostly this."
+  
+  Features the soft blue cloud bubble behind the highlight phrase.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="reframe">
+  {%- if section.settings.show_accents -%}
+    <span class="lp-accent acc-yellow" aria-hidden="true" style="top: 70px; left: 14%; --acc-size: 32px; opacity: 0.7; transform: rotate(-18deg);">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14.39 9.27 L22 9.27 L15.81 13.78 L18.2 21.05 L12 16.54 L5.8 21.05 L8.19 13.78 L2 9.27 L9.61 9.27 Z"/></svg>
+    </span>
+    <span class="lp-accent acc-orange" aria-hidden="true" style="top: 55px; right: 16%; --acc-size: 28px; opacity: 0.7; transform: rotate(15deg);">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 18 C 9 19.7 7.7 21 6 21 S 3 19.7 3 18 S 4.3 15 6 15 C 6.35 15 6.68 15.07 7 15.18 V 6 L 21 3 V 16 C 21 17.7 19.7 19 18 19 S 15 17.7 15 16 S 16.3 13 18 13 C 18.35 13 18.68 13.07 19 13.18 V 5.18 L 9 7.18 V 18 Z"/></svg>
+    </span>
+  {%- endif -%}
+  
+  <div class="container">
+    <div class="reframe-body">
+      {%- if section.settings.small_label != blank -%}
+        <span class="small-label">{{ section.settings.small_label }}</span>
+      {%- endif -%}
+      
+      <h2>
+        {{ section.settings.headline_main }}
+        {%- if section.settings.headline_highlight != blank -%}
+          <span class="highlight">{{ section.settings.headline_highlight }}</span>
+        {%- endif -%}
+      </h2>
+      
+      {%- if section.settings.body != blank -%}
+        <div class="reframe-text">{{ section.settings.body }}</div>
+      {%- endif -%}
+      
+      {%- if section.settings.quote_show -%}
+        <div class="stephanie-quote">
+          <div class="quote-mark">"</div>
+          <p>{{ section.settings.quote_text }}</p>
+          <div class="quote-attr">{{ section.settings.quote_attrib }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Reframe Section",
+  "tag": "section",
+  "class": "lp-section lp-section--reframe",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label (pill)",
+      "default": "WHAT THERAPY LOOKS LIKE"
+    },
+    {
+      "type": "text",
+      "id": "headline_main",
+      "label": "Headline (first part)",
+      "default": "What happens in a speech therapy session?"
+    },
+    {
+      "type": "text",
+      "id": "headline_highlight",
+      "label": "Headline highlight phrase",
+      "info": "Short phrase that appears inside the soft blue cloud bubble.",
+      "default": "Mostly this."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body paragraphs",
+      "default": "<p>A pediatric SLP doesn't pull out flashcards or run drills. She reads a book. She makes a silly sound. She pauses. She waits. She celebrates every tiny try — every gesture, every babble, every brave attempt.</p><p>That's the whole magic of it. Children learn language through joyful, back-and-forth play with people they love. The only difference between her reading time and yours is that she knows which sounds, which words, and which little pauses help most at each stage.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Stephanie quote"
+    },
+    {
+      "type": "checkbox",
+      "id": "quote_show",
+      "label": "Show pull quote",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quote_text",
+      "label": "Quote text",
+      "default": "The most powerful thing a parent can do isn't more time — it's a few small techniques used with love. These books are those techniques, written right onto the page. Anyone can use them."
+    },
+    {
+      "type": "text",
+      "id": "quote_attrib",
+      "label": "Attribution",
+      "default": "— Stephanie Anderson, M.S., CCC-SLP"
+    },
+    {
+      "type": "header",
+      "content": "Decorations"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_accents",
+      "label": "Show star + music note accents",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Reframe Section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+/*
+  Speech Therapy Publishing — Brand design system (theme-wide)
+  Loaded on every page, immediately after base.css.
+  - Defines the brand token palette (sampled from the Genesis homepage mockup).
+  - Re-points the theme's font variables to the brand pairing (Baloo 2 / Inter).
+  - Guards the /pages/best-teacher and /pages/find-first-words landing pages so
+    they keep their own Fredoka/Nunito type exactly as before.
+  This file intentionally contains NO layout rules and NO bare element selectors,
+  so it cannot disturb any existing section. Homepage layout lives in home.css.
+*/
+
+:root {
+  /* ---- brand palette (from mockup :root) ---- */
+  --cream: #FDF3E2;
+  --cream-deep: #FBEBD2;
+  --ink: #262138;
+  --ink-soft: #635D74;
+  --coral: #F4901E;
+  --coral-deep: #DE7B0E;
+  --pink: #EF4F8B;
+  --pink-deep: #D63576;
+  --teal: #1F8C79;
+  --teal-deep: #145E51;
+  --grape: #8B7FD6;
+  --grape-deep: #6E5FC4;
+  --yellow: #FFCB3D;
+  --white: #FFFFFF;
+  --line: rgba(43, 36, 64, 0.1);
+
+  /* ---- radii & shadow tokens ---- */
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --shadow-soft: 0 20px 45px -20px rgba(43, 36, 64, 0.25);
+  --shadow-tight: 0 8px 20px -10px rgba(43, 36, 64, 0.3);
+
+  /* ---- brand typography, theme-wide ----
+     base.css applies --font-heading-family to headings and --font-body-family
+     to body copy; overriding them here re-skins the whole store's type without
+     touching the theme's own CSS. Loaded after base.css so these win. */
+  --font-heading-family: 'Baloo 2', var(--font-body-fallback, sans-serif);
+  --font-heading-weight: 700;
+  --font-body-family: 'Inter', sans-serif;
+}
+
+/* Keep the two live landing pages on their original type. Their content is
+   wrapped in .lp-page by theme.liquid, so scoping the variables here means every
+   descendant that reads the font vars resolves to the landing-page fonts. */
+.lp-page {
+  --font-heading-family: 'Fredoka', sans-serif;
+  --font-body-family: 'Nunito', sans-serif;
+}

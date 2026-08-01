@@ -1,0 +1,19 @@
+{%- comment -%}
+  Renders a merchant-editable image with a bundled default.
+  Usage:
+    {% render 'home-image', image: section.settings.cover, fallback: 'home-cover-imitation.webp',
+       class: 'hero-cover hc1', alt: 'Imitation Book cover', width: 400 %}
+  - image:    an image_picker setting (may be blank)
+  - fallback: filename of a committed asset used when image is blank
+  - class:    css classes for the <img>
+  - alt:      fallback alt text (image's own alt wins when set)
+  - width:    target render width for Shopify's image CDN
+{%- endcomment -%}
+{%- liquid
+  assign w = width | default: 800
+-%}
+{%- if image != blank -%}
+  {{ image | image_url: width: w | image_tag: class: class, alt: image.alt | default: alt, loading: 'lazy' }}
+{%- else -%}
+  <img class="{{ class }}" src="{{ fallback | asset_url }}" alt="{{ alt | escape }}" loading="lazy">
+{%- endif -%}

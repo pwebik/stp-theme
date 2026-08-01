@@ -1,0 +1,344 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  ============================================================================
+  Landing Page: Hero
+  ============================================================================
+  Fully configurable hero section for the speech therapy landing pages.
+  
+  Editable in theme editor:
+  - Announcement bar (text + visibility)
+  - Eyebrow text
+  - Headline + accent phrase (the bubble-letter part)
+  - Subhead (rich text — supports <strong>)
+  - Reviews badge (stars + count + label)
+  - CTA button (text + link)
+  - Trust pills (block-based, add/remove/reorder)
+  - Hero image (uploaded by client)
+  - Decorations (bee + swoosh — toggleable)
+  
+  Hardcoded (design integrity):
+  - Cream-to-soft-blue gradient
+  - Layout grid
+  - Wavy SVG bottom divider
+  - Lilita One bubble-letter font
+{%- endcomment -%}
+
+{%- if section.settings.announce_show -%}
+<div class="announce-bar">
+  {%- if section.settings.announce_star_icon -%}<span class="announce-star">{{ section.settings.announce_star_icon }}</span>{%- endif -%}
+  {{ section.settings.announce_text }}
+</div>
+{%- endif -%}
+
+<section class="hero" style="{{ lp_bg_decls }}
+  {%- if section.settings.gradient_start -%}--hero-grad-start: {{ section.settings.gradient_start }};{%- endif -%}
+  {%- if section.settings.gradient_mid -%}--hero-grad-mid: {{ section.settings.gradient_mid }};{%- endif -%}
+  {%- if section.settings.gradient_end -%}--hero-grad-end: {{ section.settings.gradient_end }};{%- endif -%}
+">
+  
+  <div class="hero-decor" aria-hidden="true">
+    {%- if section.settings.show_bee -%}
+      <div class="bee"></div>
+    {%- endif -%}
+    {%- if section.settings.show_swoosh -%}
+      <svg class="swoosh" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M 480 40 C 240 20, 60 180, 220 320 S 480 460, 460 540" fill="none" stroke="#E8C09A" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 460 540 C 320 580, 100 540, 80 380" fill="none" stroke="#E8C09A" stroke-width="14" stroke-linecap="round"/>
+      </svg>
+    {%- endif -%}
+    
+    {%- comment -%} Decorative book-style accents — yellow star + pink heart {%- endcomment -%}
+    {%- if section.settings.show_decorative_accents -%}
+      <span class="lp-accent acc-yellow" aria-hidden="true" style="top: 18%; right: 5%; --acc-size: 24px; opacity: 0.7; transform: rotate(12deg);">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14.39 9.27 L22 9.27 L15.81 13.78 L18.2 21.05 L12 16.54 L5.8 21.05 L8.19 13.78 L2 9.27 L9.61 9.27 Z"/></svg>
+      </span>
+      <span class="lp-accent acc-pink" aria-hidden="true" style="top: 65%; left: 8%; --acc-size: 18px; opacity: 0.65; transform: rotate(-15deg);">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 C 12 21 4 14.5 4 9 C 4 6.24 6.24 4 9 4 C 10.66 4 12.13 4.81 13 6.05 C 13.87 4.81 15.34 4 17 4 C 19.76 4 22 6.24 22 9 C 22 14.5 14 21 14 21 L 12 21 Z"/></svg>
+      </span>
+    {%- endif -%}
+  </div>
+  
+  <div class="hero-content">
+    <div class="hero-copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow-text">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      
+      <h1>
+        {{ section.settings.headline }}
+        {%- if section.settings.headline_accent != blank -%}
+          <span class="accent">{{ section.settings.headline_accent }}</span>
+        {%- endif -%}
+      </h1>
+      
+      {%- if section.settings.subhead != blank -%}
+        <div class="subhead">{{ section.settings.subhead }}</div>
+      {%- endif -%}
+      
+      {%- if section.settings.reviews_show -%}
+        <div class="hero-reviews-badge">
+          <span class="stars">{{ section.settings.reviews_stars }}</span>
+          <span class="count">{{ section.settings.reviews_count }}</span>
+        </div>
+      {%- endif -%}
+      
+      <div class="cta-cluster">
+        {%- if section.settings.cta_text != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="btn-primary">{{ section.settings.cta_text }}</a>
+        {%- endif -%}
+        
+        {%- if section.blocks.size > 0 -%}
+          <div class="trust-pills">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'trust_pill' -%}
+                <span class="trust-pill" {{ block.shopify_attributes }}>
+                  <span class="check">✓</span>
+                  {{ block.settings.label }}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+    
+    {%- if section.settings.hero_image != blank -%}
+      <div class="hero-books-group">
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            alt: section.settings.hero_image_alt | default: 'Speech Therapy Publishing book bundle',
+            sizes: '(min-width: 768px) 50vw, 100vw',
+            widths: '400, 600, 800, 1200'
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Hero",
+  "tag": "section",
+  "class": "lp-section lp-section--hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "announce_show",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announce_star_icon",
+      "label": "Star icon (emoji)",
+      "default": "⭐"
+    },
+    {
+      "type": "text",
+      "id": "announce_text",
+      "label": "Announcement text",
+      "default": "Free shipping on the Learn to Talk Bundle — 3 books, $39.99"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text (above headline)",
+      "info": "Small pill above the headline. Emoji + short phrase works best.",
+      "default": "📖 An at-home tool from a pediatric SLP"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline (main)",
+      "info": "Renders in bubble-letter Lilita One. Keep it punchy.",
+      "default": "You're Already Your Child's Best Teacher."
+    },
+    {
+      "type": "text",
+      "id": "headline_accent",
+      "label": "Headline accent phrase (colored)",
+      "info": "Renders in the brand blue with a yellow underline. Optional.",
+      "default": "Here's How to Make Those Minutes Count."
+    },
+    {
+      "type": "richtext",
+      "id": "subhead",
+      "label": "Subhead",
+      "info": "Supports <strong>bold</strong> for emphasis on key phrases.",
+      "default": "<p>A <strong>3-book system</strong> built around the gentle techniques speech therapists use — so the time you already spend reading becomes the most powerful thing you do for your child's first words.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Reviews badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "reviews_show",
+      "label": "Show reviews badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reviews_stars",
+      "label": "Stars (Unicode characters)",
+      "default": "★★★★★"
+    },
+    {
+      "type": "richtext",
+      "id": "reviews_count",
+      "label": "Review count text",
+      "info": "Supports <strong> for emphasis.",
+      "default": "<p><strong>1,000+</strong> 5-star reviews from parents &amp; SLPs</p>"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Get the Bundle — $39.99"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link",
+      "info": "Typically the bundle product page."
+    },
+    {
+      "type": "header",
+      "content": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "The bundle hero shot. Recommended size: 1200×900px."
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Image alt text",
+      "default": "Speech Therapy Publishing 3-book bundle"
+    },
+    {
+      "type": "header",
+      "content": "Decorative elements"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bee",
+      "label": "Show bee mascot",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swoosh",
+      "label": "Show swoosh arc",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorative_accents",
+      "label": "Show decorative star + heart accents",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background colors (advanced)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave blank to use the defaults baked into the design (cream → soft blue gradient)."
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Gradient start (top-left)",
+      "default": "#FDF5EC"
+    },
+    {
+      "type": "color",
+      "id": "gradient_mid",
+      "label": "Gradient middle",
+      "default": "#E8EFEB"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient end (bottom-right)",
+      "default": "#CFDFD9"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_pill",
+      "name": "Trust pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pill label",
+          "default": "Free shipping"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "LP Hero",
+      "blocks": [
+        {
+          "type": "trust_pill",
+          "settings": {
+            "label": "Free shipping"
+          }
+        },
+        {
+          "type": "trust_pill",
+          "settings": {
+            "label": "Less than $14 per book"
+          }
+        },
+        {
+          "type": "trust_pill",
+          "settings": {
+            "label": "SLP-created"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

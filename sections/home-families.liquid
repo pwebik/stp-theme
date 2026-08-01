@@ -1,0 +1,56 @@
+{%- comment %} Real families — 1 featured tile + supporting clips {% endcomment -%}
+{%- assign tiles = section.blocks -%}
+<section class="home-block home-families">
+  <div class="wrap">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow coral">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="video-grid">
+      {%- for block in tiles limit: 1 -%}
+        <div class="video-main" {{ block.shopify_attributes }}>{% render 'home-family-tile', block: block %}</div>
+      {%- endfor -%}
+      <div class="video-col">
+        {%- for block in tiles offset: 1 -%}
+          <div class="video-sub{% cycle 'x': '', ' alt' %}" {{ block.shopify_attributes }}>{% render 'home-family-tile', block: block %}</div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · Real families",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "See it in action" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Real families, real reading time." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Short clips of parents and toddlers using the books together — the pause, the giggle, the first try at a word." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Video tile",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video", "info": "Upload to Shopify and select. Leave empty to show a coloured placeholder." },
+        { "type": "image_picker", "id": "poster", "label": "Poster image" },
+        { "type": "text", "id": "caption", "label": "Top caption", "default": "Featured video" },
+        { "type": "text", "id": "label", "label": "Bottom label", "default": "\"Wait for it — she says 'nana' at 0:42\"" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Home · Real families",
+      "blocks": [
+        { "type": "tile", "settings": { "caption": "Featured video", "label": "\"Wait for it — she says 'nana' at 0:42\"" } },
+        { "type": "tile", "settings": { "caption": "Parent clip", "label": "Bedtime with the Imitation Book" } },
+        { "type": "tile", "settings": { "caption": "SLP tip", "label": "Stephanie demos \"pause & wait\"" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

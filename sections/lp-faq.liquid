@@ -1,0 +1,151 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: FAQ
+  Accordion list of Q+A. Each FAQ item is a block.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="faq-section">
+  <div class="header-block">
+    {%- if section.settings.small_label != blank -%}
+      <span class="small-label">{{ section.settings.small_label }}</span>
+    {%- endif -%}
+    {%- if section.settings.headline != blank -%}
+      <h2>{{ section.settings.headline }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subhead != blank -%}
+      <p class="sub">{{ section.settings.subhead }}</p>
+    {%- endif -%}
+  </div>
+  
+  <div class="faq-list">
+    {%- for block in section.blocks -%}
+      <details class="faq-item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+        <summary class="faq-q">{{ block.settings.question }}</summary>
+        <div class="faq-a"><div class="faq-a-inner">{{ block.settings.answer }}</div></div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP FAQ",
+  "tag": "section",
+  "class": "lp-section lp-section--faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label",
+      "default": "QUESTIONS"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Things parents often ask"
+    },
+    {
+      "type": "text",
+      "id": "subhead",
+      "label": "Subhead",
+      "default": "Quick answers from Stephanie and the team."
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "LP FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What age are these books for?",
+            "answer": "<p>The books are made for babies and toddlers from about 6 months through age 4. The Imitation Book is a beautiful starting point as early as 6 months; My Words Book opens up around 12 months; Action Book bridges to early sentences from around 18 months. Most families come back to all three at different stages.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What makes these different from other board books?",
+            "answer": "<p>Most board books focus on illustrations and a story. These are built around the gentle techniques speech therapists already use — imitation, pause-and-wait, joyful repetition, and scaffolded vocabulary — written right into the pages so you have everything you need to spark talking practice as you read.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How much time per day does this take?",
+            "answer": "<p>10 to 15 minutes a day is plenty. Consistency matters more than length — a short, playful reading most days will do more than one long session a week.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do I really need all three books, or can I start with just one?",
+            "answer": "<p>You can absolutely start with one. But the books were designed as a system that grows with your child: the Imitation Book builds the foundation, My Words Book adds vocabulary, and Action Book bridges to early sentences. The bundle saves $7.98 and gives you the full arc for the next two to three years.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "When will I see new words come?",
+            "answer": "<p>Most parents notice their child engaging more — pointing, gesturing, trying sounds — within the first week or two. New words usually come in 3 to 6 weeks of consistent reading. Every child is different though, and slower bloomers are just as wonderful.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What if my child doesn't respond right away?",
+            "answer": "<p>Totally normal — and totally okay. Some little ones watch quietly for weeks before they try a sound out loud. Keep reading playfully, keep pausing for their turn, and celebrate every little effort — even a glance or a babble counts. The \"Pause &amp; Wait\" step is the most powerful part.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What about shipping and returns?",
+            "answer": "<p>The bundle ships free within the US, with most orders arriving in 3–5 business days. If you're not happy with your books, send them back within 30 days for a full refund.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

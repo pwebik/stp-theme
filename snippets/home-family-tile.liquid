@@ -1,0 +1,17 @@
+{%- comment -%}
+  Renders the media + overlays for one "real families" tile.
+  Expects: block (the tile block)
+{%- endcomment -%}
+{%- assign v = block.settings.video -%}
+{%- if v != blank -%}
+  <video class="video-tile-media" autoplay muted loop playsinline {% if block.settings.poster != blank %}poster="{{ block.settings.poster | image_url: width: 900 }}"{% endif %}>
+    {%- for source in v.sources -%}{%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="video/mp4">{%- endif -%}{%- endfor -%}
+  </video>
+{%- elsif block.settings.poster != blank -%}
+  <img class="video-tile-media" src="{{ block.settings.poster | image_url: width: 900 }}" alt="{{ block.settings.label | escape }}" loading="lazy">
+  <div class="play-btn" aria-hidden="true">▶</div>
+{%- else -%}
+  <div class="play-btn" aria-hidden="true">▶</div>
+{%- endif -%}
+{%- if block.settings.caption != blank -%}<span class="video-caption">{{ block.settings.caption }}</span>{%- endif -%}
+{%- if block.settings.label != blank -%}<span class="video-label">{{ block.settings.label }}</span>{%- endif -%}

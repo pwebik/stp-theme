@@ -1,0 +1,188 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Testimonials
+  Header + featured review + grid of 3 review cards.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="testimonials">
+  <div class="header-block">
+    {%- if section.settings.small_label != blank -%}
+      <span class="small-label">{{ section.settings.small_label }}</span>
+    {%- endif -%}
+    {%- if section.settings.headline != blank -%}
+      <h2>{{ section.settings.headline }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subhead != blank -%}
+      <p class="sub">{{ section.settings.subhead }}</p>
+    {%- endif -%}
+  </div>
+  
+  {%- if section.settings.featured_quote != blank -%}
+    <div class="featured-review">
+      <div class="stars">{{ section.settings.featured_stars }}</div>
+      <blockquote>{{ section.settings.featured_quote }}</blockquote>
+      <div class="attrib">
+        <strong>{{ section.settings.featured_name }}</strong>
+        {%- if section.settings.featured_meta != blank -%}
+          <span>— {{ section.settings.featured_meta }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+  
+  <div class="review-grid">
+    {%- for block in section.blocks -%}
+      <div class="review-card" {{ block.shopify_attributes }}>
+        <div class="stars">{{ block.settings.stars }}</div>
+        <p>{{ block.settings.quote }}</p>
+        <div class="attrib">
+          <strong>{{ block.settings.name }}</strong>
+          {%- if block.settings.meta != blank -%}
+            <span>— {{ block.settings.meta }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Testimonials",
+  "tag": "section",
+  "class": "lp-section lp-section--testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label",
+      "default": "FROM REAL FAMILIES"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Stories from parents using the books every day"
+    },
+    {
+      "type": "text",
+      "id": "subhead",
+      "label": "Subhead",
+      "default": "Real moments. Real first words. Real reviews."
+    },
+    {
+      "type": "header",
+      "content": "Featured review (large quote)"
+    },
+    {
+      "type": "text",
+      "id": "featured_stars",
+      "label": "Stars",
+      "default": "★★★★★"
+    },
+    {
+      "type": "textarea",
+      "id": "featured_quote",
+      "label": "Featured quote",
+      "default": "This book helped my baby start to talk and say words at 12 months old. It's now part of our daily routine."
+    },
+    {
+      "type": "text",
+      "id": "featured_name",
+      "label": "Reviewer name",
+      "default": "Krizzy"
+    },
+    {
+      "type": "text",
+      "id": "featured_meta",
+      "label": "Reviewer meta",
+      "default": "Verified buyer"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stars",
+          "label": "Stars",
+          "default": "★★★★★"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta",
+          "info": "e.g. 'Verified buyer'"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "LP Testimonials",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "My 1-year-old watches the motions and sounds, and now imitates some of them. Watching her try is the best part of the day.",
+            "name": "Alli",
+            "meta": "Verified buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "Short, uncluttered pages keep my toddler's attention. Her favorites are 'ah-choo' and 'pop pop pop.'",
+            "name": "Kathy",
+            "meta": "Verified buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "Super impressed — my toddler picked up on it right away. We're seeing him try sounds and words he hadn't before.",
+            "name": "Patrick",
+            "meta": "Verified buyer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

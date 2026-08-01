@@ -1,0 +1,675 @@
+{{ 'section-multicolumn.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .section-{{ section.id }} .reviews-carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background image logic */
+  .section-{{ section.id }} .multicolumn-background-image-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+  
+  .section-{{ section.id }} .multicolumn-background-image-wrapper img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: {{ section.settings.desktop_bg_position }};
+  }
+
+  .section-{{ section.id }} .multicolumn-background-image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 1);
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+
+  /* Mobile Background Optimization */
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.background_image != blank -%}
+      {%- liquid
+        assign mobile_bg = section.settings.background_image
+        if section.settings.mobile_background_image != blank
+          assign mobile_bg = section.settings.mobile_background_image
+        endif
+      -%}
+      .section-{{ section.id }} .reviews-carousel {
+        background: linear-gradient(rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }}), rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }})), 
+                    url('{{ mobile_bg | image_url: width: 800 }}');
+        background-size: cover;
+        background-position: {{ section.settings.mobile_bg_position }};
+      }
+      .section-{{ section.id }} .multicolumn-background-image-wrapper { display: none; }
+    {%- endif -%}
+  }
+
+  .section-{{ section.id }} .page-width {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Title */
+  .section-{{ section.id }} .reviews-carousel__title {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  /* Slider track */
+  .reviews-carousel__list {
+    display: flex;
+    gap: 2rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .reviews-carousel__slide {
+    flex: 0 0 calc((100% - 4rem) / {{ section.settings.columns_desktop }});
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 989px) {
+    .reviews-carousel__slide {
+      flex: 0 0 calc((100% - 2rem) / 2);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .reviews-carousel__slide {
+      flex: 0 0 100%;
+    }
+  }
+
+  /* Review card */
+  .review-card {
+    background: {{ section.settings.card_background }};
+    border-radius: 1.2rem;
+    padding: 2.4rem;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  /* Stars */
+  .review-card__stars {
+    display: flex;
+    gap: 0.2rem;
+    color: {{ section.settings.star_color }};
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  /* Review text */
+  .review-card__text {
+    flex: 1;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  .review-card__text.is-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .review-card__read-more {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: {{ section.settings.star_color }};
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+    margin-top: 0.4rem;
+    align-self: flex-start;
+  }
+
+  .review-card__read-more:hover {
+    opacity: 0.8;
+  }
+
+  /* Reviewer info */
+  .review-card__reviewer {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: auto;
+  }
+
+  .review-card__avatar {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .review-card__avatar-placeholder {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    background: {{ section.settings.star_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .review-card__reviewer-name {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+
+  .review-card__reviewer-label {
+    font-size: 1.2rem;
+    color: {{ section.settings.text_color }};
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  /* Navigation buttons */
+  .reviews-carousel__nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 3rem;
+  }
+
+  .reviews-carousel__btn {
+    background: transparent;
+    border: 0.2rem solid {{ section.settings.star_color }};
+    border-radius: 50%;
+    width: 4.4rem;
+    height: 4.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    color: {{ section.settings.star_color }};
+    padding: 0;
+  }
+
+  .reviews-carousel__btn:hover {
+    background: {{ section.settings.star_color }};
+    color: #fff;
+  }
+
+  .reviews-carousel__btn svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .reviews-carousel__counter {
+    font-size: 1.4rem;
+    color: {{ section.settings.text_color }};
+    min-width: 6rem;
+    text-align: center;
+  }
+
+  /* Overflow wrapper for sliding */
+  .reviews-carousel__track-wrapper {
+    overflow: hidden;
+  }
+
+  .reviews-carousel__track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.4s ease;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .reviews-carousel__track li {
+    flex: 0 0 calc((100% - {{ section.settings.columns_desktop | minus: 1 | times: 2 }}rem) / {{ section.settings.columns_desktop }});
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 989px) {
+    .reviews-carousel__track li {
+      flex: 0 0 calc((100% - 2rem) / 2);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .reviews-carousel__track li {
+      flex: 0 0 100%;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}">
+  <div class="reviews-carousel color-{{ section.settings.color_scheme }} gradient">
+
+    {%- if section.settings.background_image != blank -%}
+      <div class="multicolumn-background-image-wrapper">
+        {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '800, 1200, 1600, 2000, 2400' }}
+      </div>
+    {%- endif -%}
+
+    <div class="page-width section-{{ section.id }}-padding">
+
+      {%- unless section.settings.title == blank -%}
+        <div class="reviews-carousel__title">
+          <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.title }}
+          </h2>
+        </div>
+      {%- endunless -%}
+
+      <div class="reviews-carousel__track-wrapper" id="carousel-wrapper-{{ section.id }}">
+        <ul class="reviews-carousel__track" id="carousel-track-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <div class="review-card">
+
+                {%- assign rating = block.settings.rating | plus: 0 -%}
+                <div class="review-card__stars" aria-label="{{ rating }} out of 5 stars">
+                  {%- for i in (1..5) -%}
+                    {%- if i <= rating -%}
+                      ★
+                    {%- else -%}
+                      <span style="opacity: 0.3;">★</span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+                {%- if block.settings.text != blank -%}
+                  <p class="review-card__text">"{{ block.settings.text }}"</p>
+                  <button
+                    class="review-card__read-more"
+                    aria-expanded="false"
+                    style="display: none;"
+                  >Read more</button>
+                {%- endif -%}
+
+                {%- if block.settings.reviewer_name != blank -%}
+                  <div class="review-card__reviewer">
+                    {%- if block.settings.avatar != blank -%}
+                      {{ block.settings.avatar | image_url: width: 96 | image_tag: class: 'review-card__avatar', loading: 'lazy', widths: '48, 96' }}
+                    {%- else -%}
+                      <div class="review-card__avatar-placeholder" aria-hidden="true">
+                        {{ block.settings.reviewer_name | slice: 0 | upcase }}
+                      </div>
+                    {%- endif -%}
+                    <div>
+                      <p class="review-card__reviewer-name">{{ block.settings.reviewer_name }}</p>
+                      {%- if block.settings.reviewer_label != blank -%}
+                        <p class="review-card__reviewer-label">{{ block.settings.reviewer_label }}</p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="reviews-carousel__nav">
+          <button class="reviews-carousel__btn" id="carousel-prev-{{ section.id }}" aria-label="Previous review">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <span class="reviews-carousel__counter" id="carousel-counter-{{ section.id }}">
+            1 / {{ section.blocks.size }}
+          </span>
+          <button class="reviews-carousel__btn" id="carousel-next-{{ section.id }}" aria-label="Next review">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var sectionId = '{{ section.id }}';
+    var columnsDesktop = {{ section.settings.columns_desktop }};
+
+    var track = document.getElementById('carousel-track-' + sectionId);
+    var wrapper = document.getElementById('carousel-wrapper-' + sectionId);
+    var prevBtn = document.getElementById('carousel-prev-' + sectionId);
+    var nextBtn = document.getElementById('carousel-next-' + sectionId);
+    var counter = document.getElementById('carousel-counter-' + sectionId);
+
+    if (!track) return;
+
+    var realItems = Array.from(track.querySelectorAll('li'));
+    var total = realItems.length;
+    if (total <= 1) return;
+
+    realItems.slice().reverse().forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.insertBefore(clone, track.firstChild);
+    });
+
+    realItems.forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+
+    var current = total;
+    var isTransitioning = false;
+    var GAP = 20;
+
+    function getColumns() {
+      var w = window.innerWidth;
+      if (w <= 749) return 1;
+      if (w <= 989) return 2;
+      return columnsDesktop;
+    }
+
+    function getItemWidth() {
+      var cols = getColumns();
+      return (wrapper.offsetWidth - (cols - 1) * GAP) / cols;
+    }
+
+    function goTo(index, animate) {
+      var offset = index * (getItemWidth() + GAP);
+      track.style.transition = animate ? 'transform 0.4s ease' : 'none';
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      if (counter) {
+        var realIndex = ((current - total) % total + total) % total;
+        counter.textContent = (realIndex + 1) + ' / ' + total;
+      }
+    }
+
+    track.addEventListener('transitionend', function () {
+      if (current >= total * 2) {
+        current -= total;
+        goTo(current, false);
+      } else if (current < total) {
+        current += total;
+        goTo(current, false);
+      }
+      isTransitioning = false;
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        current--;
+        goTo(current, true);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        current++;
+        goTo(current, true);
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      goTo(current, false);
+    });
+
+    goTo(current, false);
+
+    var realCards = track.querySelectorAll('li:not([aria-hidden]) .review-card__read-more');
+    realCards.forEach(function (btn) {
+      var textEl = btn.previousElementSibling;
+      if (!textEl || !textEl.classList.contains('review-card__text')) return;
+
+      if (textEl.scrollHeight > textEl.clientHeight + 2) {
+        btn.style.display = 'inline';
+      }
+
+      btn.addEventListener('click', function () {
+        var isExpanded = textEl.classList.contains('is-expanded');
+        textEl.classList.toggle('is-expanded', !isExpanded);
+        btn.textContent = isExpanded ? 'Read more' : 'Read less';
+        btn.setAttribute('aria-expanded', String(!isExpanded));
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews Carousel",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "What Our Customers Say",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Cards visible on desktop"
+    },
+    {
+      "type": "header",
+      "content": "Card Styling"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star & button color",
+      "default": "#f5a623"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "desktop_bg_position",
+      "label": "Desktop Background Position",
+      "options": [
+        { "value": "left top", "label": "Top Left" },
+        { "value": "center top", "label": "Top Center" },
+        { "value": "right top", "label": "Top Right" },
+        { "value": "left center", "label": "Middle Left" },
+        { "value": "center center", "label": "Middle Center" },
+        { "value": "right center", "label": "Middle Right" },
+        { "value": "left bottom", "label": "Bottom Left" },
+        { "value": "center bottom", "label": "Bottom Center" },
+        { "value": "right bottom", "label": "Bottom Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Background Settings"
+    },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile Background Image", "info": "Optional." },
+    {
+      "type": "select",
+      "id": "mobile_bg_position",
+      "label": "Mobile Background Position",
+      "options": [
+        { "value": "left top", "label": "Top Left" },
+        { "value": "center top", "label": "Top Center" },
+        { "value": "right top", "label": "Top Right" },
+        { "value": "left center", "label": "Middle Left" },
+        { "value": "center center", "label": "Middle Center" },
+        { "value": "right center", "label": "Middle Right" },
+        { "value": "left bottom", "label": "Bottom Left" },
+        { "value": "center bottom", "label": "Bottom Center" },
+        { "value": "right bottom", "label": "Bottom Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background overlay opacity",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "Star rating",
+          "options": [
+            { "value": "1", "label": "★ 1 star" },
+            { "value": "2", "label": "★★ 2 stars" },
+            { "value": "3", "label": "★★★ 3 stars" },
+            { "value": "4", "label": "★★★★ 4 stars" },
+            { "value": "5", "label": "★★★★★ 5 stars" }
+          ],
+          "default": "5"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "This product is absolutely amazing. I couldn't be happier with my purchase!"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Happy Customer"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_label",
+          "label": "Reviewer label (optional)",
+          "info": "e.g. Verified Buyer, or their location",
+          "default": "Verified Buyer"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Reviewer photo (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Carousel",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,87 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Empowerment Section ("Worry" section in v1)
+  Validates parent attentiveness without alarming.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="worry-section">
+  {%- if section.settings.show_accent -%}
+    <span class="lp-accent acc-teal" aria-hidden="true" style="top: 75px; right: 18%; --acc-size: 28px; opacity: 0.6; transform: rotate(15deg);">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"/></svg>
+    </span>
+  {%- endif -%}
+  
+  <div class="container">
+    {%- if section.settings.small_label != blank -%}
+      <span class="small-label">{{ section.settings.small_label }}</span>
+    {%- endif -%}
+    
+    {%- if section.settings.headline != blank -%}
+      <h2>{{ section.settings.headline }}</h2>
+    {%- endif -%}
+    
+    {%- if section.settings.body != blank -%}
+      <div class="worry-body">{{ section.settings.body }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Empowerment Section",
+  "tag": "section",
+  "class": "lp-section lp-section--worry",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label (pill)",
+      "default": "THE TRUTH ABOUT EARLY LANGUAGE"
+    },
+    {
+      "type": "richtext",
+      "id": "headline",
+      "label": "Headline",
+      "info": "Use <em> for the accent phrase (renders in blue).",
+      "default": "<p>The most powerful thing you can do for your child's first words is <em>already in your hands.</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body paragraphs",
+      "default": "<p>Decades of research are clear about this: the time a parent spends talking, playing, and reading with their child is the single biggest factor in early language development. Not flashcards. Not screens. Not waiting until the next pediatrician visit.</p><p>You already do this every day. The only thing missing is a simple, joyful tool that turns that time into something even more meaningful.</p><p><strong>That's what these books are for.</strong></p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_accent",
+      "label": "Show decorative sparkle accent",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Empowerment Section"
+    }
+  ]
+}
+{% endschema %}

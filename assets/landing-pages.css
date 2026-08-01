@@ -1,0 +1,1464 @@
+/* Speech Therapy Publishing — Landing Pages CSS
+   v6 final design — bubble-letter brand-cohesive
+   
+   Namespace: All rules are scoped under `.lp-page` to avoid theme bleed.
+   The Liquid templates wrap all landing-page sections in <div class="lp-page">.
+   
+   Asset-dependent CSS (font face, bee mascot bg, Stephanie portrait bg) lives
+   in snippets/landing-page-css-head.liquid so Liquid can resolve asset URLs.
+*/
+
+  /* Embedded Lilita One — works offline / in static PDFs without external fetch */
+  
+
+  .lp-page * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    /* === V6 PALETTE — blue-cohesive but warmed up ===
+       Same brand-cohesive blue structure as v5, but the surfaces and text
+       colors are nudged warmer so the page doesn't read clinical/cold.
+       Sky surfaces lean very slightly green-warm; headlines use a dark
+       teal-brown instead of pure cold blue. */
+    
+    /* Blue family — slightly warmer than v5 */
+    --sky: #C6DDD9;             /* hint of green-warmth in the cloud-blue */
+    --sky-light: #DBE9E5;       /* warmer hero blue */
+    --sky-soft: #ECF2EF;        /* warmer section blue */
+    --sky-deep: #92BCB7;
+    --blue-deep: #2C7A8C;       /* kept as-is — this is the brand accent */
+    
+    /* Teal — kept */
+    --teal: #3AAFAB;
+    --teal-light: #9ED6D4;
+    --teal-deep: #218986;
+    
+    /* Orange — CTA only */
+    --orange: #F08D3D;
+    --orange-deep: #D9711A;
+    --orange-soft: #FDDCB8;
+    
+    /* Pink — accent */
+    --pink: #EF7AAA;
+    --pink-deep: #C9558A;
+    --pink-soft: #FBD6E5;
+    
+    /* Cream — warm canvas */
+    --cream: #FDF5EC;
+    --cream-deep: #FAEDD9;
+    --sand: #F5E1C8;
+    
+    /* Yellow */
+    --yellow-soft: #FFD96A;
+    --yellow-bright: #FFC940;
+    
+    /* Sage green */
+    --green: #92BD6E;
+    
+    /* TEXT COLORS — WARMED UP:
+       --ink: warm charcoal for body. Not pure black, not cold blue.
+       --headline: dark warm teal-brown for h1/h2 bubble letters — friendlier.
+       --ink-soft: warm-leaning slate for subdued text. */
+    --ink: #2E3438;             /* warm charcoal (was cold #1F3A47) */
+    --ink-soft: #5E625F;        /* warm slate (was cool #5A6E78) */
+    --headline: #2C403D;        /* warm dark teal-brown for bubble headlines */
+    --white: #FFFFFF;
+  }
+  .lp-page { scroll-behavior: smooth; }
+  .lp-page {
+    font-family: "Poppins", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.005em;
+  }
+  /* Bubble-letter display font for big headlines (matches the book covers).
+     h3/h4/.display kept on Freude — Lilita is too heavy at smaller sizes.
+     v6: color shifted from cold blue ink to warm dark teal-brown. */
+  .lp-page h1, .lp-page h2 { font-family: "Freude", sans-serif; font-weight: 400; line-height: 1.05; letter-spacing: 0.005em; color: var(--headline); }
+  .lp-page h3, .lp-page h4, .lp-page .display { font-family: "Freude", sans-serif; font-weight: 600; line-height: 1.1; }
+  
+  /* ============ SITE HEADER (mirrors existing Shopify theme) ============ */
+  .lp-page .site-header {
+    background: white;
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .lp-page .site-header img { height: 44px; }
+  .lp-page .site-header nav { display: flex; gap: 32px; font-weight: 600; color: var(--ink-soft); font-size: 15px; }
+  .lp-page .site-header nav span { cursor: pointer; }
+  .lp-page .site-header nav span:hover { color: var(--teal); }
+  .lp-page .site-header .cart-icon { color: var(--teal); font-size: 24px; cursor: pointer; position: relative; }
+  
+  /* ============ ANNOUNCEMENT BAR ============ */
+  .lp-page .announce-bar {
+    /* v5: shifted from orange-deep to deep brand blue */
+    background: var(--blue-deep);
+    color: white;
+    text-align: center;
+    padding: 9px 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    font-family: "Freude", sans-serif;
+    letter-spacing: 0.2px;
+  }
+  
+  /* ============ HERO ============ */
+  .lp-page .hero {
+    position: relative;
+    /* Soft cream → peach diagonal gradient. Far gentler than flat orange. */
+    /* v5: gradient shifted from peach to soft blue — brand cohesion with the website */
+    /* v6: warmed-up gradient — still cream→blue but the blue end is warmer */
+    background: linear-gradient(135deg, #FDF5EC 0%, #E8EFEB 45%, #CFDFD9 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: 540px;
+  }
+  /* Organic wavy shape baked into the hero background (the brand's signature look) */
+  .lp-page .hero::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 80px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z' fill='%23ECF2EF'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 4;
+  }
+  .lp-page .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 48px 96px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  /* Hero copy is now dark text on light background — much warmer and more readable */
+  .lp-page .hero-copy { color: var(--ink); }
+  .lp-page .eyebrow-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--blue-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    letter-spacing: 0.3px;
+    margin-bottom: 18px;
+    padding: 7px 15px;
+    background: white;
+    border-radius: 999px;
+    border: 1.5px solid rgba(44,122,140,0.25);
+    box-shadow: 0 2px 6px rgba(44,122,140,0.08);
+  }
+  .lp-page .hero h1 {
+    /* v6: bubble letters use --headline (warm dark teal-brown) instead of cold ink. */
+    font-size: 52px;
+    color: var(--headline);
+    margin-bottom: 20px;
+    text-shadow: none;
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+  .lp-page .hero h1 .accent {
+    /* Accent now uses the deep teal-blue — book-cover-style highlight color */
+    color: var(--blue-deep);
+    display: inline-block;
+    position: relative;
+  }
+  .lp-page .hero h1 .accent::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px; bottom: -2px;
+    height: 11px;
+    background: rgba(255,217,106,0.55); /* sunny yellow underline — matches book cover style */
+    z-index: -1;
+    border-radius: 6px;
+    opacity: 1;
+  }
+  .lp-page .hero .subhead {
+    font-size: 19px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    max-width: 540px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .lp-page .hero .subhead strong { color: var(--ink); font-weight: 700; }
+  /* Hero reviews badge — social proof immediately, per client feedback */
+  .lp-page .hero-reviews-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 8px 14px;
+    background: white;
+    border: 1.5px solid rgba(44,122,140,0.22);
+    border-radius: 999px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    font-family: "Freude", sans-serif;
+    box-shadow: 0 2px 8px rgba(44,122,140,0.1);
+  }
+  .lp-page .hero-reviews-badge .stars {
+    /* Stars stay golden — universally recognizable for ratings */
+    color: var(--orange-deep);
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
+  .lp-page .hero-reviews-badge .count { color: var(--ink); }
+  .lp-page .cta-cluster { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .lp-page .btn-primary {
+    background: var(--orange);
+    color: white;
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 16px 34px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 var(--orange-deep), 0 10px 24px rgba(240,141,61,0.32);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+    letter-spacing: 0.1px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.1s ease;
+  }
+  .lp-page .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--orange-deep), 0 14px 30px rgba(240,141,61,0.4); }
+  .lp-page .btn-primary:active { transform: translateY(1px); box-shadow: 0 2px 0 var(--orange-deep), 0 6px 14px rgba(240,141,61,0.3); }
+  .lp-page .price-note {
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.95;
+  }
+  .lp-page .price-note .checks { color: var(--orange-deep); }
+  
+  /* Trust pills row directly below CTA */
+  .lp-page .trust-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .lp-page .trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: white;
+    color: var(--ink);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(58,175,171,0.25);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .lp-page .trust-pill .check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  
+
+  /* ============ HERO DECORATIONS ============ */
+  .lp-page .hero-decor {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  /* Cloud decorations hidden on the softer hero — they were designed for the
+     saturated orange field and don't read against the cream/peach gradient.
+     The bee is kept as a small playful accent; the swoosh is dialed way back. */
+  .lp-page .hero-decor .cloud { display: none; }
+.lp-page .hero-decor .bee {
+    position: absolute;
+    width: 56px; height: 64px;
+    top: 8%; left: 42%;
+    opacity: 0.85;
+    /* background-image set in snippets/landing-page-css-head.liquid (asset_url) */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    animation: bee-float 4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  }
+  @keyframes  bee-float  {
+    0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+    50% { transform: translate(8px, -12px) rotate(4deg); }
+  }
+  /* swoosh arc */
+  .lp-page .hero-decor .swoosh {
+    position: absolute;
+    top: 8%; right: 4%;
+    width: 50%; height: 80%;
+    opacity: 0.18;
+  }
+
+  @media  (max-width: 860px)  {
+
+    
+  .lp-page .hero-decor .cloud-3, .lp-page .hero-decor .cloud-4, .lp-page .hero-decor .cloud-5, .lp-page .hero-decor .swoosh { display: none; }
+
+    
+  .lp-page .hero-decor .bee { width: 56px; height: 64px; top: 22%; right: 10%; }
+
+  
+}
+
+  .lp-page .hero-books { position: relative; display: flex; justify-content: center; align-items: center; }
+  .lp-page .hero-books-group { position: relative; width: 100%; max-width: 560px; }
+  .lp-page .hero-books-group .bundle-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 24px 40px rgba(0,0,0,0.22));
+  }
+  
+  /* ============ TRUST BAR ============ */
+  .lp-page .trust-bar {
+    /* v5: soft sky background — flows from the new blue hero gradient */
+    background: var(--sky-soft);
+    padding: 22px 32px 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 56px;
+    border-bottom: 1px solid rgba(44,122,140,0.08);
+  }
+  .lp-page .trust-item { display: flex; align-items: center; gap: 10px; }
+  .lp-page .trust-item .icon {
+    width: 34px; height: 34px;
+    background: rgba(44,122,140,0.13);
+    color: var(--blue-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .lp-page .trust-item .label { font-family: "Freude", sans-serif; font-weight: 600; color: var(--ink); font-size: 14.5px; letter-spacing: 0.1px; }
+  .lp-page .trust-divider { width: 1px; height: 24px; background: rgba(44,122,140,0.22); }
+
+  /* ============ SOCIAL PROOF STRIP (NEW — appears right after trust bar) ============ */
+  /* Three short reviews with stars, immediately below the hero. Addresses client
+     feedback: "Adding the reviews right away or at least the 5 stars might be helpful." */
+  .lp-page .proof-strip {
+    background: white;
+    padding: 56px 32px 64px;
+    border-bottom: 1px solid rgba(212,145,90,0.08);
+  }
+  .lp-page .proof-strip .proof-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .lp-page .proof-strip .proof-stars {
+    color: var(--orange-deep);
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .lp-page .proof-strip .proof-title {
+    font-family: "Freude", sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+  .lp-page .proof-strip .proof-title strong {
+    font-weight: 700;
+    color: var(--blue-deep);
+  }
+  .lp-page .proof-strip .proof-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  .lp-page .proof-strip .proof-card {
+    background: var(--sky-soft);
+    border-radius: 18px;
+    padding: 24px 26px;
+    border: 1.5px solid rgba(44,122,140,0.13);
+  }
+  .lp-page .proof-strip .proof-card .stars {
+    color: var(--orange-deep);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .lp-page .proof-strip .proof-card blockquote {
+    font-family: "Freude", sans-serif;
+    font-weight: 400;
+    font-size: 15.5px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin: 0 0 14px;
+    font-style: normal;
+  }
+  .lp-page .proof-strip .proof-card .attrib {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .lp-page .proof-strip .proof-card .attrib span {
+    font-weight: 400;
+    opacity: 0.75;
+    margin-left: 4px;
+  }
+  
+  /* ============ SECTIONS ============ */
+  .lp-page section { position: relative; }
+  .lp-page .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .lp-page .section-pad { padding: 80px 32px; }
+  
+  /* ============ THE WORRY SECTION ============ */
+  .lp-page .worry-section {
+    background: white;
+    padding: 88px 32px 72px;
+    text-align: center;
+  }
+  .lp-page .worry-section .container { max-width: 780px; }
+  .lp-page .worry-section .small-label {
+    display: inline-block;
+    background: rgba(44,122,140,0.12);
+    color: var(--blue-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .worry-section h2 {
+    font-size: 38px;
+    color: var(--ink);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+  .lp-page .worry-section h2 em { font-style: normal; color: var(--blue-deep); }
+  .lp-page .worry-section p {
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .lp-page .worry-section p:last-child {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 20px;
+  }
+  
+  /* ============ THE REFRAME ============ */
+  .lp-page .reframe {
+    background: linear-gradient(180deg, var(--sky-soft) 0%, var(--sky-light) 100%);
+    padding: 88px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lp-page .reframe .container {
+    max-width: 820px;
+    text-align: center;
+  }
+  .lp-page .reframe-body { }
+  .lp-page .reframe h2 {
+    font-size: 42px;
+    color: var(--ink);
+    margin-bottom: 24px;
+    line-height: 1.15;
+  }
+  .lp-page .reframe h2 .highlight {
+    background: linear-gradient(180deg, transparent 58%, var(--yellow-soft) 58%);
+    padding: 0 6px;
+    border-radius: 4px;
+  }
+  .lp-page .reframe p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .lp-page .reframe .small-label {
+    display: inline-block;
+    background: var(--pink);
+    color: white;
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .stephanie-quote {
+    margin-top: 40px;
+    background: white;
+    border-radius: 24px;
+    padding: 36px 40px 30px;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    text-align: left;
+  }
+  .lp-page .stephanie-quote .quote-mark {
+    position: absolute;
+    top: 4px; left: 22px;
+    font-family: "Freude", sans-serif;
+    font-size: 90px;
+    line-height: 1;
+    color: var(--teal-light);
+    opacity: 0.6;
+  }
+  .lp-page .stephanie-quote p {
+    font-family: "Freude", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    padding-left: 32px;
+  }
+  .lp-page .stephanie-quote .quote-attr {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    color: var(--pink);
+    font-size: 15px;
+    padding-left: 32px;
+  }
+  
+  /* ============ THE PROGRESSIVE SYSTEM ============ */
+  .lp-page .system {
+    background: white;
+    padding: 88px 32px 80px;
+    position: relative;
+  }
+  .lp-page .system .header-block {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 56px;
+  }
+  .lp-page .system .small-label {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .system h2 {
+    font-size: 44px;
+    color: var(--ink);
+    margin-bottom: 18px;
+    line-height: 1.1;
+  }
+  .lp-page .system h2 .arrow {
+    display: inline-block;
+    color: var(--orange);
+    margin: 0 6px;
+  }
+  .lp-page .system .sub {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  
+  .lp-page .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .lp-page .stage-card {
+    background: white;
+    border-radius: 28px;
+    padding: 36px 28px 32px;
+    text-align: center;
+    border: 2px solid transparent;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  /* Brighter stage card surfaces — still soft enough to let the books pop,
+     but more saturated than v2 so the cards feel cheerful, not washed. */
+  .lp-page .stage-card.stage-1 { background: #DBF0EE; border-color: var(--teal-light); }
+  .lp-page .stage-card.stage-2 { background: #FBE0EB; border-color: rgba(239,122,170,0.32); }
+  .lp-page .stage-card.stage-3 { background: #FDE8CC; border-color: rgba(240,141,61,0.32); }
+  .lp-page .stage-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.06); }
+  .lp-page .stage-card .stage-number {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    padding: 5px 16px;
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .lp-page .stage-card.stage-1 .stage-number { color: var(--teal); }
+  .lp-page .stage-card.stage-2 .stage-number { color: var(--pink); }
+  .lp-page .stage-card.stage-3 .stage-number { color: var(--orange-deep); }
+  .lp-page .stage-card .book-img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    display: block;
+    filter: drop-shadow(0 12px 24px rgba(0,0,0,0.18));
+  }
+  .lp-page .stage-card h3 {
+    font-size: 26px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .lp-page .stage-card .stage-tag {
+    display: inline-block;
+    font-family: "Freude", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .lp-page .stage-card p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .lp-page .stage-card .age {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+    background: white;
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  
+  .lp-page .system-cta { text-align: center; margin-top: 56px; }
+  
+  /* ============ HOW IT WORKS (the You Can Do This section) ============ */
+  .lp-page .how-it-works {
+    background: var(--cream);
+    padding: 88px 32px 96px;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .lp-page .how-it-works::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: 0; right: 0;
+    height: 60px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,0 L0,0 Z' fill='white'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .lp-page .how-it-works .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    margin-top: 40px;
+  }
+  .lp-page .how-it-works .small-label {
+    display: inline-block;
+    background: white;
+    color: var(--blue-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    border: 1.5px solid rgba(44,122,140,0.2);
+  }
+  .lp-page .how-it-works h2 {
+    font-size: 40px;
+    margin-bottom: 22px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .lp-page .how-it-works h2 .accent { color: var(--blue-deep); }
+  .lp-page .how-it-works p.lead {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    color: var(--ink-soft);
+  }
+  .lp-page .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .lp-page .step {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.08), 0 6px 18px rgba(0,0,0,0.12);
+    position: relative;
+  }
+  .lp-page .step .num {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--blue-deep);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .lp-page .step .text { font-family: "Freude", sans-serif; font-weight: 500; font-size: 16px; line-height: 1.3; color: var(--ink); }
+  .lp-page .how-it-works .image-box {
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  }
+  .lp-page .how-it-works .image-box img {
+    width: 100%;
+    display: block;
+    opacity: 0.88;
+  }
+  /* v5: soft blue vignette to blend image edges into the cream section */
+  .lp-page .how-it-works .image-box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 95% 95% at 50% 50%, transparent 40%, rgba(190,223,229,0.45) 100%);
+  }
+  
+  /* ============ TESTIMONIALS ============ */
+  .lp-page .testimonials {
+    background: var(--cream);
+    padding: 88px 32px 80px;
+  }
+  .lp-page .testimonials .header-block { text-align: center; max-width: 760px; margin: 0 auto 48px; }
+  .lp-page .testimonials .small-label {
+    display: inline-block;
+    background: rgba(44,122,140,0.12);
+    color: var(--blue-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .testimonials h2 {
+    font-size: 38px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.18;
+  }
+  .lp-page .testimonials .sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+  }
+  
+  .lp-page .featured-review {
+    max-width: 820px;
+    margin: 0 auto 40px;
+    background: white;
+    border: 1px solid rgba(212,145,90,0.15);
+    border-radius: 28px;
+    padding: 44px 56px 40px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 12px 36px rgba(212,145,90,0.08);
+  }
+  .lp-page .featured-review .stars { color: var(--orange-deep); font-size: 22px; margin-bottom: 18px; letter-spacing: 4px; }
+  .lp-page .featured-review blockquote {
+    font-family: "Freude", sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 22px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .lp-page .featured-review .attrib {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    color: var(--blue-deep);
+    font-size: 16px;
+  }
+  .lp-page .featured-review .attrib span { color: var(--ink-soft); font-weight: 500; margin-left: 6px; font-family: "Poppins", sans-serif; }
+  
+  .lp-page .review-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  .lp-page .review-card {
+    background: white;
+    border: 1px solid rgba(212,145,90,0.12);
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  .lp-page .review-card .stars { color: var(--orange-deep); font-size: 16px; margin-bottom: 12px; letter-spacing: 1px; }
+  .lp-page .review-card p {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .lp-page .review-card .attrib {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    color: var(--pink);
+    font-size: 15px;
+  }
+  .lp-page .review-card .attrib span { color: var(--ink-soft); font-weight: 400; margin-left: 4px; font-family: "Poppins", sans-serif; font-size: 13px; }
+  
+  /* ============ MEET STEPHANIE ============ */
+  .lp-page .meet-stephanie {
+    background: var(--sky-soft);
+    color: var(--ink);
+    padding: 88px 32px 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lp-page .meet-stephanie::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path d='M0,30 C240,0 480,60 720,30 C960,0 1200,60 1440,30 L1440,60 L0,60 Z' fill='%23FDF5EC'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    clip-path: none;
+  }
+  .lp-page .meet-stephanie .container {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .lp-page .meet-stephanie .small-label {
+    display: inline-block;
+    background: rgba(44,122,140,0.15);
+    color: var(--blue-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .meet-stephanie h2 {
+    font-size: 40px;
+    margin-bottom: 22px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .lp-page .meet-stephanie p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: var(--ink-soft);
+  }
+  .lp-page .meet-stephanie .credentials {
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(44,122,140,0.3);
+    font-family: "Freude", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--blue-deep);
+  }
+  .lp-page .meet-stephanie .stephanie-image-wrap {
+    aspect-ratio: 3/4;
+    border-radius: 28px;
+    /* background-image set in snippets/landing-page-css-head.liquid (asset_url) */
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+  }
+  
+  /* ============ FAQ ============ */
+  .lp-page .faq-section {
+    background: var(--cream);
+    padding: 88px 32px;
+  }
+  .lp-page .faq-section .header-block { text-align: center; max-width: 720px; margin: 0 auto 48px; }
+  .lp-page .faq-section .small-label {
+    display: inline-block;
+    background: rgba(239,122,170,0.18);
+    color: var(--pink-deep);
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lp-page .faq-section h2 {
+    font-size: 38px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.18;
+  }
+  .lp-page .faq-section .sub { color: var(--ink-soft); font-size: 18px; }
+  
+  .lp-page .faq-list { max-width: 820px; margin: 0 auto; }
+  .lp-page .faq-item {
+    background: white;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid rgba(212,145,90,0.08);
+  }
+  .lp-page .faq-q {
+    padding: 22px 28px;
+    font-family: "Freude", sans-serif;
+    font-weight: 500;
+    font-size: 17.5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    color: var(--ink);
+    user-select: none;
+  }
+  .lp-page .faq-q::after {
+    content: "+";
+    font-size: 24px;
+    color: var(--blue-deep);
+    font-weight: 600;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .lp-page .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .lp-page .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .lp-page .faq-item.open .faq-a { max-height: 500px; }
+  .lp-page .faq-a-inner {
+    padding: 0 28px 22px;
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  
+  /* ============ FINAL CTA ============ */
+  .lp-page .final-cta {
+    background: var(--cream);
+    padding: 88px 32px 96px;
+    text-align: center;
+    position: relative;
+  }
+  .lp-page .final-cta .closing-banner-img {
+    max-width: 1100px;
+    margin: 0 auto 0;
+    border-radius: 28px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 1400 / 466;
+    position: relative;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+  }
+  .lp-page .final-cta .closing-banner-img img { width: 100%; display: block; }
+  .lp-page .final-cta .cta-content {
+    max-width: 720px;
+    margin: -40px auto 0;
+    background: white;
+    padding: 44px 40px 40px;
+    border-radius: 28px;
+    box-shadow: 0 14px 40px rgba(44,122,140,0.12);
+    border: 1.5px solid rgba(44,122,140,0.14);
+    position: relative;
+    z-index: 2;
+  }
+  .lp-page .final-cta h2 {
+    font-size: 32px;
+    line-height: 1.22;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .lp-page .final-cta h2 .accent { color: var(--orange-deep); }
+  .lp-page .final-cta .quote-attrib {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  .lp-page .final-cta .price-display {
+    font-family: "Freude", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .lp-page .final-cta .price-display .strike {
+    text-decoration: line-through;
+    color: var(--ink-soft);
+    font-weight: 400;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  .lp-page .final-cta .small-print {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .lp-page .final-cta .btn-primary { font-size: 20px; padding: 18px 40px; }
+  .lp-page .final-cta .post-cta {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 18px;
+  }
+  
+  /* ============ FOOTER ============ */
+  .lp-page .site-footer {
+    background: var(--ink);
+    color: white;
+    padding: 48px 32px 28px;
+    text-align: center;
+  }
+  .lp-page .site-footer img { height: 50px; margin-bottom: 18px; filter: brightness(0) invert(1); opacity: 0.95; }
+  .lp-page .site-footer p { font-size: 14px; opacity: 0.7; line-height: 1.6; max-width: 540px; margin: 0 auto 16px; }
+  .lp-page .site-footer .links { display: flex; justify-content: center; gap: 28px; font-size: 14px; margin-bottom: 28px; }
+  .lp-page .site-footer .links span { cursor: pointer; opacity: 0.85; }
+  .lp-page .site-footer .copy { font-size: 12px; opacity: 0.5; }
+  
+  /* ============ MOBILE ============ */
+  @media  (max-width: 768px)  {
+
+    
+  .lp-page .site-header { padding: 12px 16px; }
+
+    
+  .lp-page .site-header img { height: 36px; }
+
+    
+  .lp-page .site-header nav { display: none; }
+
+    
+  .lp-page .announce-bar { font-size: 12px; padding: 7px 12px; }
+
+    
+    
+  .lp-page .hero-content {
+      grid-template-columns: 1fr;
+      padding: 56px 22px 72px;
+      gap: 32px;
+    }
+
+    
+  .lp-page .hero { min-height: auto; }
+
+    
+  .lp-page .hero::after { height: 40px; }
+
+    
+  .lp-page .hero h1 { font-size: 34px; line-height: 1.1; }
+
+    
+  .lp-page .hero .subhead { font-size: 17px; }
+
+    
+  .lp-page .eyebrow-text { font-size: 13px; }
+
+    
+  .lp-page .btn-primary { font-size: 18px; padding: 16px 28px; width: 100%; text-align: center; }
+
+    
+  .lp-page .cta-cluster { width: 100%; align-items: stretch; }
+
+    
+  .lp-page .price-note { text-align: center; }
+
+    
+  .lp-page .trust-pills { justify-content: center; gap: 8px; }
+
+    
+  .lp-page .trust-pill { font-size: 13px; padding: 8px 12px; }
+
+    
+  .lp-page .trust-pill .check { width: 18px; height: 18px; font-size: 11px; }
+
+    
+  .lp-page .hero-reviews-badge { font-size: 12px; padding: 6px 12px; align-self: center; }
+
+    
+  .lp-page .hero-reviews-badge .stars { font-size: 13px; }
+
+    
+/* Decorations hidden on mobile so hero is calm */
+
+    
+  .lp-page .hero-decor .bee, .lp-page .hero-decor .swoosh { display: none; }
+
+    
+    
+  .lp-page .hero-books-group { max-width: 340px; margin: 0 auto; }
+
+    
+    
+  .lp-page .trust-bar { flex-direction: column; gap: 12px; padding: 20px 16px; }
+
+    
+  .lp-page .trust-divider { display: none; }
+
+    
+  .lp-page .trust-item .label { font-size: 14px; }
+
+    
+    
+/* NEW — proof strip mobile */
+
+    
+  .lp-page .proof-strip { padding: 40px 20px 48px; }
+
+    
+  .lp-page .proof-strip .proof-title { font-size: 17px; }
+
+    
+  .lp-page .proof-strip .proof-grid { grid-template-columns: 1fr; gap: 14px; }
+
+    
+  .lp-page .proof-strip .proof-card { padding: 20px 22px; }
+
+    
+  .lp-page .proof-strip .proof-card blockquote { font-size: 15px; }
+
+    
+    
+  .lp-page .section-pad, .lp-page .worry-section, .lp-page .reframe, .lp-page .system, .lp-page .how-it-works, .lp-page .testimonials, .lp-page .meet-stephanie, .lp-page .faq-section, .lp-page .final-cta { padding: 56px 20px; }
+
+    
+    
+  .lp-page .worry-section h2 { font-size: 26px; }
+
+    
+  .lp-page .worry-section p { font-size: 17px; }
+
+    
+  .lp-page .worry-section p:last-child { font-size: 18px; }
+
+    
+    
+  .lp-page .reframe .container { max-width: 600px; }
+
+    
+  .lp-page .how-it-works .container, .lp-page .meet-stephanie .container { grid-template-columns: 1fr; gap: 32px; }
+
+    
+  .lp-page .reframe h2 { font-size: 28px; }
+
+    
+  .lp-page .reframe p { font-size: 16px; }
+
+    
+  .lp-page .stephanie-quote { padding: 28px 24px; }
+
+    
+  .lp-page .stephanie-quote p { font-size: 17px; padding-left: 22px; }
+
+    
+  .lp-page .stephanie-quote .quote-attr { padding-left: 22px; }
+
+    
+    
+  .lp-page .system h2 { font-size: 30px; }
+
+    
+  .lp-page .system .sub { font-size: 16px; }
+
+    
+  .lp-page .stage-grid { grid-template-columns: 1fr; gap: 32px; }
+
+    
+  .lp-page .stage-card .book-img { width: 150px; height: 150px; }
+
+    
+  .lp-page .stage-card h3 { font-size: 24px; }
+
+    
+    
+  .lp-page .how-it-works h2 { font-size: 28px; }
+
+    
+  .lp-page .how-it-works p.lead { font-size: 16px; }
+
+    
+  .lp-page .steps-grid { grid-template-columns: 1fr; }
+
+    
+  .lp-page .how-it-works::before { height: 30px; }
+
+    
+    
+  .lp-page .testimonials h2 { font-size: 28px; }
+
+    
+  .lp-page .featured-review { padding: 36px 24px 32px; }
+
+    
+  .lp-page .featured-review blockquote { font-size: 20px; }
+
+    
+  .lp-page .review-grid { grid-template-columns: 1fr; }
+
+    
+    
+  .lp-page .meet-stephanie h2 { font-size: 30px; }
+
+    
+  .lp-page .meet-stephanie p { font-size: 16px; }
+
+    
+  .lp-page .meet-stephanie .stephanie-image-wrap { max-width: 320px; margin: 0 auto; }
+
+    
+    
+  .lp-page .faq-section h2 { font-size: 28px; }
+
+    
+  .lp-page .faq-q { font-size: 16px; padding: 18px 22px; }
+
+    
+  .lp-page .faq-a-inner { padding: 0 22px 18px; font-size: 15px; }
+
+    
+    
+  .lp-page .final-cta h2 { font-size: 24px; }
+
+    
+  .lp-page .final-cta .closing-banner-img { aspect-ratio: 1.3/1; }
+
+    
+  .lp-page .final-cta .cta-content { padding: 28px 22px; margin: -32px 12px 0; }
+
+    
+  .lp-page .final-cta .btn-primary { font-size: 20px; padding: 18px 32px; }
+
+    
+    
+  .lp-page .site-footer .links { flex-wrap: wrap; gap: 16px; }
+
+  
+}
+
+  /* ============ PLUS-UP v4 — book-aligned playfulness ============ */
+  
+  /* Reusable organic accents — placed with absolute positioning relative
+     to parent. Sizes scale via --acc-size custom prop. */
+  .lp-page .lp-accent {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    width: var(--acc-size, 28px);
+    height: var(--acc-size, 28px);
+    color: var(--orange);
+    opacity: 0.85;
+  }
+  .lp-page .lp-accent svg { width: 100%; height: 100%; display: block; }
+  
+  /* Variants — each maps to a color we already use */
+  .lp-page .lp-accent.acc-teal { color: var(--teal); }
+  .lp-page .lp-accent.acc-pink { color: var(--pink); }
+  .lp-page .lp-accent.acc-orange { color: var(--orange); }
+  .lp-page .lp-accent.acc-yellow { color: var(--yellow-bright); }
+  .lp-page .lp-accent.acc-green { color: var(--green); }
+  
+  /* Sections need positioning context for absolute accents */
+  .lp-page .hero, .lp-page .worry-section, .lp-page .reframe, .lp-page .system, .lp-page .testimonials, .lp-page .meet-stephanie, .lp-page .final-cta {
+    position: relative;
+  }
+  
+  /* === Cloud bubble accent on the reframe highlight phrase === */
+  /* The book covers all use a soft blue cloud shape behind their titles.
+     We echo that here — but only on the short highlight phrase, where
+     a cloud shape actually fits aspect-ratio wise.
+     This replaces the v3 yellow underline highlight. */
+  .lp-page .reframe h2 .highlight {
+    position: relative;
+    display: inline-block;
+    background: none;
+    padding: 18px 28px 22px;
+    color: var(--ink);
+    z-index: 1;
+  }
+  .lp-page .reframe h2 .highlight::before {
+    content: "";
+    position: absolute;
+    inset: -6px -8px -4px -8px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 130' preserveAspectRatio='none'><path d='M 60,90 C 40,90 30,75 40,60 C 28,55 30,40 45,38 C 50,18 80,15 95,30 C 105,12 145,12 155,35 C 175,18 215,22 220,42 C 240,30 270,42 270,62 C 285,68 285,90 268,95 C 270,112 240,118 225,108 C 215,122 175,120 170,105 C 150,118 110,118 100,105 C 80,118 50,112 55,95 C 40,98 30,90 60,90 Z' fill='%23BEDFE5' opacity='0.7'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  /* Subtle dotted-line accent under the cloud, echoing the book covers'
+     dashed-line ovals around their subtitle phrases */
+  .lp-page .reframe h2 .highlight::after {
+    content: "";
+    position: absolute;
+    left: 12px; right: 12px; bottom: -2px;
+    height: 3px;
+    background-image: radial-gradient(circle, var(--teal) 1px, transparent 1.5px);
+    background-size: 8px 3px;
+    background-repeat: repeat-x;
+    opacity: 0.4;
+  }
+  
+  /* === Scroll-reveal animation for system progression === */
+  /* The "Sounds → Words → Sentences" sequence pops in word-by-word
+     when the user scrolls it into view. */
+  .lp-page .system h2 .reveal-word, .lp-page .system h2 .reveal-arrow {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+  .lp-page .system.in-view h2 .reveal-word.r-1 { opacity: 1; transform: translateY(0); transition-delay: 0ms; }
+  .lp-page .system.in-view h2 .reveal-arrow.r-2 { opacity: 1; transform: translateY(0); transition-delay: 280ms; }
+  .lp-page .system.in-view h2 .reveal-word.r-3 { opacity: 1; transform: translateY(0); transition-delay: 480ms; }
+  .lp-page .system.in-view h2 .reveal-arrow.r-4 { opacity: 1; transform: translateY(0); transition-delay: 760ms; }
+  .lp-page .system.in-view h2 .reveal-word.r-5 { opacity: 1; transform: translateY(0); transition-delay: 960ms; }
+  
+  /* Reduce motion respects user preference */
+  @media  (prefers-reduced-motion: reduce)  {
+
+    
+  .lp-page .system h2 .reveal-word, .lp-page .system h2 .reveal-arrow {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+  
+}
+
+
+
+/* ============================================================================
+   Liquid wrapper-class shims
+   ============================================================================
+   These rules support wrapper divs added by the Liquid section templates so
+   they integrate cleanly with the existing grid layouts. Each is intentionally
+   minimal — the wrappers exist to be the first/last grid child in the parent
+   .container, no decoration needed.
+   ============================================================================ */
+
+.lp-page .how-copy,
+.lp-page .meet-copy {
+  /* First column of the .container grid in those sections */
+}
+
+.lp-page .how-copy .btn-primary { margin-top: 16px; }
+
+.lp-page .worry-body,
+.lp-page .meet-body,
+.lp-page .reframe-text {
+  /* Body-text wrapper. Inherits .container constraints; no extra styling needed
+     because the inner <p> elements already pick up .reframe p / .worry-section p
+     / etc. rules from the main stylesheet. */
+}
+
+/* Accessibility helper — visually hides text but keeps it available to screen
+   readers. Used on the Stephanie portrait wrapper (alt-text proxy). */
+.lp-page .visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Star wrapper in announcement bar (optional cosmetic) */
+.lp-page .announce-bar .announce-star { margin-right: 6px; }
+
+/* CTA cluster inside the 3-book system section (block below the stage grid) */
+.lp-page .system-cta { text-align: center; margin-top: 32px; }
+
+/* ============ IMAGE CONTAINMENT FIXES ============ */
+
+/* Hero bundle: image_tag output has no .bundle-img class, so target the img
+   directly and scale it to the column instead of its full pixel width. */
+.lp-page .hero-books-group img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 24px 40px rgba(0,0,0,0.22));
+}
+
+/* How It Works photo: lock the box to a shape and crop the photo to fill it,
+   so a portrait upload no longer stretches the section. Tweak the ratio to taste. */
+.lp-page .how-it-works .image-box { aspect-ratio: 4 / 5; }
+.lp-page .how-it-works .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Final CTA banner: fill the fixed box and crop centered rather than overflowing. */
+.lp-page .final-cta .closing-banner-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 3-Book System stage cards: .book-img is a wrapper div (already sized 180px /
+   150px on mobile), but the <img> inside had no dimensions and overflowed the
+   card. Constrain the inner img to fill its box. */
+.lp-page .stage-card .book-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}

@@ -1,0 +1,29 @@
+{%- comment %} Founder story {% endcomment -%}
+<section class="home-block home-founder" id="story">
+  <div class="wrap founder-grid">
+    <div class="founder-photo">
+      {% render 'home-image', image: section.settings.photo, fallback: 'home-founder.webp', class: '', alt: section.settings.attribution, width: 800 %}
+    </div>
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:var(--coral-deep);">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.quote != blank -%}<blockquote>{{ section.settings.quote }}</blockquote>{%- endif -%}
+      {%- if section.settings.attribution != blank -%}<p class="attribution">{{ section.settings.attribution }}</p>{%- endif -%}
+      {%- if section.settings.bio != blank -%}<div class="bio">{{ section.settings.bio }}</div>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · Founder",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "photo", "label": "Photo" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Meet Stephanie" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"I wrote these books so parents can guide their child's speech confidently at home — no special training needed.\"" },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "— Stephanie Anderson, M.S., CCC-SLP · Founder, Speech Therapy Publishing" },
+    { "type": "richtext", "id": "bio", "label": "Bio", "default": "<p>I began my career as a speech-language pathologist working in Early Intervention. While nearly every parent I worked with read to their child, I struggled to find books that truly met kids where they were developmentally. That's how Imitation Book was born — and today, all four books are used by families and professionals across the country.</p>" }
+  ],
+  "presets": [ { "name": "Home · Founder" } ]
+}
+{% endschema %}

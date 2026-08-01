@@ -1,0 +1,102 @@
+{%- comment %} Bundle tiers — middle card is the featured "Complete" bundle {% endcomment -%}
+<section class="home-block home-bundles" id="bundles">
+  <div class="wrap">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="bundle-grid">
+      {%- for block in section.blocks -%}
+        {%- assign featured = block.settings.featured -%}
+        <div class="bundle-card{% if featured %} hero-bundle{% endif %}" {{ block.shopify_attributes }}>
+          {%- if featured and block.settings.ribbon != blank -%}<span class="bundle-ribbon">{{ block.settings.ribbon }}</span>{%- endif -%}
+          {%- if block.settings.kicker != blank -%}
+            <span class="eyebrow {{ block.settings.accent }}"{% if featured %} style="color:var(--yellow);"{% endif %}>{{ block.settings.kicker }}</span>
+          {%- endif -%}
+          <h3>{{ block.settings.title }}</h3>
+
+          <div class="bundle-covers">
+            {% render 'home-bundle-cov', image: block.settings.cover_1, label: block.settings.label_1 %}
+            {% render 'home-bundle-cov', image: block.settings.cover_2, label: block.settings.label_2 %}
+            {% render 'home-bundle-cov', image: block.settings.cover_3, label: block.settings.label_3 %}
+            {% render 'home-bundle-cov', image: block.settings.cover_4, label: block.settings.label_4 %}
+          </div>
+
+          {%- if block.settings.description != blank -%}<p class="bundle-desc">{{ block.settings.description }}</p>{%- endif -%}
+
+          {%- if block.settings.includes != blank -%}
+            <div class="bundle-includes">
+              {%- assign rows = block.settings.includes | newline_to_br | split: '<br />' -%}
+              {%- for row in rows -%}
+                {%- assign r = row | strip -%}
+                {%- if r != blank -%}<div><span class="check">✓</span> {{ r }}</div>{%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="bundle-price">
+            <div class="price-row">
+              {%- if block.settings.price_now != blank -%}<span class="price-now">{{ block.settings.price_now }}</span>{%- endif -%}
+              {%- if block.settings.price_was != blank -%}<span class="price-was">{{ block.settings.price_was }}</span>{%- endif -%}
+            </div>
+            {%- if block.settings.price_save != blank -%}<p class="price-save">{{ block.settings.price_save }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="bundle-btn">{{ block.settings.button_label }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · Bundle tiers",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Choose your system" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three bundles. One goal: more words, sooner." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Start where your child is, or get the full arc from first sounds to everyday routines with our best-value set." }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle card",
+      "settings": [
+        { "type": "checkbox", "id": "featured", "label": "Featured (elevated dark card)", "default": false },
+        { "type": "text", "id": "ribbon", "label": "Ribbon (featured only)", "default": "★ Best Value · Includes the NEW book" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Starter" },
+        { "type": "select", "id": "accent", "label": "Kicker colour", "options": [ {"value":"coral","label":"Coral"}, {"value":"teal","label":"Teal"}, {"value":"grape","label":"Grape"} ], "default": "coral" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Early Speech Starter Bundle" },
+        { "type": "header", "content": "Covers (up to 4)" },
+        { "type": "image_picker", "id": "cover_1", "label": "Cover 1" }, { "type": "text", "id": "label_1", "label": "Label 1", "default": "Imitation" },
+        { "type": "image_picker", "id": "cover_2", "label": "Cover 2" }, { "type": "text", "id": "label_2", "label": "Label 2", "default": "My Words" },
+        { "type": "image_picker", "id": "cover_3", "label": "Cover 3" }, { "type": "text", "id": "label_3", "label": "Label 3", "default": "Action" },
+        { "type": "image_picker", "id": "cover_4", "label": "Cover 4" }, { "type": "text", "id": "label_4", "label": "Label 4", "default": "" },
+        { "type": "header", "content": "Copy & pricing" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "The original 3-book system. Play, talk, and build confidence — perfect if your child is just starting their speech journey." },
+        { "type": "textarea", "id": "includes", "label": "Includes (one per line)", "default": "Imitation Book\nMy Words Book\nAction Book" },
+        { "type": "text", "id": "price_now", "label": "Price now", "default": "$39.99" },
+        { "type": "text", "id": "price_was", "label": "Price was", "default": "$47.97" },
+        { "type": "text", "id": "price_save", "label": "Savings line", "default": "Save $7.98" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Starter Bundle" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Home · Bundle tiers",
+      "blocks": [
+        { "type": "bundle", "settings": { "featured": false, "kicker": "Starter", "accent": "coral", "title": "Early Speech Starter Bundle", "label_1": "Imitation", "label_2": "My Words", "label_3": "Action", "label_4": "", "description": "The original 3-book system. Play, talk, and build confidence — perfect if your child is just starting their speech journey.", "includes": "Imitation Book\nMy Words Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Starter Bundle" } },
+        { "type": "bundle", "settings": { "featured": true, "ribbon": "★ Best Value · Includes the NEW book", "kicker": "Complete System", "title": "Early Speech Complete Bundle", "label_1": "Imitation", "label_2": "My Words", "label_3": "Action", "label_4": "Routines · NEW", "description": "All four SLP-created books — the complete starter set for every stage of early communication, from first sounds to everyday conversations.", "includes": "Imitation Book\nMy Words Book\nAction Book\nMy Routines Book — NEW", "price_now": "$49.99", "price_was": "$63.96", "price_save": "Save $13.97 · Free shipping", "button_label": "Shop the Complete Bundle" } },
+        { "type": "bundle", "settings": { "featured": false, "kicker": "Mealtime & routines", "accent": "grape", "title": "Daily Routines Early Speech Bundle", "label_1": "Routines", "label_2": "Imitation", "label_3": "Action", "label_4": "", "description": "Three books to help your little one play, talk, and communicate through the routines of everyday life — mealtimes, getting dressed, and play.", "includes": "My Routines Book — NEW\nImitation Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Daily Routines Bundle" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

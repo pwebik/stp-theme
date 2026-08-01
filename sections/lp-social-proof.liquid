@@ -1,0 +1,140 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: Social Proof Strip
+  Three short review cards below the trust bar.
+  Each review is a block — client can add/edit/remove freely.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="proof-strip">
+  <div class="proof-header">
+    {%- if section.settings.header_stars != blank -%}
+      <div class="proof-stars">{{ section.settings.header_stars }}</div>
+    {%- endif -%}
+    {%- if section.settings.header_title != blank -%}
+      <div class="proof-title">{{ section.settings.header_title }}</div>
+    {%- endif -%}
+  </div>
+  
+  <div class="proof-grid">
+    {%- for block in section.blocks -%}
+      <div class="proof-card" {{ block.shopify_attributes }}>
+        <div class="stars">{{ block.settings.stars }}</div>
+        <blockquote>{{ block.settings.quote }}</blockquote>
+        <div class="attrib">
+          <strong>{{ block.settings.attrib_name }}</strong>
+          {%- if block.settings.attrib_meta != blank -%}
+            <span>· {{ block.settings.attrib_meta }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Social Proof Strip",
+  "tag": "section",
+  "class": "lp-section lp-section--proof",
+  "settings": [
+    {
+      "type": "text",
+      "id": "header_stars",
+      "label": "Header stars",
+      "default": "★★★★★"
+    },
+    {
+      "type": "richtext",
+      "id": "header_title",
+      "label": "Header title",
+      "info": "<strong> highlights the count.",
+      "default": "<p><strong>Trusted by 1,000+ families</strong> &amp; recommended by speech therapists nationwide</p>"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stars",
+          "label": "Stars",
+          "default": "★★★★★"
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Review quote"
+        },
+        {
+          "type": "text",
+          "id": "attrib_name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "text",
+          "id": "attrib_meta",
+          "label": "Reviewer meta",
+          "info": "e.g. 'Verified buyer', 'SLP & mom', etc."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "LP Social Proof Strip",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "This book helped my baby start to talk and say words at 12 months old. It's now part of our daily routine.",
+            "attrib_name": "Krizzy",
+            "attrib_meta": "Verified buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "As a parent, finding tools that actually help your child's development can feel overwhelming. This is one of those rare finds that delivers.",
+            "attrib_name": "Amazon Customer",
+            "attrib_meta": "Verified purchase"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "Speech path here. I love this book. It was one of my son's favorites and what I used to help him produce more words from 1–2 years.",
+            "attrib_name": "Brooke",
+            "attrib_meta": "SLP & mom"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

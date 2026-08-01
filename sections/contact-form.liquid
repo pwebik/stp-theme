@@ -1,0 +1,333 @@
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    position: relative;
+    {%- if section.settings.background_color != 'rgba(0,0,0,0)' and section.settings.background_color != blank -%}
+      background-color: {{ section.settings.background_color }};
+    {%- endif -%}
+  }
+
+  /* CRITICAL ANCHOR FIX: This span sits invisible but 'pushes' the anchor point up */
+  .anchor-target-{{ section.id }} {
+    position: absolute;
+    top: -{{ section.settings.scroll_offset }}px;
+    display: block;
+    visibility: hidden;
+    height: 1px;
+    width: 1px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Background Image Styling */
+  .section-{{ section.id }} .contact-background-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; overflow: hidden;
+  }
+  
+  .section-{{ section.id }} .contact-background-wrapper img {
+    width: 100%; height: 100%; 
+    object-fit: {{ section.settings.desktop_bg_size }}; 
+    object-position: {{ section.settings.desktop_bg_position }};
+  }
+
+  .section-{{ section.id }} .contact-background-wrapper::after {
+    content: ''; position: absolute; inset: 0;
+    background-color: #000;
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.background_image != blank -%}
+      {%- liquid
+        assign mobile_bg = section.settings.background_image
+        if section.settings.mobile_background_image != blank
+          assign mobile_bg = section.settings.mobile_background_image
+        endif
+      -%}
+      .section-{{ section.id }}-padding {
+        background-image: linear-gradient(rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }}), rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }})), 
+                          url('{{ mobile_bg | image_url: width: 800 }}');
+        background-size: {{ section.settings.mobile_bg_size }}; 
+        background-position: {{ section.settings.mobile_bg_position }};
+        background-repeat: no-repeat;
+      }
+      .section-{{ section.id }} .contact-background-wrapper { display: none; }
+    {%- endif -%}
+  }
+
+  .section-{{ section.id }} .contact {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient" style="position: relative;">
+  
+  {%- comment -%} Added: Dedicated Anchor Span {%- endcomment -%}
+  {%- if section.settings.custom_id != blank -%}
+    <span id="{{ section.settings.custom_id | escape }}" class="anchor-target-{{ section.id }}"></span>
+  {%- endif -%}
+
+  <div class="section-{{ section.id }}-padding">
+    
+    {%- if section.settings.background_image != blank -%}
+      <div class="contact-background-wrapper">
+        {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'lazy' }}
+      </div>
+    {%- endif -%}
+
+    <div class="contact page-width">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="contact__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+
+      {%- liquid
+        assign contact_form_class = 'isolate'
+        if settings.animations_reveal_on_scroll
+          assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
+        endif
+      -%}
+
+      {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+        {%- if form.posted_successfully? -%}
+          <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+            {{- 'icon-success.svg' | inline_asset_content -}}
+            {{ 'templates.contact.form.post_success' | t }}
+          </h2>
+        {%- elsif form.errors -%}
+          <div class="form__message">
+            <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+              {{- 'icon-error.svg' | inline_asset_content -}}
+              {{ 'templates.contact.form.error_heading' | t }}
+            </h2>
+          </div>
+          <ul class="form-status-list caption-large" role="list">
+            <li>
+              <a href="#ContactForm-email" class="link">
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+        {%- endif -%}
+
+        <div class="contact__fields">
+          <div class="field">
+            <input
+              class="field__input"
+              autocomplete="name"
+              type="text"
+              id="ContactForm-name"
+              name="contact[{{ 'templates.contact.form.name' | t }}]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="{{ section.settings.label_name | default: 'Name' }}"
+            >
+            <label class="field__label" for="ContactForm-name">{{ section.settings.label_name | default: 'Name' }}</label>
+          </div>
+          <div class="field field--with-error">
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="field__input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="ContactForm-email-error"
+              {% endif %}
+              placeholder="{{ section.settings.label_email | default: 'Email' }}"
+            >
+            <label class="field__label" for="ContactForm-email">
+              {{ section.settings.label_email | default: 'Email' }}
+              <span aria-hidden="true">*</span>
+            </label>
+            {%- if form.errors contains 'email' -%}
+              <small class="contact__field-error" id="ContactForm-email-error">
+                <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                <span class="form__message">
+                  <span class="svg-wrapper">
+                    {{- 'icon-error.svg' | inline_asset_content -}}
+                  </span>
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </span>
+              </small>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="field">
+          <input
+            type="tel"
+            id="ContactForm-phone"
+            class="field__input"
+            autocomplete="tel"
+            name="contact[{{ 'templates.contact.form.phone' | t }}]"
+            pattern="[0-9\-]*"
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            placeholder="{{ section.settings.label_phone | default: 'Phone Number' }}"
+          >
+          <label class="field__label" for="ContactForm-phone">{{ section.settings.label_phone | default: 'Phone Number' }}</label>
+        </div>
+        <div class="field">
+          <textarea
+            rows="10"
+            id="ContactForm-body"
+            class="text-area field__input"
+            name="contact[{{ 'templates.contact.form.comment' | t }}]"
+            placeholder="{{ section.settings.label_message | default: 'Comment' }}"
+          >
+            {{- form.body -}}
+          </textarea>
+          <label class="form__label field__label" for="ContactForm-body">
+            {{ section.settings.label_message | default: 'Comment' }}
+          </label>
+        </div>
+        <div class="contact__button">
+          <button type="submit" class="button button--primary">
+            {{ section.settings.label_submit | default: 'Send' }}
+          </button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Contact Form",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "header", "content": "Scroll & Offset" },
+    { "type": "text", "id": "custom_id", "label": "Anchor ID", "info": "e.g. 'contact-anchor'. Then use '#contact-anchor' as your link." },
+    { "type": "range", "id": "scroll_offset", "min": 0, "max": 400, "step": 10, "default": 100, "unit": "px", "label": "Scroll Gap (Increase to lower the section under header)" },
+    { "type": "header", "content": "Custom Labels" },
+    { "type": "text", "id": "label_name", "label": "Name Label", "default": "Name" },
+    { "type": "text", "id": "label_email", "label": "Email Label", "default": "Email" },
+    { "type": "text", "id": "label_phone", "label": "Phone Label", "default": "Phone Number" },
+    { "type": "text", "id": "label_message", "label": "Message Label", "default": "Comment" },
+    { "type": "text", "id": "label_submit", "label": "Button Text", "default": "Send" },
+    { "type": "header", "content": "Heading" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Contact form",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    { "type": "header", "content": "Background Settings" },
+    { "type": "color", "id": "background_color", "label": "Background Color", "default": "#ffffff" },
+    { "type": "image_picker", "id": "background_image", "label": "Background Image" },
+    {
+      "type": "select",
+      "id": "desktop_bg_size",
+      "label": "Desktop Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "desktop_bg_position",
+      "label": "Desktop Background Position",
+      "options": [
+        { "value": "left top", "label": "Top Left" },
+        { "value": "center center", "label": "Middle" },
+        { "value": "right bottom", "label": "Bottom Right" }
+      ],
+      "default": "center center"
+    },
+    { "type": "header", "content": "Mobile Background Settings" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile BG Image" },
+    {
+      "type": "select",
+      "id": "mobile_bg_size",
+      "label": "Mobile Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "mobile_bg_position",
+      "label": "Mobile Background Position",
+      "options": [
+        { "value": "center center", "label": "Middle" },
+        { "value": "center top", "label": "Top" }
+      ],
+      "default": "center center"
+    },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 95, "step": 5, "unit": "%", "label": "BG Overlay Opacity", "default": 0 },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Contact Form"
+    }
+  ]
+}
+{% endschema %}

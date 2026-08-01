@@ -1,0 +1,50 @@
+{%- comment %} FAQ — native <details> for keyboard + screen-reader accessibility {% endcomment -%}
+<section class="home-block home-faq">
+  <div class="wrap">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow teal">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="faq-list">
+      {%- for block in section.blocks -%}
+        <details class="faq-item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }} <span class="plus" aria-hidden="true">+</span></summary>
+          <div class="faq-a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home · FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Questions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Things parents often ask" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Do I need all four books, or can I start with one?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>You can start with any single book. The system is built to grow with your child.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home · FAQ",
+      "blocks": [
+        { "type": "qa", "settings": { "question": "Do I need all four books, or can I start with one?", "answer": "<p>You can start with any single book. The system is built to grow with your child — Imitation builds the foundation, My Words adds vocabulary, Action bridges to sentences, and My Routines applies it all to daily life. The Complete Bundle saves the most if you want the full arc.</p>", "open": true } },
+        { "type": "qa", "settings": { "question": "When does My Routines Book ship?", "answer": "<p>My Routines Book is currently in presale. Reserve your copy today and it will ship on [date] — presale customers get early access ahead of general availability.</p>" } },
+        { "type": "qa", "settings": { "question": "What age are these books for?", "answer": "<p>Ages 6 months through 4 years, across the four stages. Most families return to all four books at different points in that range.</p>" } },
+        { "type": "qa", "settings": { "question": "What about shipping and returns?", "answer": "<p>Bundles ship free within the US, arriving in 3–5 business days. Not happy with your books? Send them back within 30 days for a full refund.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

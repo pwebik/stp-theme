@@ -1,0 +1,295 @@
+{% comment %}
+  ** Custom Four Column Section - Opinew Reviews **
+  - Author: Gemini AI
+  - Version: 4.1
+  - Updates: 
+    - Made images in columns 2, 3, and 4 clickable (leads to dedicated product page).
+    - Integration: Opinew Reviews (Star Ratings)
+{% endcomment %}
+
+{%- liquid
+  assign text_color_style = ''
+  if section.settings.text_color != 'rgba(0,0,0,0)' and section.settings.text_color != blank
+    assign text_color_style = 'color: ' | append: section.settings.text_color | append: ';'
+  endif
+  assign section_styles = text_color_style
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.75);
+    {% if section.settings.background_color != 'rgba(0,0,0,0)' %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} { position: relative; overflow: hidden; }
+
+  {%- if section.settings.background_image != blank -%}
+    .custom-section__background-wrapper--{{ section.id }} {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+    }
+    .custom-section__background-wrapper--{{ section.id }} img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    }
+    .custom-section__background-wrapper--{{ section.id }}::after {
+      content: ''; position: absolute; inset: 0; background-color: #000;
+      opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    }
+  {%- endif -%}
+
+  .three-column-layout__wrapper--{{ section.id }} { position: relative; z-index: 1; }
+  .three-column-layout__grid {
+    display: grid; grid-template-columns: 1fr; gap: 4rem;
+    align-items: {{ section.settings.vertical_alignment }};
+  }
+  @media screen and (min-width: 750px) {
+    .three-column-layout__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media screen and (min-width: 990px) {
+    .three-column-layout__grid { grid-template-columns: 1fr repeat(3, 1fr); }
+  }
+
+  .three-column-layout__col .image-wrapper { margin-bottom: 2rem; display: block; overflow: hidden; border-radius: var(--media-radius); }
+  .three-column-layout__col .image-wrapper img {
+    width: 100%; height: auto; display: block; transition: opacity 0.3s ease;
+  }
+  /* Subtle hover effect for clickable images */
+  .three-column-layout__col a.image-wrapper:hover img {
+    opacity: 0.85;
+  }
+
+  .three-column-layout__col .heading { margin-top: 0; }
+  .three-column-layout__col .rte-wrapper { margin-bottom: 2rem; }
+  .three-column-layout__col .button {
+    margin-top: 1rem; display: inline-flex; justify-content: center;
+    align-items: center; gap: 0.8rem;
+  }
+  
+  .heading--col-1 { font-size: calc({{ section.settings.heading_1_size }}px * 0.7); }
+  @media screen and (min-width: 750px) {
+    .heading--col-1 { font-size: {{ section.settings.heading_1_size }}px; }
+  }
+
+  .opinew-stars-wrapper { margin: 0.8rem 0; display: block; }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding" style="{{ section_styles }}">
+  {%- if section.settings.background_image != blank -%}
+    <div class="custom-section__background-wrapper--{{ section.id }}">
+      {{- section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '800, 1200, 1600, 2000, 2400' -}}
+    </div>
+  {%- endif -%}
+
+  <div class="three-column-layout__wrapper--{{ section.id }} page-width">
+    <div class="three-column-layout__grid">
+      
+      <div class="three-column-layout__col" style="text-align: {{ section.settings.alignment_1 }};">
+        {%- if section.settings.heading_1 != blank -%}
+          <h2 class="heading h2 heading--col-1" style="color: {{ section.settings.heading_1_color | default: 'inherit' }};">
+            {{ section.settings.heading_1 }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading_1 != blank -%}
+          <div class="rte-wrapper" style="color: {{ section.settings.subheading_1_color | default: 'inherit' }};">
+            <div class="rte">{{ section.settings.subheading_1 }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label_1 != blank and section.settings.button_link_1 != blank -%}
+          <a href="{{ section.settings.button_link_1 }}" class="button button--primary">
+            <span>{{ section.settings.button_label_1 | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="three-column-layout__col" style="text-align: {{ section.settings.alignment_2 }};">
+        {%- if section.settings.image_2 != blank -%}
+          {%- liquid
+             assign product_2_obj = all_products[section.settings.product_2]
+             assign image_2_url = product_2_obj.url | default: section.settings.button_link_2
+          -%}
+          {%- if image_2_url != blank -%}
+            <a href="{{ image_2_url }}" class="image-wrapper">
+              {{ section.settings.image_2 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </a>
+          {%- else -%}
+            <div class="image-wrapper">
+              {{ section.settings.image_2 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if section.settings.heading_2 != blank -%}
+          <h3 class="heading h3" style="color: {{ section.settings.heading_2_color | default: 'inherit' }};">
+            {{ section.settings.heading_2 }}
+          </h3>
+        {%- endif -%}
+        {%- if product_2_obj != blank -%}
+            <div class="opinew-stars-wrapper">
+              {% render 'opinew_review_stars_product', product: product_2_obj %}
+            </div>
+        {%- endif -%}
+        {%- if section.settings.subheading_2 != blank -%}
+          <div class="rte-wrapper" style="color: {{ section.settings.subheading_2_color | default: 'inherit' }};">
+            <div class="rte">{{ section.settings.subheading_2 }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label_2 != blank and section.settings.button_link_2 != blank -%}
+          <a href="{{ section.settings.button_link_2 }}" class="button button--primary">
+            <span>{{ section.settings.button_label_2 | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="three-column-layout__col" style="text-align: {{ section.settings.alignment_3 }};">
+        {%- if section.settings.image_3 != blank -%}
+          {%- liquid
+             assign product_3_obj = all_products[section.settings.product_3]
+             assign image_3_url = product_3_obj.url | default: section.settings.button_link_3
+          -%}
+          {%- if image_3_url != blank -%}
+            <a href="{{ image_3_url }}" class="image-wrapper">
+              {{ section.settings.image_3 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </a>
+          {%- else -%}
+            <div class="image-wrapper">
+              {{ section.settings.image_3 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if section.settings.heading_3 != blank -%}
+          <h3 class="heading h3" style="color: {{ section.settings.heading_3_color | default: 'inherit' }};">
+            {{ section.settings.heading_3 }}
+          </h3>
+        {%- endif -%}
+        {%- if product_3_obj != blank -%}
+            <div class="opinew-stars-wrapper">
+              {% render 'opinew_review_stars_product', product: product_3_obj %}
+            </div>
+        {%- endif -%}
+        {%- if section.settings.subheading_3 != blank -%}
+          <div class="rte-wrapper" style="color: {{ section.settings.subheading_3_color | default: 'inherit' }};">
+            <div class="rte">{{ section.settings.subheading_3 }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label_3 != blank and section.settings.button_link_3 != blank -%}
+          <a href="{{ section.settings.button_link_3 }}" class="button button--primary">
+            <span>{{ section.settings.button_label_3 | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="three-column-layout__col" style="text-align: {{ section.settings.alignment_4 }};">
+        {%- if section.settings.image_4 != blank -%}
+          {%- liquid
+             assign product_4_obj = all_products[section.settings.product_4]
+             assign image_4_url = product_4_obj.url | default: section.settings.button_link_4
+          -%}
+          {%- if image_4_url != blank -%}
+            <a href="{{ image_4_url }}" class="image-wrapper">
+              {{ section.settings.image_4 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </a>
+          {%- else -%}
+            <div class="image-wrapper">
+              {{ section.settings.image_4 | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800' }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if section.settings.heading_4 != blank -%}
+          <h3 class="heading h3" style="color: {{ section.settings.heading_4_color | default: 'inherit' }};">
+            {{ section.settings.heading_4 }}
+          </h3>
+        {%- endif -%}
+        {%- if product_4_obj != blank -%}
+            <div class="opinew-stars-wrapper">
+              {% render 'opinew_review_stars_product', product: product_4_obj %}
+            </div>
+        {%- endif -%}
+        {%- if section.settings.subheading_4 != blank -%}
+          <div class="rte-wrapper" style="color: {{ section.settings.subheading_4_color | default: 'inherit' }};">
+            <div class="rte">{{ section.settings.subheading_4 }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label_4 != blank and section.settings.button_link_4 != blank -%}
+          <a href="{{ section.settings.button_link_4 }}" class="button button--primary">
+            <span>{{ section.settings.button_label_4 | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Four Column",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Section Styling & Layout" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_top", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_bottom", "default": 60 },
+    { "type": "color", "id": "background_color", "label": "Background Color" },
+    { "type": "image_picker", "id": "background_image", "label": "Background Image" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 95, "step": 5, "unit": "%", "label": "Background Overlay Opacity", "default": 10 },
+    { "type": "color", "id": "text_color", "label": "Default Text Color", "info": "Base color for all text. Can be overridden in each column." },
+    {
+      "type": "select", "id": "vertical_alignment", "label": "Column Vertical Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Top" }, { "value": "center", "label": "Middle" }, { "value": "flex-end", "label": "Bottom" }
+      ], "default": "flex-start"
+    },
+    { "type": "header", "content": "Column 1" },
+    { "type": "text", "id": "heading_1", "label": "Heading", "default": "Our Mission" },
+    { "type": "range", "id": "heading_1_size", "min": 30, "max": 80, "step": 2, "unit": "px", "label": "Heading Font Size", "default": 42 },
+    { "type": "color", "id": "heading_1_color", "label": "Heading Color" },
+    { "type": "richtext", "id": "subheading_1", "label": "Subheading", "default": "<p>Share your brand's story, mission, or a special announcement in this primary column.</p>" },
+    { "type": "color", "id": "subheading_1_color", "label": "Subheading Color" },
+    { "type": "text", "id": "button_label_1", "label": "Button Label", "default": "Learn More" },
+    { "type": "url", "id": "button_link_1", "label": "Button Link" },
+    { "type": "select", "id": "button_icon_1", "label": "Button Icon", "options": [ { "value": "none", "label": "None" }, { "value": "arrow", "label": "Arrow" }, { "value": "plus", "label": "Plus" } ], "default": "arrow" },
+    { "type": "select", "id": "alignment_1", "label": "Text Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Column 2 - With Opinew Stars" },
+    { "type": "product", "id": "product_2", "label": "Product for Star Rating & Image Link" },
+    { "type": "image_picker", "id": "image_2", "label": "Image" },
+    { "type": "text", "id": "heading_2", "label": "Heading", "default": "Feature One" },
+    { "type": "color", "id": "heading_2_color", "label": "Heading Color" },
+    { "type": "richtext", "id": "subheading_2", "label": "Subheading", "default": "<p>Describe a key feature or benefit of your product or service.</p>" },
+    { "type": "color", "id": "subheading_2_color", "label": "Subheading Color" },
+    { "type": "text", "id": "button_label_2", "label": "Button Label", "default": "Explore" },
+    { "type": "url", "id": "button_link_2", "label": "Button Link" },
+    { "type": "select", "id": "button_icon_2", "label": "Button Icon", "options": [ { "value": "none", "label": "None" }, { "value": "arrow", "label": "Arrow" }, { "value": "plus", "label": "Plus" } ], "default": "none" },
+    { "type": "select", "id": "alignment_2", "label": "Text Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Column 3 - With Opinew Stars" },
+    { "type": "product", "id": "product_3", "label": "Product for Star Rating & Image Link" },
+    { "type": "image_picker", "id": "image_3", "label": "Image" },
+    { "type": "text", "id": "heading_3", "label": "Heading", "default": "Feature Two" },
+    { "type": "color", "id": "heading_3_color", "label": "Heading Color" },
+    { "type": "richtext", "id": "subheading_3", "label": "Subheading", "default": "<p>Describe another key feature or benefit of your product or service.</p>" },
+    { "type": "color", "id": "subheading_3_color", "label": "Subheading Color" },
+    { "type": "text", "id": "button_label_3", "label": "Button Label", "default": "Discover" },
+    { "type": "url", "id": "button_link_3", "label": "Button Link" },
+    { "type": "select", "id": "button_icon_3", "label": "Button Icon", "options": [ { "value": "none", "label": "None" }, { "value": "arrow", "label": "Arrow" }, { "value": "plus", "label": "Plus" } ], "default": "none" },
+    { "type": "select", "id": "alignment_3", "label": "Text Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Column 4 - With Opinew Stars" },
+    { "type": "product", "id": "product_4", "label": "Product for Star Rating & Image Link" },
+    { "type": "image_picker", "id": "image_4", "label": "Image" },
+    { "type": "text", "id": "heading_4", "label": "Heading", "default": "Feature Three" },
+    { "type": "color", "id": "heading_4_color", "label": "Heading Color" },
+    { "type": "richtext", "id": "subheading_4", "label": "Subheading", "default": "<p>Describe your third key feature or benefit.</p>" },
+    { "type": "color", "id": "subheading_4_color", "label": "Subheading Color" },
+    { "type": "text", "id": "button_label_4", "label": "Button Label", "default": "Learn More" },
+    { "type": "url", "id": "button_link_4", "label": "Button Link" },
+    { "type": "select", "id": "button_icon_4", "label": "Button Icon", "options": [ { "value": "none", "label": "None" }, { "value": "arrow", "label": "Arrow" }, { "value": "plus", "label": "Plus" } ], "default": "none" },
+    { "type": "select", "id": "alignment_4", "label": "Text Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" }
+  ],
+  "presets": [ { "name": "Custom Four Column" } ]
+}
+{% endschema %}

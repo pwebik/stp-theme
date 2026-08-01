@@ -1,0 +1,318 @@
+{% comment %}
+  ** Custom Two Column Section **
+  - Author: Gemini AI
+  - Version: 5.6
+  - Logic: Button adds the product from the "Image Link" URL to cart.
+  - Fallback: Uses "Product Picker" if no link is provided.
+  - Fixed: Restored full styling for price (bold), icons, and scoped images.
+{% endcomment %}
+
+{%- liquid
+  assign text_color_style = ''
+  if section.settings.text_color != 'rgba(0,0,0,0)' and section.settings.text_color != blank
+    assign text_color_style = 'color: ' | append: section.settings.text_color | append: ';'
+  endif
+
+  assign section_styles = text_color_style
+  assign target_product = all_products[section.settings.product]
+  if section.settings.image_link contains '/products/'
+    assign product_handle = section.settings.image_link | split: '/products/' | last | split: '?' | first
+    assign detected_product = all_products[product_handle]
+    if detected_product != blank
+      assign target_product = detected_product
+    endif
+  endif
+
+  assign image_link = section.settings.image_link
+  if image_link == blank and target_product != blank
+    assign image_link = target_product.url
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.75);
+    scroll-margin-top: {{ section.settings.scroll_offset }}px; 
+    position: relative;
+    {%- if section.settings.background_color != 'rgba(0,0,0,0)' and section.settings.background_color != blank -%}
+      background-color: {{ section.settings.background_color }};
+    {%- endif -%}
+  }
+  
+  #shopify-section-{{ section.id }} { position: relative; }
+
+  /* Scoped Image Logic */
+  #shopify-section-{{ section.id }} .custom-section__image { 
+    max-width: 100%; border-radius: var(--media-radius); display: block; margin: 0 auto 1.5rem; 
+    object-fit: {{ section.settings.image_object_fit }};
+    object-position: {{ section.settings.image_object_position }};
+  }
+
+  {%- if section.settings.image_height > 0 -%}
+    #shopify-section-{{ section.id }} .custom-section__image { height: {{ section.settings.image_height }}px; width: 100%; }
+  {%- endif -%}
+
+  /* Background Image Logic */
+  {%- if section.settings.background_image != blank -%}
+    .custom-section__background-wrapper--{{ section.id }} {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden;
+    }
+    .custom-section__background-wrapper--{{ section.id }} img {
+      width: 100%; height: 100%; object-fit: {{ section.settings.desktop_bg_size }}; 
+      object-position: {{ section.settings.desktop_bg_position }};
+    }
+    .custom-section__background-wrapper--{{ section.id }}::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #000; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    }
+    @media screen and (max-width: 749px) {
+      {%- if section.settings.show_bg_mobile -%}
+        .section-{{ section.id }}-padding {
+          background-image: linear-gradient(rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }}), rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }})), 
+                            url('{{ section.settings.mobile_background_image | default: section.settings.background_image | image_url: width: 800 }}');
+          background-size: {{ section.settings.mobile_bg_size }}; background-position: {{ section.settings.mobile_bg_position }}; background-repeat: no-repeat;
+        }
+        .custom-section__background-wrapper--{{ section.id }} { display: none; }
+      {%- endif -%}
+    }
+  {%- endif -%}
+
+  .custom-section__grid--{{ section.id }} {
+    position: relative; z-index: 1; display: grid; grid-template-columns: 1fr;
+    gap: 3rem 4rem; align-items: {{ section.settings.vertical_alignment }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+    .custom-section__grid--{{ section.id }} { grid-template-columns: 1fr 1fr; }
+    .desktop-order-1 { order: 1; } .desktop-order-2 { order: 2; }
+  }
+
+  .custom-section__col--left { text-align: {{ section.settings.text_alignment_left }}; }
+  .custom-section__col--right { text-align: center; }
+  
+  #shopify-section-{{ section.id }} .custom-section__image-link { 
+    display: block; text-decoration: none; transition: transform 0.3s ease, opacity 0.3s ease; 
+  }
+  #shopify-section-{{ section.id }} .custom-section__image-link:hover { opacity: 0.9; transform: scale(1.01); }
+
+  /* Price Bold Styling */
+  .custom-section__price-wrapper { 
+    display: flex; gap: 1rem; align-items: center; margin-top: 1.5rem; justify-content: center; font-size: 1.8rem; 
+  }
+  .price-item--sale { font-weight: 700; }
+  .price-item--regular { text-decoration: line-through; opacity: 0.7; font-weight: 400; }
+  
+  .custom-section__opinew-stars { display: flex; justify-content: center; margin: 0.8rem 0 1.2rem; }
+
+  /* Button/Form Styling */
+  .custom-section__button-form { margin-top: 1.5rem; }
+  .custom-section__button { cursor: pointer; border: none; }
+  #shopify-section-{{ section.id }} .custom-section__button .svg-wrapper svg {
+    width: {{ section.settings.button_icon_size }}px; height: {{ section.settings.button_icon_size }}px; fill: {{ section.settings.button_icon_color }};
+  }
+{%- endstyle -%}
+
+<div id="{{ section.settings.custom_id | escape }}" class="section-{{ section.id }}-padding" style="{{ section_styles }}">
+  {%- if section.settings.background_image != blank -%}
+    <div class="custom-section__background-wrapper--{{ section.id }}">
+      {{- section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'lazy' -}}
+    </div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="custom-section__grid--{{ section.id }}">
+      
+      {%- liquid
+        assign desktop_order_left = section.settings.desktop_layout
+        assign desktop_order_right = 2
+        if section.settings.desktop_layout == '2'
+          assign desktop_order_right = 1
+        endif
+
+        assign mobile_order_left = section.settings.mobile_layout
+        assign mobile_order_right = 2
+        if section.settings.mobile_layout == '2'
+          assign mobile_order_right = 1
+        endif
+      -%}
+
+      <div class="custom-section__col custom-section__col--left desktop-order-{{ desktop_order_left }} mobile-order-{{ mobile_order_left }}">
+        {%- if section.settings.heading_left != blank -%}
+          <h2 class="h1" style="color: {{ section.settings.heading_left_color | default: 'inherit' }}; font-size: {{ section.settings.heading_left_size }}px;">
+            {{ section.settings.heading_left | escape }}
+          </h2>
+        {%- endif -%}
+        <div class="rte" style="color: {{ section.settings.subheading_left_color | default: 'inherit' }};">{{ section.settings.subheading_left }}</div>
+      </div>
+
+      <div class="custom-section__col custom-section__col--right desktop-order-{{ desktop_order_right }} mobile-order-{{ mobile_order_right }}">
+        {%- if section.settings.image_right != blank -%}
+            {%- if image_link != blank -%}
+              <a href="{{ image_link }}" class="custom-section__image-link">
+                {{ section.settings.image_right | image_url: width: 1000 | image_tag: class: 'custom-section__image', loading: 'lazy' }}
+              </a>
+            {%- else -%}
+              {{ section.settings.image_right | image_url: width: 1000 | image_tag: class: 'custom-section__image', loading: 'lazy' }}
+            {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.heading_right != blank -%}
+          <h3 class="h3" style="color: {{ section.settings.heading_right_color | default: 'inherit' }}; font-size: {{ section.settings.heading_right_size }}px; margin: 0 0 1rem;">
+            {{ section.settings.heading_right | escape }}
+          </h3>
+        {%- endif -%}
+
+        {%- if section.settings.product != blank -%}
+          <div class="custom-section__opinew-stars">
+            {% render 'opinew_review_stars_product', product: all_products[section.settings.product] %}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.subheading_right != blank -%}
+          <div class="rte" style="color: {{ section.settings.subheading_right_color | default: 'inherit' }};">{{ section.settings.subheading_right }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.price != blank -%}
+          <div class="custom-section__price-wrapper">
+            <span class="price-item--sale">${{ section.settings.price }}</span>
+            {%- if section.settings.compare_at_price != blank -%}
+              <s class="price-item--regular">${{ section.settings.compare_at_price }}</s>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank and target_product != blank -%}
+          {%- assign cart_variant = target_product.selected_or_first_available_variant -%}
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="custom-section__button-form">
+            <input type="hidden" name="id" value="{{ cart_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="return_to" value="/cart">
+            <button type="submit" class="button button--primary custom-section__button">
+              {{ section.settings.button_label | escape }}
+            </button>
+          </form>
+        {%- elsif section.settings.button_label != blank -%}
+          <a href="{{ section.settings.image_link | default: '#' }}" class="button button--primary custom-section__button">
+            {{ section.settings.button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Two Column",
+  "settings": [
+    { "type": "header", "content": "Scroll & Offset" },
+    { "type": "text", "id": "custom_id", "label": "Anchor ID (e.g. contact-us)" },
+    { "type": "range", "id": "scroll_offset", "min": 0, "max": 200, "step": 5, "default": 100, "unit": "px", "label": "Scroll Gap (for Header)" },
+    { "type": "header", "content": "t:sections.all.padding.section_padding_heading" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top Padding", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom Padding", "default": 36 },
+    { "type": "header", "content": "Background Settings" },
+    { "type": "color", "id": "background_color", "label": "Background Color", "default": "#ffffff" },
+    { "type": "image_picker", "id": "background_image", "label": "Background Image" },
+    {
+      "type": "select",
+      "id": "desktop_bg_size",
+      "label": "Desktop Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "desktop_bg_position",
+      "label": "Desktop Background Position",
+      "options": [
+        { "value": "left top", "label": "Top Left" },
+        { "value": "center center", "label": "Middle Center" },
+        { "value": "right bottom", "label": "Bottom Right" }
+      ],
+      "default": "center center"
+    },
+    { "type": "header", "content": "Mobile Background Settings" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile BG Image" },
+    { "type": "checkbox", "id": "show_bg_mobile", "label": "Show BG on Mobile", "default": true },
+    {
+      "type": "select",
+      "id": "mobile_bg_size",
+      "label": "Mobile Background Size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "mobile_bg_position",
+      "label": "Mobile Background Position",
+      "options": [
+        { "value": "center center", "label": "Middle" },
+        { "value": "center top", "label": "Top" }
+      ],
+      "default": "center center"
+    },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 95, "step": 5, "unit": "%", "label": "BG Overlay Opacity", "default": 10 },
+    { "type": "color", "id": "text_color", "label": "Default Text Color" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "desktop_layout", "label": "Desktop Layout", "options": [ { "value": "1", "label": "Text | Image" }, { "value": "2", "label": "Image | Text" } ], "default": "1" },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile Layout", "options": [ { "value": "1", "label": "Text then Image" }, { "value": "2", "label": "Image then Text" } ], "default": "1" },
+    { "type": "select", "id": "vertical_alignment", "label": "Vertical Alignment", "options": [ { "value": "flex-start", "label": "Top" }, { "value": "center", "label": "Middle" }, { "value": "flex-end", "label": "Bottom" } ], "default": "center" },
+    { "type": "header", "content": "Left Column (Text)" },
+    { "type": "text", "id": "heading_left", "label": "Heading", "default": "Heading" },
+    { "type": "range", "id": "heading_left_size", "min": 24, "max": 80, "default": 48, "unit": "px", "label": "Heading Font Size" },
+    { "type": "color", "id": "heading_left_color", "label": "Heading Color" },
+    { "type": "richtext", "id": "subheading_left", "label": "Subheading", "default": "<p>Content...</p>" },
+    { "type": "color", "id": "subheading_left_color", "label": "Subheading Color" },
+    { "type": "select", "id": "text_alignment_left", "label": "Text Alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Right Column (Image & Product)" },
+    { "type": "image_picker", "id": "image_right", "label": "Image" },
+    { "type": "url", "id": "image_link", "label": "Image Link (Clicking Image & Add to Cart)" },
+    { "type": "range", "id": "image_height", "min": 0, "max": 800, "step": 20, "unit": "px", "label": "Fixed Image Height (0 for auto)", "default": 0 },
+    {
+      "type": "select",
+      "id": "image_object_fit",
+      "label": "Image Object Fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_object_position",
+      "label": "Image Focus (Position)",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "text", "id": "heading_right", "label": "Heading Right", "default": "Feature Heading" },
+    { "type": "range", "id": "heading_right_size", "min": 20, "max": 48, "default": 28, "unit": "px", "label": "Heading Font Size" },
+    { "type": "color", "id": "heading_right_color", "label": "Heading Color" },
+    { "type": "product", "id": "product", "label": "Product (For Reviews & Fallback Add to Cart)" },
+    { "type": "richtext", "id": "subheading_right", "label": "Subheading Right" },
+    { "type": "color", "id": "subheading_right_color", "label": "Subheading Right Color" },
+    { "type": "text", "id": "price", "label": "Price (e.g., 29.99)" },
+    { "type": "text", "id": "compare_at_price", "label": "Old Price" },
+    { "type": "header", "content": "Button Styling" },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop Now" },
+    { "type": "range", "id": "button_icon_size", "min": 12, "max": 48, "step": 2, "unit": "px", "label": "Icon Size", "default": 20 },
+    { "type": "color", "id": "button_icon_color", "label": "Icon Color", "default": "#ffffff" }
+  ],
+  "presets": [ { "name": "Custom Two Column" } ]
+}
+{% endschema %}

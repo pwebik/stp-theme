@@ -1,0 +1,180 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: How It Works
+  4 steps + lifestyle image.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="how-it-works">
+  <div class="container">
+    <div class="how-copy">
+      {%- if section.settings.small_label != blank -%}
+        <span class="small-label">{{ section.settings.small_label }}</span>
+      {%- endif -%}
+      
+      <h2>
+        {{ section.settings.headline_main }}
+        {%- if section.settings.headline_accent != blank -%}
+          <span class="accent">{{ section.settings.headline_accent }}</span>
+        {%- endif -%}
+      </h2>
+      
+      {%- if section.settings.lead != blank -%}
+        <div class="lead">{{ section.settings.lead }}</div>
+      {%- endif -%}
+      
+      <div class="steps-grid">
+        {%- for block in section.blocks -%}
+          <div class="step" {{ block.shopify_attributes }}>
+            <div class="num">STEP {{ forloop.index }}</div>
+            <div class="text">{{ block.settings.label }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+      
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="btn-primary">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+    
+    {%- if section.settings.image != blank -%}
+      <div class="image-box">
+        {{ section.settings.image | image_url: width: 1200 | image_tag:
+            loading: 'lazy',
+            alt: section.settings.image_alt | default: 'A toddler enjoying the book',
+            widths: '400, 600, 800, 1200'
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP How It Works",
+  "tag": "section",
+  "class": "lp-section lp-section--how",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label (pill)",
+      "default": "THE TECHNIQUE"
+    },
+    {
+      "type": "text",
+      "id": "headline_main",
+      "label": "Headline (first part)",
+      "default": "Four simple moments that turn reading into"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent",
+      "label": "Headline accent phrase (colored)",
+      "default": "talking practice."
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "<p>Each book has gentle prompts woven into the pages that show you what to say, when to pause, and how to celebrate every little try. It's the same approach speech therapists use in their sessions — written down so anyone can use it.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Start the System — $39.99"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Lifestyle image",
+      "info": "A photo of a toddler engaging with the book (recommended size: 800×900px)."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "A toddler enjoying the Imitation Book"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Step description",
+          "default": "Read the page together"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "LP How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "label": "Read the page together — out loud, with energy."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Pause. Wait. Give your child a moment to try."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Celebrate every sound, gesture, or attempt."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Read it again tomorrow — repetition unlocks language."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

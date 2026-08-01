@@ -1,0 +1,241 @@
+{%- capture lp_bg_decls -%}{%- if section.settings.bg_image != blank -%}{%- assign lp_ov = section.settings.bg_overlay | default: 0 | divided_by: 100.0 -%}background-image: linear-gradient(rgba(255,255,255,{{ lp_ov }}),rgba(255,255,255,{{ lp_ov }})), url('{{ section.settings.bg_image | image_url: width: 2400 }}'); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}{%- endcapture -%}
+{%- comment -%}
+  Landing Page: 3-Book System
+  
+  "Sounds → Words → Sentences" with three stage cards.
+  Includes the scroll-triggered reveal animation on the title.
+  
+  Each book is a block — client can edit images, names, age ranges, descriptions.
+{%- endcomment -%}
+
+<section{% if section.settings.bg_image != blank %} style="{{ lp_bg_decls }}"{% endif %} class="system" id="system-{{ section.id }}">
+  {%- if section.settings.show_dot_accent -%}
+    <span class="lp-accent acc-pink" aria-hidden="true" style="top: 90px; right: 18%; --acc-size: 34px; opacity: 0.6;">
+      <svg viewBox="0 0 30 12" fill="currentColor"><circle cx="4" cy="6" r="3"/><circle cx="15" cy="6" r="3"/><circle cx="26" cy="6" r="3"/></svg>
+    </span>
+  {%- endif -%}
+  
+  <div class="header-block">
+    {%- if section.settings.small_label != blank -%}
+      <span class="small-label">{{ section.settings.small_label }}</span>
+    {%- endif -%}
+    
+    <h2>
+      <span class="reveal-word r-1">{{ section.settings.word_1 }}</span>
+      <span class="reveal-arrow r-2 arrow">→</span>
+      <span class="reveal-word r-3">{{ section.settings.word_2 }}</span>
+      <span class="reveal-arrow r-4 arrow">→</span>
+      <span class="reveal-word r-5">{{ section.settings.word_3 }}</span>
+    </h2>
+    
+    {%- if section.settings.subhead != blank -%}
+      <div class="sub">{{ section.settings.subhead }}</div>
+    {%- endif -%}
+  </div>
+  
+  <div class="stage-grid">
+    {%- for block in section.blocks -%}
+      <div class="stage-card stage-{{ forloop.index }}" {{ block.shopify_attributes }}>
+        <div class="stage-number">STAGE {{ forloop.index }}</div>
+        {%- if block.settings.book_image != blank -%}
+          <div class="book-img">
+            {{ block.settings.book_image | image_url: width: 600 | image_tag:
+                loading: 'lazy',
+                alt: block.settings.book_title,
+                widths: '300, 600'
+            }}
+          </div>
+        {%- endif -%}
+        <h3>{{ block.settings.book_title }}</h3>
+        <div class="stage-tag">{{ block.settings.book_subtitle }}</div>
+        <p>{{ block.settings.book_description }}</p>
+        <div class="age">{{ block.settings.age_range }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+  
+  {%- if section.settings.cta_text != blank -%}
+    <div class="system-cta">
+      <a href="{{ section.settings.cta_link }}" class="btn-primary">{{ section.settings.cta_text }}</a>
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+  /* Scroll-trigger word-by-word reveal */
+  (function () {
+    var el = document.getElementById('system-{{ section.id }}');
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      el.classList.add('in-view');
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    obs.observe(el);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "LP 3-Book System",
+  "tag": "section",
+  "class": "lp-section lp-section--system",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Small label (pill)",
+      "default": "THE 3-BOOK SYSTEM"
+    },
+    {
+      "type": "header",
+      "content": "Progression headline"
+    },
+    {
+      "type": "paragraph",
+      "content": "These three words animate in sequence as the section scrolls into view."
+    },
+    {
+      "type": "text",
+      "id": "word_1",
+      "label": "First word",
+      "default": "Sounds"
+    },
+    {
+      "type": "text",
+      "id": "word_2",
+      "label": "Second word",
+      "default": "Words"
+    },
+    {
+      "type": "text",
+      "id": "word_3",
+      "label": "Third word",
+      "default": "Sentences"
+    },
+    {
+      "type": "richtext",
+      "id": "subhead",
+      "label": "Subhead",
+      "default": "<p>Three board books designed to grow with your child — one for each natural stage of early language.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Get All 3 Books — $39.99"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dot_accent",
+      "label": "Show pink dot accent",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay",
+      "label": "White overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "0 = image at full strength, higher = more white wash for text legibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "book",
+      "name": "Book stage card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "book_image",
+          "label": "Book cover image"
+        },
+        {
+          "type": "text",
+          "id": "book_title",
+          "label": "Book title"
+        },
+        {
+          "type": "text",
+          "id": "book_subtitle",
+          "label": "Subtitle / tagline"
+        },
+        {
+          "type": "textarea",
+          "id": "book_description",
+          "label": "Description (1–2 sentences)"
+        },
+        {
+          "type": "text",
+          "id": "age_range",
+          "label": "Age range pill",
+          "default": "Best for 6 months – 2 years"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "LP 3-Book System",
+      "blocks": [
+        {
+          "type": "book",
+          "settings": {
+            "book_title": "Imitation Book",
+            "book_subtitle": "Sounds & Play",
+            "book_description": "Sparks early talking with playful sounds and actions. Your child watches, listens, and tries — the critical first step toward words.",
+            "age_range": "Best for 6 months – 2 years"
+          }
+        },
+        {
+          "type": "book",
+          "settings": {
+            "book_title": "My Words Book",
+            "book_subtitle": "First Words",
+            "book_description": "Real first words your toddler can actually say — ball, mama, puppy, banana. Watch them say their first words with confidence.",
+            "age_range": "Best for 1 – 3 years"
+          }
+        },
+        {
+          "type": "book",
+          "settings": {
+            "book_title": "Action Book",
+            "book_subtitle": "Verbs & Sentences",
+            "book_description": "From single words to early sentences. Verbs and -ing words that turn \"eat\" into \"she is eating\" — the bridge to talking in full.",
+            "age_range": "Best for 18 months – 4 years"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
