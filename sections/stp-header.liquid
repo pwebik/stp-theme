@@ -1,14 +1,14 @@
 {%- comment %} Speech Therapy Publishing — brand header {% endcomment -%}
 {%- liquid
-  assign lh = 46
+  assign lw = 190
   if section.settings.logo_size == 'sm'
-    assign lh = 32
+    assign lw = 150
   elsif section.settings.logo_size == 'lg'
-    assign lh = 60
+    assign lw = 240
   elsif section.settings.logo_size == 'xl'
-    assign lh = 76
+    assign lw = 300
   endif
-  assign logo_style = 'height:' | append: lh | append: 'px !important;width:auto;'
+  assign logo_style = 'width:' | append: lw | append: 'px !important;height:auto !important;max-width:none !important;'
 -%}
 <header class="stp-header">
   <div class="stp-nav-inner">
@@ -56,8 +56,8 @@
 {% stylesheet %}
 .stp-header { background: var(--cream, #FDF3E2); border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); position: sticky; top: 0; z-index: 50; }
 .stp-nav-inner { display: flex; align-items: center; gap: 20px; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
-.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; flex: 1 1 0; min-width: 0; }
-.stp-logo-img { width: auto; display: block; }
+.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; flex: 1 1 auto; }
+.stp-logo-img { display: block; height: auto; max-width: none; }
 .stp-logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--coral, #F4901E); flex: none; }
 .stp-logo em { font-style: normal; color: var(--coral-deep, #DE7B0E); }
 .stp-links { display: flex; gap: 30px; align-items: center; justify-content: center; flex: 0 1 auto; }
@@ -89,7 +89,7 @@
   "name": "STP Header",
   "settings": [
     { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional — overrides text logo)" },
-    { "type": "select", "id": "logo_size", "label": "Logo image size", "options": [ {"value":"sm","label":"Small"}, {"value":"md","label":"Medium"}, {"value":"lg","label":"Large"}, {"value":"xl","label":"Extra large"} ], "default": "md" },
+    { "type": "select", "id": "logo_size", "label": "Logo image size", "options": [ {"value":"sm","label":"Small"}, {"value":"md","label":"Medium"}, {"value":"lg","label":"Large"}, {"value":"xl","label":"Extra large"} ], "default": "lg" },
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "speech therapy" },
     { "type": "text", "id": "logo_text_accent", "label": "Logo text (accent)", "default": "publishing" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
