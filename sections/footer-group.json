@@ -18,21 +18,21 @@
           "type": "column",
           "settings": {
             "heading": "Shop",
-            "menu": ""
+            "menu": "shop"
           }
         },
         "c2": {
           "type": "column",
           "settings": {
             "heading": "Company",
-            "menu": "main-menu-2025"
+            "menu": "main-menu-2026"
           }
         },
         "c3": {
           "type": "column",
           "settings": {
             "heading": "New",
-            "menu": ""
+            "menu": "new"
           }
         }
       },
