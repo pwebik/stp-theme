@@ -25,7 +25,7 @@
           "type": "column",
           "settings": {
             "heading": "Company",
-            "menu": "main-menu-2026"
+            "menu": "company"
           }
         },
         "c3": {
