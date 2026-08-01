@@ -59,9 +59,9 @@
         "stat_number": "100,000+",
         "stat_label": "families trust this system",
         "cta_primary_label": "Shop the Complete Bundle →",
-        "cta_primary_link": "",
+        "cta_primary_link": "shopify://products/early-speech-complete-bundle-4-fun-interactive-at-home-speech-therapy-books-for-toddlers-to-build-sounds-words-sentences-daily-routines-written-by-a-pediatric-speech-therapist",
         "cta_secondary_label": "See all 4 books",
-        "cta_secondary_link": "",
+        "cta_secondary_link": "shopify://collections/all",
         "card_badge": "+1 NEW BOOK!",
         "card_title": "Early Speech Complete Bundle",
         "card_subtitle": "All 4 Books · Sounds → Words → Actions → Routines",
@@ -151,7 +151,7 @@
             "price_was": "$47.97",
             "price_save": "Save $7.98",
             "button_label": "Shop Starter Bundle",
-            "button_link": ""
+            "button_link": "shopify://products/learn-to-talk-bundle-3-fun-interactive-at-home-speech-therapy-books-for-toddlers-to-build-sounds-words-sentences-written-by-a-pediatric-speech-therapist"
           }
         },
         "home_bundles_b2": {
@@ -172,7 +172,7 @@
             "price_was": "$63.96",
             "price_save": "Save $13.97 · Free shipping",
             "button_label": "Shop the Complete Bundle",
-            "button_link": ""
+            "button_link": "shopify://products/early-speech-complete-bundle-4-fun-interactive-at-home-speech-therapy-books-for-toddlers-to-build-sounds-words-sentences-daily-routines-written-by-a-pediatric-speech-therapist"
           }
         },
         "home_bundles_b3": {
@@ -193,7 +193,7 @@
             "price_was": "$47.97",
             "price_save": "Save $7.98",
             "button_label": "Shop Daily Routines Bundle",
-            "button_link": ""
+            "button_link": "shopify://products/late-talker-speech-bundle-3-fun-interactive-at-home-speech-therapy-books-for-toddlers-to-build-sounds-actions-daily-routines-written-by-a-pediatric-speech-therapist"
           }
         }
       },
@@ -292,7 +292,7 @@
             "description": "Silly sounds and play actions that spark your toddler's very first attempts to talk.",
             "price": "$18.99",
             "shop_label": "Shop this book →",
-            "shop_link": "",
+            "shop_link": "shopify://products/imitation-book-interactive-fun-learn-to-talk-board-book-for-toddlers-ages-0-4-written-by-a-speech-therapist",
             "highlight_border": false
           }
         },
@@ -309,7 +309,7 @@
             "description": "First words your toddler can actually say — ball, mama, puppy, banana.",
             "price": "$18.99",
             "shop_label": "Shop this book →",
-            "shop_link": "",
+            "shop_link": "shopify://products/my-words-book-easy-first-words-toddlers-can-actually-say-written-by-a-speech-therapist-speech-development-board-book-for-kids-ages-1-4",
             "highlight_border": false
           }
         },
@@ -326,7 +326,7 @@
             "description": "Verbs and -ing words that bridge single words into early sentences.",
             "price": "$18.99",
             "shop_label": "Shop this book →",
-            "shop_link": "",
+            "shop_link": "shopify://products/action-book-childrens-board-book-for-learning-verbs-for-toddlers-ages-1-4-written-by-a-speech-therapist",
             "highlight_border": false
           }
         },
@@ -343,7 +343,7 @@
             "description": "Real phrases for mealtime, dressing, and play — the language of daily life at home.",
             "price": "$18.99",
             "shop_label": "Reserve yours →",
-            "shop_link": "",
+            "shop_link": "shopify://products/my-routines-book-fun-interactive-at-home-speech-therapy-board-book-for-toddlers-ages-1-4-daily-routine-language-for-late-talkers-gestalt-language-processors-written-by-a-pediatric-speech-therapist",
             "highlight_border": true
           }
         }
@@ -525,7 +525,7 @@
         "heading": "Open the books, read together, and watch the words come.",
         "subtext": "Get all four — Sounds, Words, Actions, and Routines — in one complete system.",
         "cta_label": "Shop the Complete Bundle",
-        "cta_link": ""
+        "cta_link": "shopify://products/early-speech-complete-bundle-4-fun-interactive-at-home-speech-therapy-books-for-toddlers-to-build-sounds-words-sentences-daily-routines-written-by-a-pediatric-speech-therapist"
       }
     }
   },
