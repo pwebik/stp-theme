@@ -13,28 +13,26 @@
   "sections": {
     "stp-footer": {
       "type": "stp-footer",
-      "settings": {
-        "logo_text": "speech therapy",
-        "logo_text_accent": "publishing",
-        "copyright": "Speech Therapy Publishing. All rights reserved."
-      },
       "blocks": {
         "c1": {
           "type": "column",
           "settings": {
-            "heading": "Shop"
+            "heading": "Shop",
+            "menu": ""
           }
         },
         "c2": {
           "type": "column",
           "settings": {
-            "heading": "Company"
+            "heading": "Company",
+            "menu": "main-menu-2025"
           }
         },
         "c3": {
           "type": "column",
           "settings": {
-            "heading": "New"
+            "heading": "New",
+            "menu": ""
           }
         }
       },
@@ -42,7 +40,13 @@
         "c1",
         "c2",
         "c3"
-      ]
+      ],
+      "settings": {
+        "logo_image": "shopify://shop_images/Mater_Logo_-_Speech_Therapy_Publishing.png",
+        "logo_text": "speech therapy",
+        "logo_text_accent": "publishing",
+        "copyright": "Speech Therapy Publishing. All rights reserved."
+      }
     }
   },
   "order": [

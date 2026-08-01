@@ -17,7 +17,7 @@
         "announcement-1": {
           "type": "announcement",
           "settings": {
-            "text": "NEW \u00b7 My Routines Book is here \u2014 the 4th book in the system. Presale ends soon \u2192",
+            "text": "NEW · My Routines Book is here — the 4th book in the system. Presale ends soon →",
             "link": ""
           }
         }
@@ -38,11 +38,13 @@
     "stp-header": {
       "type": "stp-header",
       "settings": {
-        "logo_text": "speech therapy",
-        "logo_text_accent": "publishing",
+        "logo_image": "shopify://shop_images/Mater_Logo_-_Speech_Therapy_Publishing.png",
+        "logo_text": "",
+        "logo_text_accent": "",
         "menu": "main-menu",
         "cta_label": "Shop Bundles",
-        "show_cart": true
+        "cta_link": "shopify://collections/bundles",
+        "show_cart": false
       }
     }
   },
