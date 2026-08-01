@@ -39,6 +39,7 @@
       "type": "stp-header",
       "settings": {
         "logo_image": "shopify://shop_images/Mater_Logo_-_Speech_Therapy_Publishing.png",
+        "logo_size": "md",
         "logo_text": "",
         "logo_text_accent": "",
         "menu": "main-menu-2026",
