@@ -384,7 +384,7 @@
           "settings": {
             "video": "shopify://files/videos/1st video (1).mp4",
             "caption": "Featured video",
-            "label": "\"Wait for it — she says 'nana' at 0:42\""
+            "label": ""
           }
         },
         "home_families_b2": {
@@ -392,7 +392,7 @@
           "settings": {
             "video": "shopify://files/videos/2nd (1).mp4",
             "caption": "Parent clip",
-            "label": "Bedtime with the Imitation Book"
+            "label": ""
           }
         },
         "home_families_b3": {
