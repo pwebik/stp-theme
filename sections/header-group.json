@@ -44,7 +44,8 @@
         "menu": "main-menu",
         "cta_label": "Shop Bundles",
         "cta_link": "shopify://collections/bundles",
-        "show_cart": false
+        "show_search": true,
+        "show_cart": true
       }
     }
   },

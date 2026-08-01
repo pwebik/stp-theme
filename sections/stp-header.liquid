@@ -3,7 +3,7 @@
   <div class="stp-nav-inner">
     <a href="{{ routes.root_url }}" class="stp-logo">
       {%- if section.settings.logo_image != blank -%}
-        {{ section.settings.logo_image | image_url: width: 400 | image_tag: alt: shop.name, class: 'stp-logo-img', style: 'height:' | append: section.settings.logo_height | append: 'px' }}
+        <span class="stp-logo-imgwrap stp-logo-{{ section.settings.logo_size }}">{{ section.settings.logo_image | image_url: width: 400 | image_tag: alt: shop.name, class: 'stp-logo-img' }}</span>
       {%- else -%}
         <span class="stp-logo-dot" aria-hidden="true"></span><span class="stp-logo-text">{{ section.settings.logo_text }} <em>{{ section.settings.logo_text_accent }}</em></span>
       {%- endif -%}
@@ -46,7 +46,12 @@
 .stp-header { background: var(--cream, #FDF3E2); border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); position: sticky; top: 0; z-index: 50; }
 .stp-nav-inner { display: flex; align-items: center; gap: 24px; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
 .stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; margin-right: auto; }
-.stp-logo-img { width: auto; display: block; }
+.stp-logo-imgwrap { display: inline-flex; }
+.stp-logo-img { width: auto; display: block; height: 44px; }
+.stp-logo-sm .stp-logo-img { height: 32px; }
+.stp-logo-md .stp-logo-img { height: 46px; }
+.stp-logo-lg .stp-logo-img { height: 60px; }
+.stp-logo-xl .stp-logo-img { height: 76px; }
 .stp-logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--coral, #F4901E); flex: none; }
 .stp-logo em { font-style: normal; color: var(--coral-deep, #DE7B0E); }
 .stp-links { display: flex; gap: 30px; align-items: center; }
@@ -59,7 +64,7 @@
 .stp-nav-cta { background: var(--ink, #262138); color: var(--white, #fff) !important; padding: 11px 22px; border-radius: 100px; font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
 .stp-nav-cta:hover { background: var(--teal-deep, #145E51); }
 .stp-cta-mobile { display: none; }
-.stp-nav-toggle { display: none; }
+.stp-nav-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; margin: 0; }
 .stp-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; margin-left: 4px; }
 .stp-burger span { width: 24px; height: 2px; background: var(--ink, #262138); border-radius: 2px; }
 @media (max-width: 980px) {
@@ -76,7 +81,7 @@
   "name": "STP Header",
   "settings": [
     { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional — overrides text logo)" },
-    { "type": "range", "id": "logo_height", "label": "Logo image height", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 44 },
+    { "type": "select", "id": "logo_size", "label": "Logo image size", "options": [ {"value":"sm","label":"Small"}, {"value":"md","label":"Medium"}, {"value":"lg","label":"Large"}, {"value":"xl","label":"Extra large"} ], "default": "md" },
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "speech therapy" },
     { "type": "text", "id": "logo_text_accent", "label": "Logo text (accent)", "default": "publishing" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
