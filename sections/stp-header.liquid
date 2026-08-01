@@ -60,6 +60,10 @@
       header = document.querySelector('.stp-header');
     }
     if (!header) return;
+    // Make the section's top-level wrapper sticky so it pins across the whole page
+    var el = header;
+    while (el.parentElement && el.parentElement !== document.body) { el = el.parentElement; }
+    if (el && el !== document.body) { el.style.position = 'sticky'; el.style.top = '0'; el.style.zIndex = '50'; }
     var ticking = false;
     function update() {
       if (window.scrollY > 24) { header.classList.add('stp-scrolled'); }
@@ -74,14 +78,14 @@
 </script>
 
 {% stylesheet %}
-.stp-header { background: var(--cream, #FDF3E2); border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); position: sticky; top: 0; z-index: 50; animation: stpSlideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; transition: box-shadow 0.3s ease, background 0.3s ease; }
+.stp-header { background: var(--cream, #FDF3E2); border-bottom: 1px solid var(--line, rgba(43,36,64,0.1)); position: relative; z-index: 50; animation: stpSlideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; transition: box-shadow 0.3s ease, background 0.3s ease; }
 .stp-header.stp-scrolled { box-shadow: 0 6px 20px -12px rgba(43, 36, 64, 0.35); background: rgba(253, 243, 226, 0.94); backdrop-filter: saturate(1.1) blur(6px); }
 @keyframes stpSlideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 .stp-nav-inner { display: flex; align-items: center; gap: 20px; padding: 14px 24px; max-width: 1200px; margin: 0 auto; transition: padding 0.3s ease; }
 .stp-scrolled .stp-nav-inner { padding-top: 8px; padding-bottom: 8px; }
 .stp-logo-img { transition: transform 0.3s ease; transform-origin: left center; }
 .stp-scrolled .stp-logo-img { transform: scale(0.84); }
-.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; flex: 1 1 auto; }
+.stp-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading-family); font-weight: 700; font-size: 20px; color: var(--ink, #262138); text-decoration: none; white-space: nowrap; flex: 1 1 0; min-width: 0; }
 .stp-logo-img { display: block; height: auto; max-width: none; }
 .stp-logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--coral, #F4901E); flex: none; }
 .stp-logo em { font-style: normal; color: var(--coral-deep, #DE7B0E); }
