@@ -13,7 +13,7 @@
         <div class="bundle-card{% if featured %} hero-bundle{% endif %}" {{ block.shopify_attributes }}>
           {%- if featured and block.settings.ribbon != blank -%}<span class="bundle-ribbon">{{ block.settings.ribbon }}</span>{%- endif -%}
           {%- if block.settings.kicker != blank -%}
-            <span class="eyebrow {{ block.settings.accent }}"{% if featured %} style="color:var(--yellow);"{% endif %}>{{ block.settings.kicker }}</span>
+            <span class="eyebrow"{% if featured %} style="color:var(--yellow);"{% else %} style="color:{{ block.settings.kicker_color }};"{% endif %}>{{ block.settings.kicker }}</span>
           {%- endif -%}
           <h3>{{ block.settings.title }}</h3>
 
@@ -69,13 +69,13 @@
         { "type": "checkbox", "id": "featured", "label": "Featured (elevated dark card)", "default": false },
         { "type": "text", "id": "ribbon", "label": "Ribbon (featured only)", "default": "★ Best Value · Includes the NEW book" },
         { "type": "text", "id": "kicker", "label": "Kicker", "default": "Starter" },
-        { "type": "select", "id": "accent", "label": "Kicker colour", "options": [ {"value":"coral","label":"Coral"}, {"value":"teal","label":"Teal"}, {"value":"grape","label":"Grape"} ], "default": "coral" },
+        { "type": "color", "id": "kicker_color", "label": "Kicker colour", "default": "#DE7B0E" },
         { "type": "text", "id": "title", "label": "Title", "default": "Early Speech Starter Bundle" },
         { "type": "header", "content": "Covers (up to 4)" },
         { "type": "image_picker", "id": "cover_1", "label": "Cover 1" }, { "type": "text", "id": "label_1", "label": "Label 1", "default": "Imitation" },
         { "type": "image_picker", "id": "cover_2", "label": "Cover 2" }, { "type": "text", "id": "label_2", "label": "Label 2", "default": "My Words" },
         { "type": "image_picker", "id": "cover_3", "label": "Cover 3" }, { "type": "text", "id": "label_3", "label": "Label 3", "default": "Action" },
-        { "type": "image_picker", "id": "cover_4", "label": "Cover 4" }, { "type": "text", "id": "label_4", "label": "Label 4", "default": "" },
+        { "type": "image_picker", "id": "cover_4", "label": "Cover 4" }, { "type": "text", "id": "label_4", "label": "Label 4" },
         { "type": "header", "content": "Copy & pricing" },
         { "type": "textarea", "id": "description", "label": "Description", "default": "The original 3-book system. Play, talk, and build confidence — perfect if your child is just starting their speech journey." },
         { "type": "textarea", "id": "includes", "label": "Includes (one per line)", "default": "Imitation Book\nMy Words Book\nAction Book" },
@@ -92,9 +92,9 @@
     {
       "name": "Home · Bundle tiers",
       "blocks": [
-        { "type": "bundle", "settings": { "featured": false, "kicker": "Starter", "accent": "coral", "title": "Early Speech Starter Bundle", "label_1": "Imitation", "label_2": "My Words", "label_3": "Action", "label_4": "", "description": "The original 3-book system. Play, talk, and build confidence — perfect if your child is just starting their speech journey.", "includes": "Imitation Book\nMy Words Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Starter Bundle" } },
+        { "type": "bundle", "settings": { "featured": false, "kicker": "Starter", "kicker_color": "#DE7B0E", "title": "Early Speech Starter Bundle", "label_1": "Imitation", "label_2": "My Words", "label_3": "Action", "label_4": "", "description": "The original 3-book system. Play, talk, and build confidence — perfect if your child is just starting their speech journey.", "includes": "Imitation Book\nMy Words Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Starter Bundle" } },
         { "type": "bundle", "settings": { "featured": true, "ribbon": "★ Best Value · Includes the NEW book", "kicker": "Complete System", "title": "Early Speech Complete Bundle", "label_1": "Imitation", "label_2": "My Words", "label_3": "Action", "label_4": "Routines · NEW", "description": "All four SLP-created books — the complete starter set for every stage of early communication, from first sounds to everyday conversations.", "includes": "Imitation Book\nMy Words Book\nAction Book\nMy Routines Book — NEW", "price_now": "$49.99", "price_was": "$63.96", "price_save": "Save $13.97 · Free shipping", "button_label": "Shop the Complete Bundle" } },
-        { "type": "bundle", "settings": { "featured": false, "kicker": "Mealtime & routines", "accent": "grape", "title": "Daily Routines Early Speech Bundle", "label_1": "Routines", "label_2": "Imitation", "label_3": "Action", "label_4": "", "description": "Three books to help your little one play, talk, and communicate through the routines of everyday life — mealtimes, getting dressed, and play.", "includes": "My Routines Book — NEW\nImitation Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Daily Routines Bundle" } }
+        { "type": "bundle", "settings": { "featured": false, "kicker": "Mealtime & routines", "kicker_color": "#6E5FC4", "title": "Daily Routines Early Speech Bundle", "label_1": "Routines", "label_2": "Imitation", "label_3": "Action", "label_4": "", "description": "Three books to help your little one play, talk, and communicate through the routines of everyday life — mealtimes, getting dressed, and play.", "includes": "My Routines Book — NEW\nImitation Book\nAction Book", "price_now": "$39.99", "price_was": "$47.97", "price_save": "Save $7.98", "button_label": "Shop Daily Routines Bundle" } }
       ]
     }
   ]
