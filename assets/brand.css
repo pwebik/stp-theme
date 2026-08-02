@@ -2,7 +2,7 @@
   Speech Therapy Publishing — Brand design system (theme-wide)
   Loaded on every page, immediately after base.css.
   - Defines the brand token palette (sampled from the Genesis homepage mockup).
-  - Re-points the theme's font variables to the brand pairing (Baloo 2 / Inter).
+  - Re-points the theme's font variables to the brand pairing (Freude / Inter).
   - Guards the /pages/best-teacher and /pages/find-first-words landing pages so
     they keep their own Fredoka/Nunito type exactly as before.
   This file intentionally contains NO layout rules and NO bare element selectors,
@@ -38,7 +38,7 @@
      base.css applies --font-heading-family to headings and --font-body-family
      to body copy; overriding them here re-skins the whole store's type without
      touching the theme's own CSS. Loaded after base.css so these win. */
-  --font-heading-family: 'Baloo 2', var(--font-body-fallback, sans-serif);
+  --font-heading-family: 'Freude', var(--font-body-fallback, sans-serif);
   --font-heading-weight: 700;
   --font-body-family: 'Inter', sans-serif;
 }
