@@ -262,7 +262,7 @@ h5,
 .h3,
 .h4,
 .h5 {
-  font-family: 'Baloo 2';
+  font-family: 'Freude';
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
   letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
@@ -3603,8 +3603,8 @@ details-disclosure > details {
 }
 
 @font-face {
-  font-family: 'Baloo 2';
-  src: url('{{ 'Baloo 2.woff' | asset_url }}') format('woff');
+  font-family: 'Freude';
+  src: url('{{ 'Freude.woff' | asset_url }}') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -3672,11 +3672,11 @@ details-disclosure > details {
 
 .copyright__content {
     font-size: 20px;
-    font-family: 'Baloo 2';
+    font-family: 'Freude';
     font-weight: bolder;
 }
 
 /* This is an alternative method */
 .button {
-  font-family: "Baloo 2", sans-serif;
+  font-family: "Freude", sans-serif;
 }
