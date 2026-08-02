@@ -11,11 +11,22 @@
   "sections": {
     "stp_hero": {
       "type": "stp-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "SLP-Created & Parent-Approved",
+        "heading": "Help your little one",
+        "heading_highlight": "find their words.",
+        "subheading": "Playful board books that turn everyday reading into speech practice — built by a pediatric speech-language pathologist (and mom) to move children from first sounds to full routines.",
+        "cta_primary_label": "Shop the Complete Bundle",
+        "cta_primary_link": "",
+        "cta_secondary_label": "Meet the books",
+        "cta_secondary_link": "",
+        "badge_1": "Perfect for Ages 0–4",
+        "badge_2": "Free US shipping on bundles",
+        "show_doodles": true
+      }
     },
     "stp_trust": {
       "type": "stp-trust",
-      "settings": {},
       "blocks": {
         "t1": {
           "type": "item",
@@ -51,11 +62,11 @@
         "t2",
         "t3",
         "t4"
-      ]
+      ],
+      "settings": {}
     },
     "stp_journey": {
       "type": "stp-journey",
-      "settings": {},
       "blocks": {
         "j1": {
           "type": "stage",
@@ -103,11 +114,16 @@
         "j2",
         "j3",
         "j4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "The developmental path",
+        "heading": "Four books. One natural path to talking.",
+        "subheading": "Speech develops in stages — and each book meets your child where they are, from copying their very first sounds to narrating a whole day.",
+        "show_doodles": true
+      }
     },
     "stp_books": {
       "type": "stp-books",
-      "settings": {},
       "blocks": {
         "b1": {
           "type": "book",
@@ -116,9 +132,12 @@
             "meta": "Ages 0–3 · Sounds",
             "description": "Copy sounds, gestures, and playful prompts — the joyful first step to talking.",
             "price": "$15.99",
+            "badge": "",
             "color": "orange",
             "cover_key": "imitation-front",
-            "cta_label": "Add"
+            "image": "shopify://shop_images/Imitation_Book_Cover.png",
+            "cta_label": "Add",
+            "cta_link": ""
           }
         },
         "b2": {
@@ -128,9 +147,12 @@
             "meta": "Ages 1–4 · Words",
             "description": "Only clear, functional first words toddlers are most likely to say and use daily.",
             "price": "$15.99",
+            "badge": "",
             "color": "pink",
             "cover_key": "mywords-front",
-            "cta_label": "Add"
+            "image": "shopify://shop_images/My_Words_Book_Cover.png",
+            "cta_label": "Add",
+            "cta_link": ""
           }
         },
         "b3": {
@@ -140,9 +162,12 @@
             "meta": "Ages 1–4 · Sentences",
             "description": "Simple verbs that help toddlers move beyond labeling and start forming sentences.",
             "price": "$15.99",
+            "badge": "",
             "color": "red",
             "cover_key": "action-3d",
-            "cta_label": "Add"
+            "image": "shopify://shop_images/Action_Book_Cover.png",
+            "cta_label": "Add",
+            "cta_link": ""
           }
         },
         "b4": {
@@ -155,7 +180,9 @@
             "badge": "Presale",
             "color": "purple",
             "cover_key": "routines-front",
-            "cta_label": "Reserve"
+            "image": "shopify://shop_images/CopyofCopyofMyWordsBookCover_4.png",
+            "cta_label": "Reserve",
+            "cta_link": ""
           }
         }
       },
@@ -164,16 +191,22 @@
         "b2",
         "b3",
         "b4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "The library",
+        "heading": "Meet the books",
+        "cta_label": "Save more with a bundle →",
+        "cta_link": ""
+      }
     },
     "stp_bundles": {
       "type": "stp-bundles",
-      "settings": {},
       "blocks": {
         "bn1": {
           "type": "bundle",
           "settings": {
             "featured": false,
+            "flag": "⭐ Most popular · Best value",
             "title": "Learn to Talk",
             "contents": "Imitation + My Words + Action (3 books)",
             "price": "$39.99",
@@ -182,7 +215,10 @@
             "feature_1": "Sounds → words → sentences",
             "feature_2": "Our best-selling 3-book set",
             "feature_3": "Free US shipping",
-            "cta_label": "Add to Cart"
+            "image": "shopify://shop_images/1.-Early-Speech-Starter-Bundle_2_678fc350-03cb-445e-b176-e91a2ae5aae0.png",
+            "cover_key": "none",
+            "cta_label": "Add to Cart",
+            "cta_link": ""
           }
         },
         "bn2": {
@@ -198,13 +234,17 @@
             "feature_1": "Every stage, sounds → routines",
             "feature_2": "Includes the new My Routines Book",
             "feature_3": "Free shipping + 30-day returns",
-            "cta_label": "Add Complete to Cart"
+            "image": "shopify://shop_images/2.-Early-Speech-Complete-Bundle_2_933a2bb2-5e95-4a94-8942-da9dcf7f6445.png",
+            "cover_key": "none",
+            "cta_label": "Add Complete to Cart",
+            "cta_link": ""
           }
         },
         "bn3": {
           "type": "bundle",
           "settings": {
             "featured": false,
+            "flag": "⭐ Most popular · Best value",
             "title": "Daily Routines",
             "contents": "My Routines + Imitation + Action (Ages 1–3)",
             "price": "$39.99",
@@ -213,7 +253,10 @@
             "feature_1": "Play, talk, and everyday phrases",
             "feature_2": "Great for confident early talkers",
             "feature_3": "Free US shipping",
-            "cta_label": "Add to Cart"
+            "image": "shopify://shop_images/3.-Daily-Routines-Early-Speech-Bundle_2_e84ec599-0178-45e3-9fe6-23ebb742b9f3.png",
+            "cover_key": "none",
+            "cta_label": "Add to Cart",
+            "cta_link": ""
           }
         }
       },
@@ -221,19 +264,38 @@
         "bn1",
         "bn2",
         "bn3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Best value",
+        "heading": "Bundle up & save",
+        "subheading": "Bundles ship free in the US — pick the set that matches where your child is right now.",
+        "show_doodles": true
+      }
     },
     "stp_video": {
       "type": "stp-video",
-      "settings": {}
+      "settings": {
+        "eyebrow": "See it in action",
+        "heading": "Reading that feels like play",
+        "video": "shopify://files/videos/Copy of Imitation Book - Amazon Ad Subtitles Music - 16x9 (1).mov",
+        "autoplay": true
+      }
     },
     "stp_presale": {
       "type": "stp-presale",
-      "settings": {}
+      "settings": {
+        "pill": "New · Presale open",
+        "heading": "My Routines Book",
+        "body": "The fourth stage of the journey. From morning wake-up to bedtime, My Routines Book turns the moments you already share into natural language practice — the everyday way toddlers learn to talk.",
+        "cta_primary_label": "Reserve your copy →",
+        "cta_primary_link": "",
+        "cta_secondary_label": "Learn more",
+        "cta_secondary_link": "",
+        "show_doodles": true
+      }
     },
     "stp_reviews": {
       "type": "stp-reviews",
-      "settings": {},
       "blocks": {
         "r1": {
           "type": "review",
@@ -264,15 +326,24 @@
         "r1",
         "r2",
         "r3"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "From real families",
+        "heading": "Parents see the words come"
+      }
     },
     "stp_founder": {
       "type": "stp-founder",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/unnamed_3.jpg",
+        "eyebrow": "Our story",
+        "heading": "Made by a speech therapist who's also a mom.",
+        "body": "<p>Speech Therapy Publishing began with a simple idea: the tools SLPs use every day should be in every parent's hands, in a form toddlers love. Each board book is built on evidence-based, play-driven techniques — no special training required.</p><p>Every page is designed to be read together, again and again, turning story time into the most natural speech practice there is.</p>",
+        "name": "Stephanie Anderson, M.S., CCC-SLP"
+      }
     },
     "stp_faq": {
       "type": "stp-faq",
-      "settings": {},
       "blocks": {
         "f1": {
           "type": "qa",
@@ -308,11 +379,20 @@
         "f2",
         "f3",
         "f4"
-      ]
+      ],
+      "settings": {
+        "heading": "Questions, answered"
+      }
     },
     "stp_final": {
       "type": "stp-final-cta",
-      "settings": {}
+      "settings": {
+        "heading": "Open the books, read together, and watch the words come.",
+        "body": "Get all four — Imitation, My Words, Action, and My Routines — in one complete system.",
+        "cta_label": "Shop the Complete Bundle →",
+        "cta_link": "",
+        "show_doodles": true
+      }
     }
   },
   "order": [
