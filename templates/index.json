@@ -11,6 +11,10 @@
   "sections": {
     "stp_hero": {
       "type": "stp-hero",
+      "custom_css": [
+        "p {margin-top: 20px; margin-bottom: 30px;}",
+        "h1 {margin-top: 20px;}"
+      ],
       "settings": {
         "eyebrow": "SLP-Created & Parent-Approved",
         "heading": "Help your little one",
