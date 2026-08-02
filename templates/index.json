@@ -13,7 +13,8 @@
       "type": "stp-hero",
       "custom_css": [
         "p {margin-top: 20px; margin-bottom: 30px;}",
-        "h1 {margin-top: 20px;}"
+        "h1 {margin-top: 20px;}",
+        ".stp-btn {color: white;}"
       ],
       "settings": {
         "eyebrow": "SLP-Created & Parent-Approved",
@@ -200,6 +201,9 @@
         "b3",
         "b4"
       ],
+      "custom_css": [
+        ".stp-btn {color: white;}"
+      ],
       "settings": {
         "eyebrow": "",
         "heading": "Meet the books",
@@ -272,6 +276,9 @@
         "bn1",
         "bn2",
         "bn3"
+      ],
+      "custom_css": [
+        ".stp-btn {color: white;}"
       ],
       "settings": {
         "eyebrow": "",
@@ -394,6 +401,9 @@
     },
     "stp_final": {
       "type": "stp-final-cta",
+      "custom_css": [
+        ".stp-wrap {display: flex; flex-direction: column; align-items: center; gap: 20px;}"
+      ],
       "settings": {
         "heading": "Open the books, read together, and watch the words come.",
         "body": "Get all four — Imitation, My Words, Action, and My Routines — in one complete system.",
