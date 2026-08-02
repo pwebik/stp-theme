@@ -1,0 +1,37 @@
+{%- comment -%}  STP Final CTA  {%- endcomment -%}
+<section class="stp-block stp-final">
+  {%- if section.settings.show_doodles -%}
+    {% render 'stp-doodle', type:'star', color:'rgba(255,255,255,.45)', size:40, float:'stp-float stp-float--slow', style:'top:20%;left:9%;--r:-10deg' %}
+    {% render 'stp-doodle', type:'sparkle', color:'rgba(255,255,255,.4)', size:28, float:'stp-float', style:'bottom:22%;right:10%;--r:8deg' %}
+  {%- endif -%}
+  <div class="stp-wrap">
+    {%- if section.settings.heading != blank -%}<h2 class="stp-final__title">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.body != blank -%}<p class="stp-final__body">{{ section.settings.body }}</p>{%- endif -%}
+    {%- if section.settings.cta_label != blank -%}<a href="{{ section.settings.cta_link | default: '#' }}" class="stp-btn stp-btn--cta stp-final__btn">{{ section.settings.cta_label }}</a>{%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-final{background:var(--stp-orange);color:#fff;text-align:center;position:relative;overflow:hidden;padding:88px 0;}
+.stp-final__title{font-size:clamp(3.36rem,4vw,4.96rem);margin-bottom:16px;position:relative;z-index:1;}
+.stp-final__body{opacity:.95;font-size:1.792rem;max-width:52ch;margin:0 auto 30px;position:relative;z-index:1;}
+.stp-final__btn{position:relative;z-index:1;background:#fff;color:var(--stp-orange-deep);box-shadow:0 10px 0 -2px rgba(0,0,0,.18);}
+.stp-final__btn:hover{color:var(--stp-orange-deep);box-shadow:0 13px 0 -2px rgba(0,0,0,.18);}
+@media (max-width:520px){.stp-final{padding:64px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Final CTA",
+  "tag": "section",
+  "class": "stp-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Open the books, read together, and watch the words come." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Get all four — Imitation, My Words, Action, and My Routines — in one complete system." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop the Complete Bundle →" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "checkbox", "id": "show_doodles", "label": "Show doodles", "default": true }
+  ],
+  "presets": [{ "name": "STP Final CTA" }]
+}
+{% endschema %}

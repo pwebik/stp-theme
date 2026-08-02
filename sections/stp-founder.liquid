@@ -1,0 +1,48 @@
+{%- comment -%}  STP Founder — Our Story  {%- endcomment -%}
+<section class="stp-block stp-founder">
+  <div class="stp-wrap">
+    <div class="stp-founder__grid">
+      <div class="stp-founder__photo">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.name | escape }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'stp-founder.webp' | asset_url }}" alt="{{ section.settings.name | escape }}" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="stp-founder__copy">
+        {%- if section.settings.eyebrow != blank -%}<span class="stp-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="stp-founder__title">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.body != blank -%}<div class="stp-founder__body">{{ section.settings.body }}</div>{%- endif -%}
+        {%- if section.settings.name != blank -%}<div class="stp-founder__sig">— {{ section.settings.name }}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-founder{background:var(--stp-cream-deep);padding:88px 0;}
+.stp-founder__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:center;}
+.stp-founder__photo{aspect-ratio:1/1;border-radius:28px;overflow:hidden;border:2.5px dashed var(--stp-teal);background:var(--stp-white);}
+.stp-founder__photo img{width:100%;height:100%;object-fit:cover;}
+.stp-founder__title{font-size:clamp(3.04rem,3.4vw,4.16rem);margin:12px 0 18px;}
+.stp-founder__body{color:var(--stp-ink-soft);font-size:1.696rem;}
+.stp-founder__body p{margin-bottom:16px;}
+.stp-founder__sig{font-family:var(--stp-font-display);font-size:1.84rem;color:var(--stp-ink);margin-top:8px;}
+@media (max-width:820px){.stp-founder__grid{grid-template-columns:1fr;gap:32px;}.stp-founder{padding:64px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Founder",
+  "tag": "section",
+  "class": "stp-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Founder photo", "info": "Defaults to Stephanie's photo." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made by a speech therapist who's also a mom." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Speech Therapy Publishing began with a simple idea: the tools SLPs use every day should be in every parent's hands, in a form toddlers love. Each board book is built on evidence-based, play-driven techniques — no special training required.</p><p>Every page is designed to be read together, again and again, turning story time into the most natural speech practice there is.</p>" },
+    { "type": "text", "id": "name", "label": "Signature", "default": "Stephanie Anderson, M.S., CCC-SLP" }
+  ],
+  "presets": [{ "name": "STP Founder" }]
+}
+{% endschema %}

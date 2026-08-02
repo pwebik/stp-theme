@@ -1,0 +1,61 @@
+{%- comment -%}  STP FAQ — accordion via native details/summary  {%- endcomment -%}
+<section class="stp-block stp-faq">
+  <div class="stp-wrap stp-faq__inner">
+    {%- if section.settings.heading != blank -%}<h2 class="stp-faq__title">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- for block in section.blocks -%}
+      <details class="stp-faq__item" {{ block.shopify_attributes }}>
+        <summary class="stp-faq__q">
+          <span>{{ block.settings.question }}</span>
+          <svg class="stp-faq__chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="stp-faq__a">{{ block.settings.answer }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-faq{background:var(--stp-cream);padding:88px 0;}
+.stp-faq__inner{max-width:820px;}
+.stp-faq__title{font-size:clamp(3.2rem,3.6vw,4.32rem);text-align:center;margin-bottom:36px;}
+.stp-faq__item{background:var(--stp-white);border-radius:18px;box-shadow:var(--stp-shadow-soft);margin-bottom:14px;overflow:hidden;}
+.stp-faq__q{cursor:pointer;padding:22px 24px;font-family:var(--stp-font-display);font-weight:600;font-size:1.728rem;color:var(--stp-ink);display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;}
+.stp-faq__q::-webkit-details-marker{display:none;}
+.stp-faq__chev{transition:transform .25s ease;color:var(--stp-teal-deep);flex:none;}
+.stp-faq__item[open] .stp-faq__chev{transform:rotate(180deg);}
+.stp-faq__a{padding:0 24px 22px;color:var(--stp-ink-soft);}
+@media (max-width:520px){.stp-faq{padding:64px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP FAQ",
+  "tag": "section",
+  "class": "stp-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Q&A",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What age are these books for?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "The series is designed for ages 0–4, meeting children from their very first sounds through everyday routines. Each book notes the stage it best supports." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "STP FAQ",
+      "blocks": [
+        { "type": "qa", "settings": { "question": "What age are these books for?", "answer": "The series is designed for ages 0–4, meeting children from their very first sounds through everyday routines. Each book notes the stage it best supports." } },
+        { "type": "qa", "settings": { "question": "Do I need speech therapy training to use them?", "answer": "Not at all. Every book includes simple, parent-friendly prompts on how to read it — the techniques are built right into the pages." } },
+        { "type": "qa", "settings": { "question": "When does My Routines Book ship?", "answer": "My Routines Book is on presale now. Reserve a copy today and we'll ship it as soon as the first print run arrives. [Confirm presale ship date]" } },
+        { "type": "qa", "settings": { "question": "What's your shipping & return policy?", "answer": "Bundles ship free within the US, arriving in 3–5 business days. Not happy? Send them back within 30 days for a full refund." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

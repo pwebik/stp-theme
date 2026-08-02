@@ -1,4 +1,4 @@
-{%- comment -%}  STP Bundles  {%- endcomment -%}
+{%- comment -%}  STP Bundles — clean cards, optional per-card image  {%- endcomment -%}
 <section class="stp-block stp-bundles">
   {%- if section.settings.show_doodles -%}
     {% render 'stp-doodle', type:'star', color:'rgba(255,255,255,.4)', size:38, float:'stp-float stp-float--slow', style:'top:12%;right:6%;--r:10deg' %}
@@ -14,34 +14,33 @@
     <div class="stp-bundles__grid">
       {%- for block in section.blocks -%}
         {%- liquid
-          case block.settings.cover_key
-            when 'bundle-2'
-              assign fallback = 'stp-bundle-2.webp'
-            when 'bundle-1'
-              assign fallback = 'stp-bundle-1.webp'
-            when 'bundle-3'
-              assign fallback = 'stp-bundle-3.webp'
-            when 'bundle-daily'
-              assign fallback = 'stp-bundle-daily-routines.webp'
-            else
-              assign fallback = 'stp-bundle-3book.webp'
-          endcase
           assign feat_class = ''
           if block.settings.featured
             assign feat_class = ' stp-bundle--feature'
           endif
+          assign cover = ''
+          if block.settings.image != blank
+            assign cover = block.settings.image | image_url: width: 700
+          else
+            case block.settings.cover_key
+              when 'bundle-2'
+                assign cover = 'stp-bundle-2.webp' | asset_url
+              when 'bundle-3book'
+                assign cover = 'stp-bundle-3book.webp' | asset_url
+              when 'bundle-1'
+                assign cover = 'stp-bundle-1.webp' | asset_url
+              when 'bundle-3'
+                assign cover = 'stp-bundle-3.webp' | asset_url
+              when 'bundle-daily'
+                assign cover = 'stp-bundle-daily-routines.webp' | asset_url
+            endcase
+          endif
         -%}
         <div class="stp-bundle{{ feat_class }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.featured and block.settings.flag != blank -%}
-            <span class="stp-bundle__flag">{{ block.settings.flag }}</span>
+          {%- if block.settings.featured and block.settings.flag != blank -%}<span class="stp-bundle__flag">{{ block.settings.flag }}</span>{%- endif -%}
+          {%- if cover != blank -%}
+            <div class="stp-bundle__cover"><img src="{{ cover }}" alt="{{ block.settings.title | escape }}" loading="lazy"></div>
           {%- endif -%}
-          <div class="stp-bundle__cover">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.image.alt | default: block.settings.title | escape }}" loading="lazy">
-            {%- else -%}
-              <img src="{{ fallback | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy">
-            {%- endif -%}
-          </div>
           {%- if block.settings.title != blank -%}<h3 class="stp-bundle__name">{{ block.settings.title }}</h3>{%- endif -%}
           {%- if block.settings.contents != blank -%}<p class="stp-bundle__contents">{{ block.settings.contents }}</p>{%- endif -%}
           <div class="stp-bundle__price">
@@ -54,9 +53,7 @@
             {%- if block.settings.feature_2 != blank -%}<li>{% render 'stp-check' %}{{ block.settings.feature_2 }}</li>{%- endif -%}
             {%- if block.settings.feature_3 != blank -%}<li>{% render 'stp-check' %}{{ block.settings.feature_3 }}</li>{%- endif -%}
           </ul>
-          {%- if block.settings.cta_label != blank -%}
-            <a href="{{ block.settings.cta_link | default: '#' }}" class="stp-btn stp-btn--cta">{{ block.settings.cta_label }}</a>
-          {%- endif -%}
+          {%- if block.settings.cta_label != blank -%}<a href="{{ block.settings.cta_link | default: '#' }}" class="stp-btn stp-btn--cta">{{ block.settings.cta_label }}</a>{%- endif -%}
         </div>
       {%- endfor -%}
     </div>
@@ -66,27 +63,25 @@
 {% stylesheet %}
 .stp-bundles{background:var(--stp-teal);color:#fff;position:relative;overflow:hidden;padding:88px 0;}
 .stp-bundles__head{text-align:center;margin-bottom:46px;position:relative;z-index:1;}
-.stp-bundles__title{font-size:clamp(2rem,3.6vw,2.8rem);}
+.stp-bundles__title{font-size:clamp(3.2rem,3.6vw,4.48rem);}
 .stp-bundles__sub{opacity:.9;margin-top:10px;}
 .stp-bundles__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;position:relative;z-index:1;}
-.stp-bundle{background:var(--stp-white);color:var(--stp-ink);border-radius:24px;padding:24px 24px 28px;
-  display:flex;flex-direction:column;gap:12px;position:relative;}
-.stp-bundle--feature{border:3px dashed var(--stp-yellow);box-shadow:0 30px 60px -30px rgba(0,0,0,.5);}
-.stp-bundle__flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--stp-orange);color:#fff;
-  font-family:var(--stp-font-display);font-size:.76rem;padding:6px 16px;border-radius:100px;white-space:nowrap;z-index:2;}
-.stp-bundle__cover{aspect-ratio:16/10;background:var(--stp-cream);border-radius:16px;display:grid;place-items:center;padding:12px;margin-bottom:2px;}
+.stp-bundle{background:var(--stp-white);color:var(--stp-ink);border-radius:24px;padding:30px 26px 32px;display:flex;flex-direction:column;gap:14px;position:relative;}
+.stp-bundle--feature{border:3px dashed var(--stp-yellow);transform:scale(1.04);box-shadow:0 30px 60px -30px rgba(0,0,0,.5);}
+.stp-bundle__flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--stp-orange);color:#fff;font-family:var(--stp-font-display);font-size:1.216rem;padding:6px 16px;border-radius:100px;white-space:nowrap;z-index:2;}
+.stp-bundle__cover{aspect-ratio:16/10;background:var(--stp-cream);border-radius:16px;display:grid;place-items:center;padding:12px;}
 .stp-bundle__cover img{width:100%;height:100%;object-fit:contain;}
-.stp-bundle__name{font-size:1.45rem;}
-.stp-bundle__contents{font-size:.9rem;color:var(--stp-ink-soft);}
-.stp-bundle__price{display:flex;align-items:baseline;gap:10px;}
-.stp-bundle__now{font-family:var(--stp-font-display);font-weight:600;font-size:2rem;}
+.stp-bundle__name{font-size:2.32rem;}
+.stp-bundle__contents{font-size:1.44rem;color:var(--stp-ink-soft);}
+.stp-bundle__price{display:flex;align-items:baseline;gap:10px;margin-top:2px;}
+.stp-bundle__now{font-family:var(--stp-font-display);font-weight:600;font-size:3.2rem;}
 .stp-bundle__was{color:var(--stp-ink-soft);text-decoration:line-through;}
-.stp-bundle__save{align-self:flex-start;background:var(--stp-pink);color:#fff;font-family:var(--stp-font-display);font-size:.76rem;padding:5px 12px;border-radius:100px;}
-.stp-bundle__feats{list-style:none;padding:0;margin:4px 0 0;display:flex;flex-direction:column;gap:8px;}
-.stp-bundle__feats li{font-size:.92rem;display:flex;gap:9px;align-items:flex-start;}
+.stp-bundle__save{align-self:flex-start;background:var(--stp-pink);color:#fff;font-family:var(--stp-font-display);font-size:1.216rem;padding:5px 12px;border-radius:100px;}
+.stp-bundle__feats{list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:8px;}
+.stp-bundle__feats li{font-size:1.472rem;display:flex;gap:9px;align-items:flex-start;}
 .stp-bundle__feats li svg{flex:none;margin-top:3px;color:var(--stp-teal);}
 .stp-bundle .stp-btn{margin-top:auto;}
-@media (max-width:900px){.stp-bundles__grid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}
+@media (max-width:900px){.stp-bundles__grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}.stp-bundle--feature{transform:none;}}
 @media (max-width:520px){.stp-bundles{padding:64px 0;}}
 {% endstylesheet %}
 
@@ -117,9 +112,12 @@
         { "type": "text", "id": "feature_1", "label": "Feature 1", "default": "Every stage, sounds → routines" },
         { "type": "text", "id": "feature_2", "label": "Feature 2", "default": "Includes the new My Routines Book" },
         { "type": "text", "id": "feature_3", "label": "Feature 3", "default": "Free shipping + 30-day returns" },
-        { "type": "select", "id": "cover_key", "label": "Built-in image", "default": "bundle-2",
-          "info": "Used when no custom image is set below.",
+        { "type": "header", "content": "Image (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Custom image" },
+        { "type": "select", "id": "cover_key", "label": "Or a built-in image", "default": "none",
+          "info": "Used only if no custom image is set. 'None' keeps the card text-only (like the mockup).",
           "options": [
+            { "value": "none", "label": "None (text only)" },
             { "value": "bundle-2", "label": "4-book fan" },
             { "value": "bundle-3book", "label": "3-book upright" },
             { "value": "bundle-1", "label": "3-book fan A" },
@@ -127,7 +125,7 @@
             { "value": "bundle-daily", "label": "Daily Routines graphic" }
           ]
         },
-        { "type": "image_picker", "id": "image", "label": "Custom image (optional)" },
+        { "type": "header", "content": "Button" },
         { "type": "text", "id": "cta_label", "label": "Button label", "default": "Add to Cart" },
         { "type": "url", "id": "cta_link", "label": "Button link" }
       ]
@@ -137,9 +135,9 @@
     {
       "name": "STP Bundles",
       "blocks": [
-        { "type": "bundle", "settings": { "featured": false, "title": "Learn to Talk", "contents": "Imitation + My Words + Action (3 books)", "price": "$39.99", "compare_at": "$47.97", "save": "Save 17%", "feature_1": "Sounds → words → sentences", "feature_2": "Our best-selling 3-book set", "feature_3": "Free US shipping", "cover_key": "bundle-3book", "cta_label": "Add to Cart" } },
-        { "type": "bundle", "settings": { "featured": true, "flag": "⭐ Most popular · Best value", "title": "Complete System", "contents": "All 4 books — the full journey", "price": "$52.99", "compare_at": "$63.96", "save": "Save 17%", "feature_1": "Every stage, sounds → routines", "feature_2": "Includes the new My Routines Book", "feature_3": "Free shipping + 30-day returns", "cover_key": "bundle-2", "cta_label": "Add Complete to Cart" } },
-        { "type": "bundle", "settings": { "featured": false, "title": "Daily Routines", "contents": "My Routines + Imitation + Action (Ages 1–3)", "price": "$39.99", "compare_at": "$47.97", "save": "Save 17%", "feature_1": "Play, talk, and everyday phrases", "feature_2": "Great for confident early talkers", "feature_3": "Free US shipping", "cover_key": "bundle-daily", "cta_label": "Add to Cart" } }
+        { "type": "bundle", "settings": { "featured": false, "title": "Learn to Talk", "contents": "Imitation + My Words + Action (3 books)", "price": "$39.99", "compare_at": "$47.97", "save": "Save 17%", "feature_1": "Sounds → words → sentences", "feature_2": "Our best-selling 3-book set", "feature_3": "Free US shipping", "cover_key": "none", "cta_label": "Add to Cart" } },
+        { "type": "bundle", "settings": { "featured": true, "flag": "⭐ Most popular · Best value", "title": "Complete System", "contents": "All 4 books — the full journey", "price": "$52.99", "compare_at": "$63.96", "save": "Save 17%", "feature_1": "Every stage, sounds → routines", "feature_2": "Includes the new My Routines Book", "feature_3": "Free shipping + 30-day returns", "cover_key": "none", "cta_label": "Add Complete to Cart" } },
+        { "type": "bundle", "settings": { "featured": false, "title": "Daily Routines", "contents": "My Routines + Imitation + Action (Ages 1–3)", "price": "$39.99", "compare_at": "$47.97", "save": "Save 17%", "feature_1": "Play, talk, and everyday phrases", "feature_2": "Great for confident early talkers", "feature_3": "Free US shipping", "cover_key": "none", "cta_label": "Add to Cart" } }
       ]
     }
   ]
