@@ -120,7 +120,7 @@
         "j4"
       ],
       "settings": {
-        "eyebrow": "The developmental path",
+        "eyebrow": "",
         "heading": "Four books. One natural path to talking.",
         "subheading": "Speech develops in stages — and each book meets your child where they are, from copying their very first sounds to narrating a whole day.",
         "show_doodles": true
@@ -197,7 +197,7 @@
         "b4"
       ],
       "settings": {
-        "eyebrow": "The library",
+        "eyebrow": "",
         "heading": "Meet the books",
         "cta_label": "Save more with a bundle →",
         "cta_link": ""
@@ -270,7 +270,7 @@
         "bn3"
       ],
       "settings": {
-        "eyebrow": "Best value",
+        "eyebrow": "",
         "heading": "Bundle up & save",
         "subheading": "Bundles ship free in the US — pick the set that matches where your child is right now.",
         "show_doodles": true
@@ -279,7 +279,7 @@
     "stp_video": {
       "type": "stp-video",
       "settings": {
-        "eyebrow": "See it in action",
+        "eyebrow": "",
         "heading": "Reading that feels like play",
         "video": "shopify://files/videos/Copy of Imitation Book - Amazon Ad Subtitles Music - 16x9 (1).mov",
         "autoplay": true
@@ -332,7 +332,7 @@
         "r3"
       ],
       "settings": {
-        "eyebrow": "From real families",
+        "eyebrow": "",
         "heading": "Parents see the words come"
       }
     },
@@ -340,7 +340,7 @@
       "type": "stp-founder",
       "settings": {
         "image": "shopify://shop_images/unnamed_3.jpg",
-        "eyebrow": "Our story",
+        "eyebrow": "",
         "heading": "Made by a speech therapist who's also a mom.",
         "body": "<p>Speech Therapy Publishing began with a simple idea: the tools SLPs use every day should be in every parent's hands, in a form toddlers love. Each board book is built on evidence-based, play-driven techniques — no special training required.</p><p>Every page is designed to be read together, again and again, turning story time into the most natural speech practice there is.</p>",
         "name": "Stephanie Anderson, M.S., CCC-SLP"
