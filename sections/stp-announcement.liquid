@@ -1,0 +1,57 @@
+{%- comment -%}  STP Announcement bar  {%- endcomment -%}
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'orange'
+  case scheme
+    when 'teal'
+      assign bg = 'var(--stp-teal)'
+    when 'purple'
+      assign bg = 'var(--stp-purple)'
+    when 'pink'
+      assign bg = 'var(--stp-pink)'
+    else
+      assign bg = 'var(--stp-orange)'
+  endcase
+-%}
+{%- if section.settings.message != blank -%}
+<div class="stp-block stp-announce" style="--stp-announce-bg:{{ bg }}">
+  <div class="stp-wrap stp-announce__inner">
+    <span class="stp-announce__msg">
+      {{ section.settings.message }}
+      {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+        <a href="{{ section.settings.link_url }}" class="stp-announce__link">{{ section.settings.link_label }}</a>
+      {%- endif -%}
+    </span>
+  </div>
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+.stp-announce{background:var(--stp-announce-bg);color:#fff;}
+.stp-announce__inner{display:flex;justify-content:center;align-items:center;gap:6px;
+  padding-top:9px;padding-bottom:9px;text-align:center;}
+.stp-announce__msg{font-family:var(--stp-font-display);font-weight:600;font-size:.92rem;}
+.stp-announce__link{text-decoration:underline;text-underline-offset:3px;color:#fff;}
+.stp-announce__link:hover{opacity:.85;color:#fff;}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Announcement",
+  "tag": "section",
+  "class": "stp-section",
+  "settings": [
+    { "type": "text", "id": "message", "label": "Message", "default": "🎉 My Routines Book is here" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "— presale now open →" },
+    { "type": "url", "id": "link_url", "label": "Link" },
+    { "type": "select", "id": "color_scheme", "label": "Color", "default": "orange",
+      "options": [
+        { "value": "orange", "label": "Orange" },
+        { "value": "teal", "label": "Teal" },
+        { "value": "purple", "label": "Purple" },
+        { "value": "pink", "label": "Pink" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "STP Announcement" }]
+}
+{% endschema %}

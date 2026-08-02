@@ -1,0 +1,119 @@
+{%- comment -%}  STP Journey — the signature developmental sequence  {%- endcomment -%}
+<section class="stp-block stp-journey">
+  {%- if section.settings.show_doodles -%}
+    {% render 'stp-doodle', type:'star', color:'var(--stp-yellow)', size:34, float:'stp-float', style:'top:8%;left:5%;--r:-8deg' %}
+    {% render 'stp-doodle', type:'sparkle', color:'var(--stp-pink)', size:26, float:'stp-float stp-float--slow', style:'bottom:12%;right:6%;--r:10deg' %}
+  {%- endif -%}
+  <div class="stp-wrap">
+    <div class="stp-journey__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="stp-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="stp-journey__title">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.subheading != blank -%}<p class="stp-journey__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="stp-journey__stages">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          case block.settings.color
+            when 'pink'
+              assign col = 'var(--stp-pink)'
+            when 'red'
+              assign col = 'var(--stp-red)'
+            when 'purple'
+              assign col = 'var(--stp-purple)'
+            when 'teal'
+              assign col = 'var(--stp-teal)'
+            when 'green'
+              assign col = 'var(--stp-green)'
+            else
+              assign col = 'var(--stp-orange)'
+          endcase
+        -%}
+        <div class="stp-stage" style="--stage:{{ col }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.is_new -%}<span class="stp-stage__new">NEW</span>{%- endif -%}
+          <div class="stp-stage__num">{{ forloop.index }}</div>
+          {%- if block.settings.stage_name != blank -%}<h3 class="stp-stage__name">{{ block.settings.stage_name }}</h3>{%- endif -%}
+          {%- if block.settings.book_name != blank -%}<div class="stp-stage__book">{{ block.settings.book_name }}</div>{%- endif -%}
+          {%- if block.settings.description != blank -%}<p class="stp-stage__desc">{{ block.settings.description }}</p>{%- endif -%}
+          {%- unless forloop.last -%}
+            <svg class="stp-stage__arrow" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {%- endunless -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-journey{position:relative;overflow:hidden;background:var(--stp-cream-deep);padding:88px 0;}
+.stp-journey__head{text-align:center;max-width:60ch;margin:0 auto 54px;position:relative;z-index:1;}
+.stp-journey__title{font-size:clamp(2rem,3.6vw,2.9rem);margin:14px 0;}
+.stp-journey__sub{color:var(--stp-ink-soft);font-size:1.08rem;}
+.stp-journey__stages{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;z-index:1;}
+.stp-stage{background:var(--stp-white);border-radius:22px;padding:26px 22px 28px;box-shadow:var(--stp-shadow-soft);
+  position:relative;border-top:5px solid var(--stage);}
+.stp-stage__num{width:46px;height:46px;border-radius:100px;display:grid;place-items:center;color:#fff;
+  font-family:var(--stp-font-display);font-weight:600;font-size:1.2rem;margin-bottom:18px;background:var(--stage);}
+.stp-stage__name{font-size:1.32rem;margin-bottom:4px;}
+.stp-stage__book{font-size:.86rem;font-weight:600;color:var(--stp-ink-soft);margin-bottom:10px;}
+.stp-stage__desc{font-size:.96rem;color:var(--stp-ink-soft);}
+.stp-stage__new{position:absolute;top:16px;right:16px;background:var(--stage);color:#fff;
+  font-family:var(--stp-font-display);font-size:.66rem;padding:4px 9px;border-radius:100px;letter-spacing:.05em;}
+.stp-stage__arrow{position:absolute;top:48px;right:-13px;color:var(--stp-teal);z-index:2;}
+@media (max-width:900px){
+  .stp-journey__stages{grid-template-columns:repeat(2,1fr);}
+  .stp-stage__arrow{display:none;}
+}
+@media (max-width:520px){
+  .stp-journey{padding:64px 0;}
+  .stp-journey__stages{grid-template-columns:1fr;}
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Journey",
+  "tag": "section",
+  "class": "stp-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The developmental path" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four books. One natural path to talking." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Speech develops in stages — and each book meets your child where they are, from copying their very first sounds to narrating a whole day." },
+    { "type": "checkbox", "id": "show_doodles", "label": "Show doodles", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "stage",
+      "name": "Stage",
+      "settings": [
+        { "type": "text", "id": "stage_name", "label": "Stage", "default": "Sounds" },
+        { "type": "text", "id": "book_name", "label": "Book", "default": "Imitation Book" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Copy sounds, gestures, and animal noises — the very first step toward spoken words." },
+        { "type": "select", "id": "color", "label": "Color", "default": "orange",
+          "options": [
+            { "value": "orange", "label": "Orange" },
+            { "value": "pink", "label": "Pink" },
+            { "value": "red", "label": "Red" },
+            { "value": "purple", "label": "Purple" },
+            { "value": "teal", "label": "Teal" },
+            { "value": "green", "label": "Green" }
+          ]
+        },
+        { "type": "checkbox", "id": "is_new", "label": "Show NEW badge", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "STP Journey",
+      "blocks": [
+        { "type": "stage", "settings": { "stage_name": "Sounds", "book_name": "Imitation Book", "description": "Copy sounds, gestures, and animal noises — the very first step toward spoken words.", "color": "orange", "is_new": false } },
+        { "type": "stage", "settings": { "stage_name": "Words", "book_name": "My Words Book", "description": "Real first words toddlers can actually say — ball, mama, puppy — and feel proud to use.", "color": "pink", "is_new": false } },
+        { "type": "stage", "settings": { "stage_name": "Sentences", "book_name": "Action Book", "description": "Everyday verbs like jump, eat, and sleep that grow single words into little sentences.", "color": "red", "is_new": false } },
+        { "type": "stage", "settings": { "stage_name": "Routines", "book_name": "My Routines Book", "description": "Bath, mealtime, bedtime — language woven into the real moments of your child's day.", "color": "purple", "is_new": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

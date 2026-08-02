@@ -1,0 +1,75 @@
+{%- comment -%}  STP Trust bar  {%- endcomment -%}
+<div class="stp-block stp-trust">
+  <div class="stp-wrap stp-trust__row">
+    {%- for block in section.blocks -%}
+      <div class="stp-trust__item" {{ block.shopify_attributes }}>
+        <span class="stp-trust__ic">
+          {%- case block.settings.icon -%}
+            {%- when 'slp' -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            {%- when 'families' -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21s-7-4.5-9-9a5 5 0 019-3 5 5 0 019 3c-2 4.5-9 9-9 9z"/></svg>
+            {%- when 'professionals' -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2.2l2.5 6.3 6.8.4-5.2 4.4 1.7 6.6L12 16.7 6.4 20.3l1.7-6.6-5.2-4.4 6.8-.4z"/></svg>
+            {%- when 'shipping' -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 7h13v8H3z"/><path d="M16 10h4l1 3v2h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+            {%- when 'guarantee' -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg>
+            {%- else -%}
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          {%- endcase -%}
+        </span>
+        <span class="stp-trust__txt">{{ block.settings.label }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+.stp-trust{background:var(--stp-white);border-top:1px solid rgba(46,42,50,.05);border-bottom:1px solid rgba(46,42,50,.05);}
+.stp-trust__row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:26px;padding-bottom:26px;}
+.stp-trust__item{display:flex;align-items:center;gap:11px;font-weight:500;font-size:.98rem;color:var(--stp-ink);}
+.stp-trust__ic{width:40px;height:40px;border-radius:12px;background:var(--stp-teal-tint);display:grid;place-items:center;color:var(--stp-teal-deep);flex:none;}
+@media (max-width:700px){
+  .stp-trust__row{gap:16px 24px;justify-content:flex-start;}
+  .stp-trust__item{flex:1 1 44%;font-size:.92rem;}
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Trust bar",
+  "tag": "section",
+  "class": "stp-section",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "slp",
+          "options": [
+            { "value": "slp", "label": "Checkmark (SLP)" },
+            { "value": "families", "label": "Heart (Families)" },
+            { "value": "professionals", "label": "Star (Professionals)" },
+            { "value": "shipping", "label": "Truck (Shipping)" },
+            { "value": "guarantee", "label": "Guarantee" }
+          ]
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Created by an SLP" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "STP Trust bar",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "slp", "label": "Created by an SLP" } },
+        { "type": "item", "settings": { "icon": "families", "label": "Tested by families" } },
+        { "type": "item", "settings": { "icon": "professionals", "label": "Loved by professionals" } },
+        { "type": "item", "settings": { "icon": "shipping", "label": "Free US shipping on bundles" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
