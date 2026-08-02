@@ -22,6 +22,10 @@
         "cta_secondary_link": "",
         "badge_1": "Perfect for Ages 0–4",
         "badge_2": "Free US shipping on bundles",
+        "cover_1": "shopify://shop_images/IMITATION_OPEN.png",
+        "cover_2": "shopify://shop_images/MYWORDS_OPEN.png",
+        "cover_3": "shopify://shop_images/ACTION_BOOK_Image.png",
+        "cover_4": "shopify://shop_images/MYROUTINESOPEN.png",
         "show_doodles": true
       }
     },
