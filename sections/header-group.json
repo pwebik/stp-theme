@@ -18,7 +18,7 @@
           "type": "announcement",
           "settings": {
             "text": "NEW · My Routines Book is here — the 4th book in the system. Presale ends soon →",
-            "link": ""
+            "link": "shopify://products/my-routines-book-fun-interactive-at-home-speech-therapy-board-book-for-toddlers-ages-1-4-daily-routine-language-for-late-talkers-gestalt-language-processors-written-by-a-pediatric-speech-therapist"
           }
         }
       },
@@ -26,7 +26,7 @@
         "announcement-1"
       ],
       "settings": {
-        "auto_rotate": false,
+        "auto_rotate": true,
         "change_slides_speed": 5,
         "color_scheme": "scheme-4",
         "show_line_separator": true,
