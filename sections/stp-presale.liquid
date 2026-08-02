@@ -1,0 +1,68 @@
+{%- comment -%}  STP Presale — My Routines spotlight  {%- endcomment -%}
+<section class="stp-block stp-presale">
+  {%- if section.settings.show_doodles -%}
+    {% render 'stp-doodle', type:'star', color:'rgba(255,255,255,.45)', size:34, float:'stp-float', style:'top:14%;left:46%;--r:-10deg' %}
+    {% render 'stp-doodle', type:'sparkle', color:'rgba(255,255,255,.4)', size:26, float:'stp-float stp-float--slow', style:'bottom:16%;left:4%;--r:8deg' %}
+  {%- endif -%}
+  <div class="stp-wrap">
+    <div class="stp-presale__grid">
+      <div class="stp-presale__copy">
+        {%- if section.settings.pill != blank -%}<span class="stp-pill stp-pill--pink">{{ section.settings.pill }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="stp-presale__title">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.body != blank -%}<p class="stp-presale__body">{{ section.settings.body }}</p>{%- endif -%}
+        <div class="stp-presale__ctas">
+          {%- if section.settings.cta_primary_label != blank -%}
+            <a href="{{ section.settings.cta_primary_link | default: '#' }}" class="stp-btn stp-btn--cta">{{ section.settings.cta_primary_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.cta_secondary_label != blank -%}
+            <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="stp-btn stp-btn--ghost stp-btn--ghost-light">{{ section.settings.cta_secondary_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="stp-presale__media">
+        {%- if section.settings.video != blank -%}
+          {{ section.settings.video | video_tag: autoplay: false, loop: false, controls: true, playsinline: true, image_size: '1200x' }}
+        {%- elsif section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'stp-routines-open.webp' | asset_url }}" alt="My Routines Book" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-presale{background:var(--stp-purple);color:#fff;position:relative;overflow:hidden;padding:88px 0;}
+.stp-presale__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;z-index:1;}
+.stp-presale .stp-pill{margin-bottom:16px;}
+.stp-presale__title{font-size:clamp(2rem,3.6vw,2.9rem);margin-bottom:16px;}
+.stp-presale__body{opacity:.94;font-size:1.08rem;max-width:44ch;}
+.stp-presale__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;}
+.stp-btn--ghost-light{color:#fff;border-color:#fff;}
+.stp-btn--ghost-light:hover{background:rgba(255,255,255,.14);color:#fff;}
+.stp-presale__media{border-radius:24px;overflow:hidden;border:2.5px dashed rgba(255,255,255,.55);background:rgba(255,255,255,.1);}
+.stp-presale__media img,.stp-presale__media video{width:100%;height:100%;display:block;object-fit:cover;border-radius:21px;}
+@media (max-width:900px){.stp-presale__grid{grid-template-columns:1fr;gap:32px;}.stp-presale{padding:64px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Presale",
+  "tag": "section",
+  "class": "stp-section",
+  "settings": [
+    { "type": "text", "id": "pill", "label": "Pill", "default": "New · Presale open" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "My Routines Book" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "The fourth stage of the journey. From morning wake-up to bedtime, My Routines Book turns the moments you already share into natural language practice — the everyday way toddlers learn to talk." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary button", "default": "Reserve your copy →" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary button", "default": "Learn more" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary link" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Use My_Routines_Video. Falls back to the routines image if empty." },
+    { "type": "image_picker", "id": "image", "label": "Image (fallback if no video)" },
+    { "type": "checkbox", "id": "show_doodles", "label": "Show doodles", "default": true }
+  ],
+  "presets": [{ "name": "STP Presale" }]
+}
+{% endschema %}

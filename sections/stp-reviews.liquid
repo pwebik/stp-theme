@@ -1,0 +1,74 @@
+{%- comment -%}  STP Reviews  {%- endcomment -%}
+<section class="stp-block stp-reviews">
+  <div class="stp-wrap">
+    <div class="stp-reviews__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="stp-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="stp-reviews__title">{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="stp-reviews__grid">
+      {%- for block in section.blocks -%}
+        <div class="stp-review" {{ block.shopify_attributes }}>
+          <div class="stp-review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          {%- if block.settings.quote != blank -%}<p class="stp-review__quote">{{ block.settings.quote }}</p>{%- endif -%}
+          <div class="stp-review__who">
+            <span class="stp-review__av">{{ block.settings.name | slice: 0, 1 | upcase }}</span>
+            <span class="stp-review__meta">
+              <b>{{ block.settings.name }}</b>
+              {%- if block.settings.detail != blank -%}<span>{{ block.settings.detail }}</span>{%- endif -%}
+            </span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-reviews{background:var(--stp-cream);padding:88px 0;}
+.stp-reviews__head{text-align:center;margin-bottom:44px;}
+.stp-reviews__title{font-size:clamp(2rem,3.6vw,2.8rem);margin-top:8px;}
+.stp-reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.stp-review{background:var(--stp-white);border-radius:22px;padding:26px 24px 28px;box-shadow:var(--stp-shadow-soft);position:relative;}
+.stp-review::after{content:"";position:absolute;left:34px;bottom:-13px;width:24px;height:24px;background:var(--stp-white);transform:rotate(45deg);border-radius:0 0 6px 0;}
+.stp-review__stars{color:var(--stp-orange);letter-spacing:2px;font-size:1.05rem;margin-bottom:12px;}
+.stp-review__quote{font-size:1rem;color:var(--stp-ink);margin-bottom:16px;}
+.stp-review__who{display:flex;align-items:center;gap:11px;}
+.stp-review__av{width:40px;height:40px;border-radius:100px;background:var(--stp-teal-tint);color:var(--stp-teal-deep);font-family:var(--stp-font-display);font-weight:600;display:grid;place-items:center;flex:none;}
+.stp-review__meta b{font-family:var(--stp-font-display);font-weight:600;font-size:.96rem;display:block;}
+.stp-review__meta span{font-size:.82rem;color:var(--stp-ink-soft);}
+@media (max-width:900px){.stp-reviews__grid{grid-template-columns:1fr;}.stp-reviews{padding:64px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Reviews",
+  "tag": "section",
+  "class": "stp-section",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "From real families" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Parents see the words come" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "As soon as we opened it she started repeating the words she knew and listening closely to the ones she didn't. Simple and effective for my 19-month-old." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Christina" },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Verified buyer · Imitation Book" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "STP Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "As soon as we opened it she started repeating words she knew and listening closely to the ones she didn't. Simple and effective for my 19-month-old.", "name": "Christina", "detail": "Verified buyer · Imitation Book" } },
+        { "type": "review", "settings": { "quote": "Fantastic for teaching verbs in a way toddlers actually enjoy. Bright illustrations, durable board pages, and my son copies every action.", "name": "Rashelle", "detail": "Verified buyer · Action Book" } },
+        { "type": "review", "settings": { "quote": "It really helped my one-year-old pick up new words and gestures. The parent tips on the first page made it easy to know what to do.", "name": "Samantha", "detail": "Verified buyer · Learn to Talk Bundle" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

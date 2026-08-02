@@ -1,0 +1,50 @@
+{%- comment -%}  STP Video — brand loop  {%- endcomment -%}
+<section class="stp-block stp-video">
+  <div class="stp-wrap">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="stp-video__head">
+        {%- if section.settings.eyebrow != blank -%}<span class="stp-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="stp-video__title">{{ section.settings.heading }}</h2>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="stp-video__frame">
+      {%- if section.settings.video != blank -%}
+        {{ section.settings.video | video_tag: autoplay: section.settings.autoplay, loop: true, muted: true, controls: false, playsinline: true, image_size: '1600x' }}
+      {%- elsif section.settings.poster != blank -%}
+        <img src="{{ section.settings.poster | image_url: width: 1600 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+        <span class="stp-video__play"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      {%- else -%}
+        <span class="stp-video__play"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="stp-video__cap">▶ Add your brand loop video (Content → Files, then pick it here)</span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.stp-video{background:var(--stp-cream);padding:80px 0;}
+.stp-video__head{text-align:center;margin-bottom:36px;}
+.stp-video__title{font-size:clamp(2rem,3.6vw,2.8rem);margin-top:8px;}
+.stp-video__frame{position:relative;border-radius:28px;overflow:hidden;box-shadow:var(--stp-shadow-card);
+  aspect-ratio:16/9;background:linear-gradient(135deg,var(--stp-teal),var(--stp-teal-deep));display:grid;place-items:center;}
+.stp-video__frame video,.stp-video__frame img{width:100%;height:100%;object-fit:cover;}
+.stp-video__play{position:absolute;width:84px;height:84px;border-radius:100px;background:#fff;display:grid;place-items:center;box-shadow:var(--stp-shadow-soft);color:var(--stp-teal-deep);}
+.stp-video__cap{position:absolute;bottom:20px;left:22px;color:#fff;font-family:var(--stp-font-display);font-size:1rem;}
+@media (max-width:520px){.stp-video{padding:56px 0;}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "STP Video",
+  "tag": "section",
+  "class": "stp-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "See it in action" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Reading that feels like play" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Upload under Content → Files, then select here. Use Main_video_for_loop for the brand loop." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image (shown if no video)" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay (muted loop)", "default": true }
+  ],
+  "presets": [{ "name": "STP Video" }]
+}
+{% endschema %}
