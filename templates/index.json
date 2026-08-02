@@ -212,6 +212,7 @@
             "feature_2": "Our best-selling 3-book set",
             "feature_3": "Free US shipping",
             "cover_key": "bundle-3book",
+            "image": "shopify://shop_images/1.-Early-Speech-Starter-Bundle_2_678fc350-03cb-445e-b176-e91a2ae5aae0.png",
             "cta_label": "Add to Cart",
             "cta_link": ""
           }
@@ -230,6 +231,7 @@
             "feature_2": "Includes the new My Routines Book",
             "feature_3": "Free shipping + 30-day returns",
             "cover_key": "bundle-2",
+            "image": "shopify://shop_images/2.-Early-Speech-Complete-Bundle_2_933a2bb2-5e95-4a94-8942-da9dcf7f6445.png",
             "cta_label": "Add Complete to Cart",
             "cta_link": ""
           }
